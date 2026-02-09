@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.mathbattle.xyz/sitemap.xml
+
+# Disallow admin/internal paths
+User-agent: *
+Disallow: /api/
+Disallow: /set-username

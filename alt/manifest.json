@@ -1,0 +1,602 @@
+[
+  {
+    "id": 1,
+    "file": "variant-01.html",
+    "title": "Centered classic",
+    "fonts": [
+      "ibmPlex",
+      "instrument"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 2,
+    "file": "variant-02.html",
+    "title": "Split plane",
+    "fonts": [
+      "syne",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+pulseSoft"
+  },
+  {
+    "id": 3,
+    "file": "variant-03.html",
+    "title": "Watermark editorial",
+    "fonts": [
+      "fraunces",
+      "dmSans"
+    ],
+    "motion": "rise+drift+fade"
+  },
+  {
+    "id": 4,
+    "file": "variant-04.html",
+    "title": "Light terminal",
+    "fonts": [
+      "jetbrains",
+      "ibmPlex"
+    ],
+    "motion": "rise+pulseSoft+fade"
+  },
+  {
+    "id": 5,
+    "file": "variant-05.html",
+    "title": "Vertical flow",
+    "fonts": [
+      "archivo",
+      "literata"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 6,
+    "file": "variant-06.html",
+    "title": "Ink stripe hero",
+    "fonts": [
+      "spaceGrotesk",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 7,
+    "file": "variant-07.html",
+    "title": "Bottom-anchored CTA",
+    "fonts": [
+      "newsreader",
+      "dmSans"
+    ],
+    "motion": "rise+fade+pulseSoft"
+  },
+  {
+    "id": 8,
+    "file": "variant-08.html",
+    "title": "Diagonal paper fold",
+    "fonts": [
+      "instrument",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 9,
+    "file": "variant-09.html",
+    "title": "Type scale ladder",
+    "fonts": [
+      "syne",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+pulseSoft"
+  },
+  {
+    "id": 10,
+    "file": "variant-10.html",
+    "title": "Equation as hero media",
+    "fonts": [
+      "fraunces",
+      "dmSans"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 11,
+    "file": "variant-11.html",
+    "title": "Wide lockup",
+    "fonts": [
+      "geist",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 12,
+    "file": "variant-12.html",
+    "title": "Narrow arena",
+    "fonts": [
+      "jetbrains",
+      "spaceGrotesk"
+    ],
+    "motion": "rise+pulseSoft+fade"
+  },
+  {
+    "id": 13,
+    "file": "variant-13.html",
+    "title": "Asymmetric mark",
+    "fonts": [
+      "instrument",
+      "dmSans"
+    ],
+    "motion": "rise+drift+fade"
+  },
+  {
+    "id": 14,
+    "file": "variant-14.html",
+    "title": "Serif manifesto",
+    "fonts": [
+      "literata",
+      "archivo"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 15,
+    "file": "variant-15.html",
+    "title": "Match header",
+    "fonts": [
+      "archivo",
+      "jetbrains"
+    ],
+    "motion": "rise+pulseSoft+fade"
+  },
+  {
+    "id": 16,
+    "file": "variant-16.html",
+    "title": "Graph plane bottom copy",
+    "fonts": [
+      "spaceGrotesk",
+      "ibmMono"
+    ],
+    "motion": "rise+drift+draw"
+  },
+  {
+    "id": 17,
+    "file": "variant-17.html",
+    "title": "Giant mark rail",
+    "fonts": [
+      "instrument",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 18,
+    "file": "variant-18.html",
+    "title": "Band + equation ticker",
+    "fonts": [
+      "syne",
+      "jetbrains"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 19,
+    "file": "variant-19.html",
+    "title": "Editorial folio rule",
+    "fonts": [
+      "newsreader",
+      "dmSans"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 20,
+    "file": "variant-20.html",
+    "title": "Asymmetric slate column",
+    "fonts": [
+      "geist",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 21,
+    "file": "variant-21.html",
+    "title": "Underline brand forest",
+    "fonts": [
+      "fraunces",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 22,
+    "file": "variant-22.html",
+    "title": "Duel scoreboard split",
+    "fonts": [
+      "archivo",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 23,
+    "file": "variant-23.html",
+    "title": "Narrow essay drift",
+    "fonts": [
+      "literata",
+      "dmSans"
+    ],
+    "motion": "rise+drift+fade"
+  },
+  {
+    "id": 24,
+    "file": "variant-24.html",
+    "title": "Axis grid media top",
+    "fonts": [
+      "ibmPlex",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 25,
+    "file": "variant-25.html",
+    "title": "Olive stacked brand",
+    "fonts": [
+      "syne",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 26,
+    "file": "variant-26.html",
+    "title": "Countdown ring arena",
+    "fonts": [
+      "jetbrains",
+      "spaceGrotesk"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 27,
+    "file": "variant-27.html",
+    "title": "Rust hairline frame",
+    "fonts": [
+      "instrument",
+      "dmSans"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 28,
+    "file": "variant-28.html",
+    "title": "Partial mosaic wide",
+    "fonts": [
+      "geist",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 29,
+    "file": "variant-29.html",
+    "title": "Navy manifesto rule",
+    "fonts": [
+      "archivo",
+      "literata"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 30,
+    "file": "variant-30.html",
+    "title": "Floating equation + bar",
+    "fonts": [
+      "fraunces",
+      "geist"
+    ],
+    "motion": "rise+drift+fade"
+  },
+  {
+    "id": 31,
+    "file": "variant-31.html",
+    "title": "Diagonal equation wash",
+    "fonts": [
+      "syne",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 32,
+    "file": "variant-32.html",
+    "title": "Polar grid stage",
+    "fonts": [
+      "jetbrains",
+      "dmSans"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 33,
+    "file": "variant-33.html",
+    "title": "Three-round timeline",
+    "fonts": [
+      "archivo",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 34,
+    "file": "variant-34.html",
+    "title": "Layered equation stack",
+    "fonts": [
+      "instrument",
+      "geist"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 35,
+    "file": "variant-35.html",
+    "title": "Corner brand graph field",
+    "fonts": [
+      "spaceGrotesk",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 36,
+    "file": "variant-36.html",
+    "title": "Prompt caret terminal",
+    "fonts": [
+      "jetbrains",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 37,
+    "file": "variant-37.html",
+    "title": "Before after transform",
+    "fonts": [
+      "fraunces",
+      "dmSans"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 38,
+    "file": "variant-38.html",
+    "title": "Countdown arc ring",
+    "fonts": [
+      "geist",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 39,
+    "file": "variant-39.html",
+    "title": "Contour landscape",
+    "fonts": [
+      "literata",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 40,
+    "file": "variant-40.html",
+    "title": "Cascading type ladder",
+    "fonts": [
+      "syne",
+      "newsreader"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 41,
+    "file": "variant-41.html",
+    "title": "Olive oval equation",
+    "fonts": [
+      "instrument",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 42,
+    "file": "variant-42.html",
+    "title": "Wireframe axes object",
+    "fonts": [
+      "archivo",
+      "jetbrains"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 43,
+    "file": "variant-43.html",
+    "title": "Proof strip scroll",
+    "fonts": [
+      "ibmMono",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 44,
+    "file": "variant-44.html",
+    "title": "Horizon climbing point",
+    "fonts": [
+      "newsreader",
+      "geist"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 45,
+    "file": "variant-45.html",
+    "title": "Focus lens detail",
+    "fonts": [
+      "fraunces",
+      "dmSans"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 46,
+    "file": "variant-46.html",
+    "title": "asymmetric / olive / archivo",
+    "fonts": [
+      "archivo",
+      "literata"
+    ],
+    "motion": "slide+fade"
+  },
+  {
+    "id": 47,
+    "file": "variant-47.html",
+    "title": "narrow / ink / jetbrains",
+    "fonts": [
+      "jetbrains",
+      "ibmPlex"
+    ],
+    "motion": "slide+fade"
+  },
+  {
+    "id": 48,
+    "file": "variant-48.html",
+    "title": "wide / forest / geist",
+    "fonts": [
+      "geist",
+      "ibmMono"
+    ],
+    "motion": "slide+fade"
+  },
+  {
+    "id": 49,
+    "file": "variant-49.html",
+    "title": "stack / slate / literata",
+    "fonts": [
+      "literata",
+      "dmSans"
+    ],
+    "motion": "slide+fade"
+  },
+  {
+    "id": 50,
+    "file": "variant-50.html",
+    "title": "frame / rust / ibmPlex",
+    "fonts": [
+      "ibmPlex",
+      "ibmMono"
+    ],
+    "motion": "slide+fade"
+  },
+  {
+    "id": 51,
+    "file": "variant-51.html",
+    "title": "center / navy / spaceGrotesk",
+    "fonts": [
+      "spaceGrotesk",
+      "ibmMono"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 52,
+    "file": "variant-52.html",
+    "title": "left / olive / instrument",
+    "fonts": [
+      "instrument",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 53,
+    "file": "variant-53.html",
+    "title": "split / ink / fraunces",
+    "fonts": [
+      "fraunces",
+      "dmSans"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 54,
+    "file": "variant-54.html",
+    "title": "topMedia / forest / syne",
+    "fonts": [
+      "syne",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 55,
+    "file": "variant-55.html",
+    "title": "bottomBar / slate / newsreader",
+    "fonts": [
+      "newsreader",
+      "dmSans"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 56,
+    "file": "variant-56.html",
+    "title": "asymmetric / rust / archivo",
+    "fonts": [
+      "archivo",
+      "literata"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 57,
+    "file": "variant-57.html",
+    "title": "narrow / navy / jetbrains",
+    "fonts": [
+      "jetbrains",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 58,
+    "file": "variant-58.html",
+    "title": "wide / olive / geist",
+    "fonts": [
+      "geist",
+      "ibmMono"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 59,
+    "file": "variant-59.html",
+    "title": "stack / ink / literata",
+    "fonts": [
+      "literata",
+      "dmSans"
+    ],
+    "motion": "rise+fade"
+  },
+  {
+    "id": 60,
+    "file": "variant-60.html",
+    "title": "frame / forest / ibmPlex",
+    "fonts": [
+      "ibmPlex",
+      "ibmMono"
+    ],
+    "motion": "rise+fade"
+  }
+]

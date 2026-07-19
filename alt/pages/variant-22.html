@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Duel scoreboard split · Derivative Duel alt 22</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #f7f7f5;
+      --surface: #ffffff;
+      --accent: #1a1a1a;
+      --soft: #ecece8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: #000; }
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+    .brand-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .eq {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 120; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+    .anim-rise { animation: rise 700ms ease both; }
+    .anim-rise-2 { animation: rise 800ms 120ms ease both; }
+    .anim-rise-3 { animation: rise 900ms 220ms ease both; }
+    .anim-fade { animation: fade 900ms ease both; }
+    
+    body { font-family: 'Archivo', sans-serif; background: #f7f7f5; }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .copy { max-width: 720px; margin: 0 auto; padding: 1.5rem 1.5rem 2rem; width: 100%; }
+    .brand {
+      font-weight: 800; font-size: clamp(2.8rem, 7vw, 4.4rem); letter-spacing: -0.045em;
+      margin: 2rem 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 32rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .board {
+      margin-top: auto; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line);
+      min-height: 280px;
+    }
+    .side {
+      display: grid; place-items: center; padding: 2rem 1rem; text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .side.a { background: #fff; }
+    .side.b { background: #111; color: #f2f2ee; }
+    .side .label { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; margin-bottom: 0.75rem; }
+    .side .score { font-size: clamp(3rem, 8vw, 4.5rem); font-weight: 700; line-height: 1; }
+    .side.a .score { animation: pulseSoft 2.8s ease-in-out infinite; }
+    .vs {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      width: 2.5rem; height: 2.5rem; background: var(--paper); border: 1px solid var(--line);
+      display: grid; place-items: center; font-size: 0.7rem; letter-spacing: 0.08em; font-weight: 600;
+    }
+    .board-wrap { position: relative; }
+  
+  </style>
+</head>
+<body data-variant="22" data-motion="rise+fade+pulse">
+
+    <div class="page">
+      <div class="copy">
+        <nav class="nav anim-fade" style="padding:0">
+          <div class="brand-mark">∂ Derivative Duel</div>
+          <div class="nav-links"><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">First to three. One problem. Two players. Zero partial credit.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Find opponent</a>
+          <a class="cta-ghost" href="#">Private room</a>
+        </div>
+      </div>
+      <div class="board-wrap anim-fade" aria-hidden="true">
+        <div class="board">
+          <div class="side a"><div><div class="label">You</div><div class="score">2</div></div></div>
+          <div class="side b"><div><div class="label">Them</div><div class="score">1</div></div></div>
+        </div>
+        <div class="vs">VS</div>
+      </div>
+    </div>
+  
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>asymmetric / olive / archivo · Derivative Duel alt 46</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Literata:opsz,wght@7..72,400;7..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #f7f7f5;
+      --surface: #ffffff;
+      --accent: #1a1a1a;
+      --soft: #ecece8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: #000; }
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+    .brand-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .eq {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 120; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+    .anim-rise { animation: rise 700ms ease both; }
+    .anim-rise-2 { animation: rise 800ms 120ms ease both; }
+    .anim-rise-3 { animation: rise 900ms 220ms ease both; }
+    .anim-fade { animation: fade 900ms ease both; }
+    
+      body { font-family: 'Literata', serif; }
+      h1, .brand-display { font-family: 'Archivo', sans-serif; }
+      
+    :root { --ink: #3a3f2b; --paper: #f6f5ec; --soft: #ecead9; --accent: #3a3f2b; }
+    body { background: var(--paper); color: var(--ink); }
+    .cta { background: var(--ink); }
+    .hero-eq {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      opacity: 0.88;
+    }
+  
+        .shell { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 2rem; align-items: end; }
+        @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
+        h1 { font-size: clamp(2.6rem, 6vw, 4rem); letter-spacing: -0.045em; margin: 2rem 0 1rem; }
+        .lead { color: var(--muted); line-height: 1.55; margin-bottom: 1.75rem; }
+        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .media { min-height: 220px; background: var(--soft); display: grid; place-items: center; transform: translateY(-1.5rem); }
+      
+      
+      @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+      .anim-rise { animation: slideIn 650ms ease both; }
+    
+    
+  </style>
+</head>
+<body data-variant="46" data-motion="slide+fade">
+<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><div><h1 class="anim-rise" style="font-family:'Archivo', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Your daily derivative.</strong> Warm up with the daily challenge, then enter ranked.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">y=cos(x²)</p></div></main>
+</body>
+</html>

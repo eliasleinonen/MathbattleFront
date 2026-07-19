@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contour landscape · Derivative Duel alt 39</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #f7f7f5;
+      --surface: #ffffff;
+      --accent: #1a1a1a;
+      --soft: #ecece8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: #000; }
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+    .brand-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .eq {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 120; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+    .anim-rise { animation: rise 700ms ease both; }
+    .anim-rise-2 { animation: rise 800ms 120ms ease both; }
+    .anim-rise-3 { animation: rise 900ms 220ms ease both; }
+    .anim-fade { animation: fade 900ms ease both; }
+    
+    :root { --ink: #3a3f2b; --paper: #f5f5ec; --soft: #ecead9; }
+    body { font-family: 'IBM Plex Sans', sans-serif; background: var(--paper); color: var(--ink); }
+    .cta { background: var(--ink); }
+    .cta-ghost:hover { border-color: var(--ink); }
+    .scene { min-height: 100vh; display: flex; flex-direction: column; }
+    .copy { max-width: 640px; padding: 1.5rem 1.5rem 2rem; }
+    .brand {
+      font-family: 'Literata', serif; font-size: clamp(2.8rem, 7vw, 4.2rem);
+      margin: 2rem 0 0.75rem; letter-spacing: -0.03em; line-height: 1;
+    }
+    .lead { color: #5c6150; line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .contours {
+      margin-top: auto; min-height: min(40vh, 300px); background: var(--soft);
+      border-top: 1px solid #d8d6c4; overflow: hidden; position: relative;
+    }
+    .contours svg { width: 100%; height: 100%; display: block; min-height: 260px; }
+    .contours path {
+      fill: none; stroke: var(--ink); stroke-width: 1; opacity: 0.35;
+      animation: drift 6s ease-in-out infinite alternate;
+    }
+    .contours path:nth-child(2) { opacity: 0.5; animation-delay: 0.3s; }
+    .contours path:nth-child(3) { opacity: 0.7; animation-delay: 0.6s; }
+  
+  </style>
+</head>
+<body data-variant="39" data-motion="rise+fade+drift">
+
+    <div class="scene">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">faq</a><a href="#">login</a></div>
+      </nav>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Level curves of skill. Climb by answering faster and cleaner.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">View ELO board</a>
+        </div>
+      </div>
+      <div class="contours anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 800 260" preserveAspectRatio="none">
+          <path d="M0 200 C 120 180, 200 220, 320 160 S 520 80, 640 120 S 760 180, 800 160" />
+          <path d="M0 170 C 140 150, 220 190, 340 130 S 540 60, 660 100 S 760 150, 800 130" />
+          <path d="M0 140 C 160 120, 240 160, 360 100 S 560 40, 680 80 S 760 120, 800 100" />
+        </svg>
+      </div>
+    </div>
+  
+</body>
+</html>

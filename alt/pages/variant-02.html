@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Split plane · Derivative Duel alt 02</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #f7f7f5;
+      --surface: #ffffff;
+      --accent: #1a1a1a;
+      --soft: #ecece8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: #000; }
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+    .brand-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .eq {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 120; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+    .anim-rise { animation: rise 700ms ease both; }
+    .anim-rise-2 { animation: rise 800ms 120ms ease both; }
+    .anim-rise-3 { animation: rise 900ms 220ms ease both; }
+    .anim-fade { animation: fade 900ms ease both; }
+    
+    body { font-family: 'Syne', sans-serif; background: #f5f5f2; }
+    .wrap { display: grid; min-height: 100vh; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; } .visual { min-height: 44vh; order: -1; } }
+    .copy { padding: 1.75rem 2.5rem 3rem; display: flex; flex-direction: column; }
+    .lockup {
+      font-size: clamp(2.9rem, 6.5vw, 4.5rem); line-height: 0.92;
+      margin: auto 0 1rem; letter-spacing: -0.045em;
+    }
+    .lockup .partial {
+      display: block; font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.42em; letter-spacing: 0; color: #3a3a3a; margin-bottom: 0.35rem;
+      animation: fade 800ms ease both;
+    }
+    .copy .lead {
+      color: var(--muted); max-width: 28rem; margin: 0 0 1.75rem;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; line-height: 1.65; font-weight: 400;
+    }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
+    .visual {
+      background:
+        radial-gradient(ellipse at 60% 40%, #ddd9ce 0%, transparent 50%),
+        linear-gradient(160deg, #ebe8e0, #f0efe9 55%, #e2dfd6);
+      display: grid; place-items: center; position: relative; overflow: hidden;
+    }
+    .visual::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(17,17,17,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17,17,17,0.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      animation: pulseSoft 4.5s ease-in-out infinite;
+    }
+    .visual svg { position: absolute; width: 78%; height: 45%; opacity: 0.35; }
+    .visual svg path {
+      fill: none; stroke: #222; stroke-width: 2;
+      stroke-dasharray: 120; animation: draw 1.6s ease both;
+    }
+    .visual .eq {
+      position: relative; z-index: 1;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(1.15rem, 2.4vw, 1.65rem);
+      animation: rise 900ms 150ms ease both;
+    }
+  
+  </style>
+</head>
+<body data-variant="2" data-motion="rise+fade+pulseSoft">
+
+    <div class="wrap">
+      <section class="copy">
+        <nav class="nav" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="lockup anim-rise"><span class="partial">∂</span>Derivative<br/>Duel</h1>
+        <p class="lead anim-rise-2">1v1 calculus battles with live ELO. Differentiation under pressure.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Daily challenge</a>
+        </div>
+      </section>
+      <aside class="visual anim-fade" aria-label="Example problem">
+        <svg viewBox="0 0 200 80" aria-hidden="true"><path d="M4 60 C40 60, 40 20, 80 20 S120 60, 160 28 S190 10, 196 18"/></svg>
+        <p class="eq">d/dx [ x<sup>7</sup> − 4x<sup>5</sup> ]</p>
+      </aside>
+    </div>
+  
+</body>
+</html>

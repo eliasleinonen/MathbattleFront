@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vertical flow · Derivative Duel alt 05</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Literata:opsz,wght@7..72,400;7..72,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #111111;
+      --muted: #5c5c5c;
+      --line: #d6d6d6;
+      --paper: #f7f7f5;
+      --surface: #ffffff;
+      --accent: #1a1a1a;
+      --soft: #ecece8;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+    .cta:hover { transform: translateY(-1px); background: #000; }
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--ink);
+      background: transparent;
+      transition: border-color 180ms ease, background 180ms ease;
+    }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(0,0,0,0.02); }
+    .brand-mark {
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .nav-links { display: flex; gap: 1.25rem; font-size: 0.9rem; color: var(--muted); }
+    .nav-links a:hover { color: var(--ink); }
+    .eq {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 120; }
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+    @keyframes drift {
+      from { transform: translateY(0); }
+      to { transform: translateY(-8px); }
+    }
+    .anim-rise { animation: rise 700ms ease both; }
+    .anim-rise-2 { animation: rise 800ms 120ms ease both; }
+    .anim-rise-3 { animation: rise 900ms 220ms ease both; }
+    .anim-fade { animation: fade 900ms ease both; }
+    
+    body { font-family: 'Archivo', sans-serif; background: #f8f7f3; }
+    .wrap {
+      max-width: 560px; margin: 0 auto; padding: 1.5rem 1.5rem 0;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    .mark {
+      font-size: clamp(3rem, 10vw, 4.5rem); line-height: 1; margin: 2.5rem 0 0.25rem;
+      letter-spacing: -0.06em; animation: rise 700ms ease both, drift 5.5s ease-in-out 700ms infinite alternate;
+    }
+    h1 {
+      font-size: clamp(2.7rem, 8vw, 4rem); letter-spacing: -0.045em; margin: 0 0 1rem; line-height: 0.98;
+    }
+    .lead {
+      font-family: 'Literata', serif; color: var(--muted);
+      font-size: 1.12rem; line-height: 1.55; margin: 0 0 2rem; max-width: 28rem;
+    }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .ribbon {
+      margin-top: auto; margin-left: -1.5rem; margin-right: -1.5rem;
+      padding: 2.5rem 1.5rem; border-top: 1px solid var(--line);
+      background:
+        repeating-linear-gradient(90deg, transparent, transparent 31px, rgba(0,0,0,0.04) 31px, rgba(0,0,0,0.04) 32px),
+        linear-gradient(180deg, #eceae2, #f8f7f3);
+      text-align: center;
+    }
+    .ribbon .eq {
+      font-family: 'Literata', serif; font-size: clamp(1.35rem, 3.5vw, 1.9rem);
+      margin: 0; animation: fade 1s ease both;
+    }
+  
+  </style>
+</head>
+<body data-variant="5" data-motion="rise+fade+drift">
+
+    <div class="wrap">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">faq</a><a href="#">login</a></div>
+      </nav>
+      <p class="mark" aria-hidden="true">∂</p>
+      <h1 class="anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Queue ranked or invite a friend. Differentiate under a live countdown.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Play now</a>
+        <a class="cta-ghost" href="#">Learn derivatives</a>
+      </div>
+      <div class="ribbon" aria-hidden="true">
+        <p class="eq">f(x)=(2x+1)<sup>5</sup> · find f′</p>
+      </div>
+    </div>
+  
+</body>
+</html>

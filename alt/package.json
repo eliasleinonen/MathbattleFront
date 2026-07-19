@@ -1,0 +1,13 @@
+{
+  "name": "derivative-duel-alt-landings",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-variants.mjs",
+    "test": "node --test generate-variants.test.mjs",
+    "screenshots": "node screenshot-all.mjs"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.15.0"
+  }
+}

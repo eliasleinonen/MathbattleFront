@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>center / navy / spaceGrotesk · Derivative Duel alt 51</title>
+  <title>Instantaneous tick stage · Derivative Duel alt 51</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -98,35 +98,51 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Mono', monospace; }
-      h1, .brand-display { font-family: 'Space Grotesk', sans-serif; }
-      
-    :root { --ink: #152238; --paper: #f2f4f8; --soft: #e4e8f0; --accent: #152238; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'IBM Plex Mono', monospace; background: #f5f5f2; }
+    .stage { min-height: 100vh; display: flex; flex-direction: column; }
+    .top { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 1.5rem 2rem; max-width: 720px; }
+    .brand {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(2.8rem, 7vw, 4.4rem); letter-spacing: -0.045em;
+      margin: 0 0 0.75rem; line-height: 0.95;
     }
+    .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .ticks {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 0.35rem; padding: 0 1.5rem 2.5rem; height: 140px;
+      border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, #ecece6, #f5f5f2);
+    }
+    .ticks i {
+      display: block; width: 2px; background: #222; opacity: 0.35;
+      transform-origin: bottom; animation: rise 700ms ease both, drift 3.5s ease-in-out infinite alternate;
+    }
+    .ticks i:nth-child(odd) { height: 40%; }
+    .ticks i:nth-child(3n) { height: 70%; opacity: 0.55; }
+    .ticks i:nth-child(5n) { height: 95%; opacity: 0.85; animation-delay: 80ms, 0s; }
   
-        .shell { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; text-align: center; }
-        h1 { font-size: clamp(2.6rem, 7vw, 4.2rem); letter-spacing: -0.04em; margin: 2.5rem 0 1rem; }
-        .lead { color: var(--muted); max-width: 34rem; margin: 0 auto 2rem; line-height: 1.55; }
-        .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-        .media {
-          margin-top: 3rem; min-height: 240px; border-radius: 0;
-          background: linear-gradient(180deg, var(--soft), var(--paper));
-          border: 1px solid var(--line); display: grid; place-items: center;
-        }
-      
-      
-      .brand-mark { font-weight: 600; }
-      h1::first-letter { font-size: 1.08em; }
-    
-    
   </style>
 </head>
-<body data-variant="51" data-motion="rise+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><p class="brand-mark anim-rise" style="font-size:2.2rem;margin:1rem 0 0">∂</p><h1 class="anim-rise" style="font-family:'Space Grotesk', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2">Beat the clock. Beat your opponent. Master the derivative.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">f(x)=x⁵+2x³</p></div></main>
+<body data-variant="51" data-motion="rise+fade+drift">
+
+    <div class="stage">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">rules</a><a href="#">login</a></div>
+      </nav>
+      <div class="top">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">The slope at a single instant. Read it cleanly, submit, and take the round.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">View leaderboard</a>
+        </div>
+      </div>
+      <div class="ticks anim-fade" aria-hidden="true">
+        <i style="animation-delay:0ms,0s"></i><i style="animation-delay:30ms,0.15s"></i><i style="animation-delay:60ms,0.3s"></i><i style="animation-delay:90ms,0.44999999999999996s"></i><i style="animation-delay:120ms,0.6s"></i><i style="animation-delay:150ms,0s"></i><i style="animation-delay:180ms,0.15s"></i><i style="animation-delay:210ms,0.3s"></i><i style="animation-delay:240ms,0.44999999999999996s"></i><i style="animation-delay:270ms,0.6s"></i><i style="animation-delay:300ms,0s"></i><i style="animation-delay:330ms,0.15s"></i><i style="animation-delay:360ms,0.3s"></i><i style="animation-delay:390ms,0.44999999999999996s"></i><i style="animation-delay:420ms,0.6s"></i><i style="animation-delay:450ms,0s"></i><i style="animation-delay:480ms,0.15s"></i><i style="animation-delay:510ms,0.3s"></i><i style="animation-delay:540ms,0.44999999999999996s"></i><i style="animation-delay:570ms,0.6s"></i><i style="animation-delay:600ms,0s"></i><i style="animation-delay:630ms,0.15s"></i><i style="animation-delay:660ms,0.3s"></i><i style="animation-delay:690ms,0.44999999999999996s"></i><i style="animation-delay:720ms,0.6s"></i><i style="animation-delay:750ms,0s"></i><i style="animation-delay:780ms,0.15s"></i><i style="animation-delay:810ms,0.3s"></i>
+      </div>
+    </div>
+  
 </body>
 </html>

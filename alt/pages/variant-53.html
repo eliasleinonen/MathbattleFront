@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>split / ink / fraunces · Derivative Duel alt 53</title>
+  <title>Secant into tangent · Derivative Duel alt 53</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,35 +98,49 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'DM Sans', sans-serif; }
-      h1, .brand-display { font-family: 'Fraunces', serif; }
-      
-    :root { --ink: #111111; --paper: #f7f7f5; --soft: #ecece8; --accent: #111111; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'DM Sans', sans-serif; background: #f4f3ef; }
+    .wrap { min-height: 100vh; display: flex; flex-direction: column; }
+    .viz {
+      flex: 1; min-height: 42vh; display: grid; place-items: center;
+      background: linear-gradient(180deg, #e6e4dc, #f4f3ef 75%);
+      border-bottom: 1px solid var(--line);
     }
+    .viz svg { width: min(92%, 480px); height: auto; }
+    .curve { fill: none; stroke: #222; stroke-width: 1.6; stroke-dasharray: 280; animation: draw 1.4s ease both; }
+    .secant { fill: none; stroke: #666; stroke-width: 1.2; stroke-dasharray: 160; animation: draw 1.2s 0.25s ease both; opacity: 0.55; }
+    .copy { padding: 2rem 1.5rem 3rem; max-width: 640px; }
+    .brand {
+      font-family: 'Literata', serif;
+      font-size: clamp(2.7rem, 7vw, 4rem); letter-spacing: -0.03em;
+      margin: 0 0 0.75rem; line-height: 1.05;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   
-        .shell { display: grid; grid-template-columns: 1.1fr 0.9fr; min-height: calc(100vh - 4rem); }
-        @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
-        .copy { padding: 2rem 2rem 3rem; display: flex; flex-direction: column; }
-        h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); letter-spacing: -0.04em; margin: auto 0 1rem; }
-        .lead { color: var(--muted); margin: 0 0 1.75rem; line-height: 1.55; max-width: 28rem; }
-        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
-        .media { background: var(--soft); display: grid; place-items: center; min-height: 280px;
-          background-image: radial-gradient(circle at 50% 50%, var(--soft) 0%, transparent 60%),
-            linear-gradient(160deg, var(--soft), #fff); }
-      
-      
-      .brand-mark { font-weight: 600; }
-      h1::first-letter { font-size: 1.08em; }
-    
-    
   </style>
 </head>
-<body data-variant="53" data-motion="rise+fade">
-<div class="shell"><div class="copy"><nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><h1 class="anim-rise" style="font-family:'Fraunces', serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Prove the chain rule.</strong> Competitive differentiation for students who like pressure.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">f(x)=e^{2x}·x³</p></div></div>
+<body data-variant="53" data-motion="rise+draw+fade">
+
+    <div class="wrap">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">learn</a><a href="#">login</a></div>
+      </nav>
+      <div class="viz anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 400 180">
+          <path class="curve" d="M20 140 C80 140, 100 40, 180 50 S280 150, 380 60" />
+          <path class="secant" d="M90 95 L310 95" />
+        </svg>
+      </div>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">From secant to tangent — the race is how fast you close that gap.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Daily challenge</a>
+        </div>
+      </div>
+    </div>
+  
 </body>
 </html>

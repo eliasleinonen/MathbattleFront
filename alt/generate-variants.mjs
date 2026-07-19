@@ -3052,10 +3052,840 @@ add({
   `,
 });
 
-// Fill ids 46..60 (1–45 handcrafted above)
-for (let id = 46; id <= 60; id++) {
-  addMatrixVariant(id);
-}
+// ---------------------------------------------------------------------------
+// Handcrafted heroes 46–60 (matrix loop disabled — all 60 are unique)
+// ---------------------------------------------------------------------------
+
+// 46 — Soft slope-field dots with brand in the quiet center
+add({
+  id: 46,
+  title: 'Slope field center',
+  fonts: ['instrument', 'ibmPlex'],
+  motionNote: 'rise+fade+pulse',
+  css: `
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f4f4f0; }
+    .scene {
+      min-height: 100vh; display: flex; flex-direction: column;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 45%, #e8e8e0 0%, transparent 60%),
+        #f4f4f0;
+    }
+    .field {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(17,17,17,0.07) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 28% 62%, rgba(17,17,17,0.06) 1px, transparent 1.2px),
+        radial-gradient(circle at 48% 30%, rgba(17,17,17,0.07) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 70% 55%, rgba(17,17,17,0.05) 1px, transparent 1.2px),
+        radial-gradient(circle at 86% 22%, rgba(17,17,17,0.06) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 18% 80%, rgba(17,17,17,0.05) 1px, transparent 1.2px);
+      background-size: 100% 100%;
+      animation: pulseSoft 5s ease-in-out infinite;
+    }
+    .hero {
+      position: relative; flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 2rem 1.5rem 4rem; max-width: 640px; margin: 0 auto;
+    }
+    .brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 4.8rem); letter-spacing: -0.03em;
+      margin: 0 0 0.85rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+  `,
+  body: `
+    <div class="scene" style="position:relative">
+      <div class="field" aria-hidden="true"></div>
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <main class="hero">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Every point has a slope. Find it faster than the person across from you.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">Challenge a friend</a>
+        </div>
+      </main>
+    </div>
+  `,
+});
+
+// 47 — Long corridor vanishing into a limit / target
+add({
+  id: 47,
+  title: 'Limit corridor',
+  fonts: ['syne', 'dmSans'],
+  motionNote: 'rise+fade+draw',
+  css: `
+    body { font-family: 'DM Sans', sans-serif; background: #f6f5f1; }
+    .wrap { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; } .corridor { min-height: 40vh; order: -1; } }
+    .copy { padding: 1.75rem 2rem 3rem; display: flex; flex-direction: column; }
+    .brand {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 4rem); letter-spacing: -0.045em;
+      margin: auto 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
+    .corridor {
+      background: linear-gradient(180deg, #ebe8e0, #f6f5f1 70%);
+      display: grid; place-items: center; position: relative; overflow: hidden;
+    }
+    .corridor svg { width: 72%; max-width: 320px; height: auto; }
+    .corridor path {
+      fill: none; stroke: #222; stroke-width: 1.4;
+      stroke-dasharray: 200; animation: draw 1.5s ease both;
+    }
+    .corridor .dot {
+      fill: #111; animation: fade 1s 0.6s ease both;
+    }
+  `,
+  body: `
+    <div class="wrap">
+      <section class="copy">
+        <nav class="nav" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">how it works</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Approach the answer as h goes to zero. Your opponent is racing the same limit.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Warm-up</a>
+        </div>
+      </section>
+      <aside class="corridor anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 200 160">
+          <path d="M20 140 L100 30 L180 140" />
+          <path d="M50 140 L100 55 L150 140" />
+          <path d="M75 140 L100 85 L125 140" />
+          <circle class="dot" cx="100" cy="28" r="3.5" />
+        </svg>
+      </aside>
+    </div>
+  `,
+});
+
+// 48 — Twin ledger columns: problem left, answer right
+add({
+  id: 48,
+  title: 'Twin ledger columns',
+  fonts: ['newsreader', 'ibmMono'],
+  motionNote: 'rise+fade+drift',
+  css: `
+    body { font-family: 'IBM Plex Mono', monospace; background: #f7f6f2; color: #1a1a18; }
+    .page { max-width: 880px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; min-height: 100vh; }
+    .brand {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.8rem, 7vw, 4.2rem); letter-spacing: -0.03em;
+      margin: 2rem 0 0.75rem; line-height: 1;
+    }
+    .lead {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+      color: var(--muted); line-height: 1.65; margin: 0 0 1.75rem; max-width: 32rem;
+    }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .ledger {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-top: 1px solid #cfcfc8; border-bottom: 1px solid #cfcfc8;
+    }
+    @media (max-width: 600px) { .ledger { grid-template-columns: 1fr; } }
+    .col { padding: 1.5rem 1.25rem; }
+    .col + .col { border-left: 1px solid #cfcfc8; }
+    @media (max-width: 600px) { .col + .col { border-left: none; border-top: 1px solid #cfcfc8; } }
+    .col .label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #888; margin: 0 0 0.75rem; }
+    .col .eq { font-size: 1.05rem; line-height: 1.5; margin: 0; animation: drift 4s ease-in-out infinite alternate; }
+    .col.answer .eq { font-family: 'Newsreader', serif; font-size: 1.35rem; }
+  `,
+  body: `
+    <div class="page">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">guide</a><a href="#">login</a></div>
+      </nav>
+      <h1 class="brand anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Two columns. One clock. Close the gap before they do.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Start a duel</a>
+        <a class="cta-ghost" href="#">Daily challenge</a>
+      </div>
+      <div class="ledger anim-fade" aria-hidden="true">
+        <div class="col">
+          <p class="label">Given</p>
+          <p class="eq">f(x) = ln(3x² + 1)</p>
+        </div>
+        <div class="col answer">
+          <p class="label">Find</p>
+          <p class="eq">f′(x) = …</p>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
+// 49 — Soft chalkboard wash with chalk-line equation
+add({
+  id: 49,
+  title: 'Soft chalkboard wash',
+  fonts: ['fraunces', 'geist'],
+  motionNote: 'rise+fade+draw',
+  css: `
+    :root { --ink: #f2f0e8; --muted: #b8b4a8; --paper: #2a2f28; }
+    body { font-family: 'Geist', sans-serif; background: var(--paper); color: var(--ink); }
+    .cta { background: var(--ink); color: #2a2f28; }
+    .cta:hover { background: #fff; color: #2a2f28; }
+    .cta-ghost { border-color: #5a6156; color: var(--ink); }
+    .cta-ghost:hover { border-color: var(--ink); background: rgba(255,255,255,0.04); }
+    .nav-links { color: var(--muted); }
+    .scene {
+      min-height: 100vh; display: flex; flex-direction: column;
+      background:
+        radial-gradient(ellipse 90% 60% at 40% 30%, #343a32 0%, transparent 55%),
+        linear-gradient(165deg, #2e332c, #242822);
+    }
+    .copy { padding: 0 1.5rem 2rem; max-width: 640px; }
+    .brand {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 7vw, 4.4rem); letter-spacing: -0.03em;
+      margin: 2rem 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .board {
+      margin-top: auto; padding: 2.5rem 1.5rem 3.5rem;
+      border-top: 1px solid #454b42;
+    }
+    .board svg { width: min(100%, 420px); height: 80px; display: block; }
+    .board path {
+      fill: none; stroke: #e8e4d8; stroke-width: 1.5;
+      stroke-dasharray: 300; animation: draw 1.8s ease both;
+    }
+    .board .eq {
+      font-family: 'Fraunces', serif; font-size: clamp(1.4rem, 3.5vw, 2rem);
+      margin: 1rem 0 0; opacity: 0.85; animation: fade 1s 0.3s ease both;
+    }
+  `,
+  body: `
+    <div class="scene">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Chalk dust, clean steps, and a ticking clock. Differentiate under pressure.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play ranked</a>
+          <a class="cta-ghost" href="#">Practice board</a>
+        </div>
+      </div>
+      <div class="board anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 400 80"><path d="M10 55 C80 55, 90 20, 160 22 S240 60, 300 35 S360 18, 390 28"/></svg>
+        <p class="eq">d/dx [ cos(x²) ]</p>
+      </div>
+    </div>
+  `,
+});
+
+// 50 — Concentric rings suggesting radius / convergence
+add({
+  id: 50,
+  title: 'Concentric rate rings',
+  fonts: ['archivo', 'literata'],
+  motionNote: 'rise+fade+pulse',
+  css: `
+    body { font-family: 'Literata', serif; background: #f3f4f6; color: #152238; }
+    .cta { background: #152238; }
+    .shell {
+      max-width: 960px; margin: 0 auto; padding: 1.5rem;
+      min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem; align-items: center;
+    }
+    @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
+    .brand {
+      font-family: 'Archivo', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 3.9rem); letter-spacing: -0.04em;
+      margin: 0 0 0.75rem; line-height: 0.98;
+    }
+    .lead { color: #5a6570; line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .rings {
+      aspect-ratio: 1; max-width: 360px; width: 100%; margin: 0 auto;
+      display: grid; place-items: center; position: relative;
+    }
+    .rings span {
+      position: absolute; border: 1px solid rgba(21,34,56,0.22); border-radius: 50%;
+      animation: pulseSoft 4s ease-in-out infinite;
+    }
+    .rings span:nth-child(1) { width: 36%; aspect-ratio: 1; animation-delay: 0s; }
+    .rings span:nth-child(2) { width: 58%; aspect-ratio: 1; animation-delay: 0.35s; }
+    .rings span:nth-child(3) { width: 82%; aspect-ratio: 1; animation-delay: 0.7s; }
+    .rings .core {
+      position: relative; z-index: 1;
+      font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 1.5rem;
+      animation: fade 900ms ease both;
+    }
+  `,
+  body: `
+    <div class="shell">
+      <div>
+        <nav class="nav anim-fade" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">ELO</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Instantaneous rate at the center. Expand your skill as the rings grow harder.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Queue ranked</a>
+          <a class="cta-ghost" href="#">Challenge friend</a>
+        </div>
+      </div>
+      <div class="rings anim-fade" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <div class="core">∂</div>
+      </div>
+    </div>
+  `,
+});
+
+// 51 — Instantaneous rate: vertical tick marks under a rising brand
+add({
+  id: 51,
+  title: 'Instantaneous tick stage',
+  fonts: ['spaceGrotesk', 'ibmMono'],
+  motionNote: 'rise+fade+drift',
+  css: `
+    body { font-family: 'IBM Plex Mono', monospace; background: #f5f5f2; }
+    .stage { min-height: 100vh; display: flex; flex-direction: column; }
+    .top { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 1.5rem 2rem; max-width: 720px; }
+    .brand {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: clamp(2.8rem, 7vw, 4.4rem); letter-spacing: -0.045em;
+      margin: 0 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .ticks {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 0.35rem; padding: 0 1.5rem 2.5rem; height: 140px;
+      border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, #ecece6, #f5f5f2);
+    }
+    .ticks i {
+      display: block; width: 2px; background: #222; opacity: 0.35;
+      transform-origin: bottom; animation: rise 700ms ease both, drift 3.5s ease-in-out infinite alternate;
+    }
+    .ticks i:nth-child(odd) { height: 40%; }
+    .ticks i:nth-child(3n) { height: 70%; opacity: 0.55; }
+    .ticks i:nth-child(5n) { height: 95%; opacity: 0.85; animation-delay: 80ms, 0s; }
+  `,
+  body: `
+    <div class="stage">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">rules</a><a href="#">login</a></div>
+      </nav>
+      <div class="top">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">The slope at a single instant. Read it cleanly, submit, and take the round.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">View leaderboard</a>
+        </div>
+      </div>
+      <div class="ticks anim-fade" aria-hidden="true">
+        ${Array.from({ length: 28 }, (_, i) => `<i style="animation-delay:${i * 30}ms,${(i % 5) * 0.15}s"></i>`).join('')}
+      </div>
+    </div>
+  `,
+});
+
+// 52 — Quiet match clock as the sole visual anchor
+add({
+  id: 52,
+  title: 'Quiet match clock',
+  fonts: ['ibmPlex', 'jetbrains'],
+  motionNote: 'rise+fade+pulse',
+  css: `
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f8f7f4; }
+    .shell {
+      max-width: 560px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    .clock-wrap {
+      margin: 2.5rem auto 2rem; width: min(220px, 55vw); aspect-ratio: 1;
+      border: 1px solid #cfcfc8; border-radius: 50%;
+      display: grid; place-items: center; position: relative;
+      background: #fff;
+    }
+    .clock-wrap::after {
+      content: ''; position: absolute; width: 2px; height: 28%;
+      background: #111; top: 22%; left: 50%; transform-origin: bottom center;
+      transform: translateX(-50%) rotate(18deg);
+      animation: pulseSoft 2.8s ease-in-out infinite;
+    }
+    .clock-face {
+      font-family: 'JetBrains Mono', monospace; font-size: 1.35rem; font-weight: 500;
+      letter-spacing: 0.04em; animation: fade 800ms ease both;
+    }
+    .brand {
+      font-size: clamp(2.6rem, 7vw, 3.8rem); font-weight: 600;
+      letter-spacing: -0.04em; margin: 0 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
+  `,
+  body: `
+    <div class="shell">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">how it works</a><a href="#">login</a></div>
+      </nav>
+      <div class="clock-wrap anim-rise" aria-hidden="true">
+        <span class="clock-face">0:45</span>
+      </div>
+      <h1 class="brand anim-rise-2">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Forty-five seconds. One derivative. Whoever is cleaner wins the round.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Start a duel</a>
+        <a class="cta-ghost" href="#">Invite friend</a>
+      </div>
+    </div>
+  `,
+});
+
+// 53 — Secant line morphing into tangent (SVG draw)
+add({
+  id: 53,
+  title: 'Secant into tangent',
+  fonts: ['literata', 'dmSans'],
+  motionNote: 'rise+draw+fade',
+  css: `
+    body { font-family: 'DM Sans', sans-serif; background: #f4f3ef; }
+    .wrap { min-height: 100vh; display: flex; flex-direction: column; }
+    .viz {
+      flex: 1; min-height: 42vh; display: grid; place-items: center;
+      background: linear-gradient(180deg, #e6e4dc, #f4f3ef 75%);
+      border-bottom: 1px solid var(--line);
+    }
+    .viz svg { width: min(92%, 480px); height: auto; }
+    .curve { fill: none; stroke: #222; stroke-width: 1.6; stroke-dasharray: 280; animation: draw 1.4s ease both; }
+    .secant { fill: none; stroke: #666; stroke-width: 1.2; stroke-dasharray: 160; animation: draw 1.2s 0.25s ease both; opacity: 0.55; }
+    .copy { padding: 2rem 1.5rem 3rem; max-width: 640px; }
+    .brand {
+      font-family: 'Literata', serif;
+      font-size: clamp(2.7rem, 7vw, 4rem); letter-spacing: -0.03em;
+      margin: 0 0 0.75rem; line-height: 1.05;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  `,
+  body: `
+    <div class="wrap">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">learn</a><a href="#">login</a></div>
+      </nav>
+      <div class="viz anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 400 180">
+          <path class="curve" d="M20 140 C80 140, 100 40, 180 50 S280 150, 380 60" />
+          <path class="secant" d="M90 95 L310 95" />
+        </svg>
+      </div>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">From secant to tangent — the race is how fast you close that gap.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Daily challenge</a>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
+// 54 — Folio with wide left margin and quiet notation
+add({
+  id: 54,
+  title: 'Folio margin notation',
+  fonts: ['newsreader', 'ibmPlex'],
+  motionNote: 'rise+fade+drift',
+  css: `
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f7f5f0; }
+    .folio {
+      max-width: 820px; margin: 0 auto; min-height: 100vh;
+      display: grid; grid-template-columns: 7rem 1fr; gap: 0;
+      border-left: 1px solid #ddd8ce;
+    }
+    @media (max-width: 640px) { .folio { grid-template-columns: 1fr; border-left: none; } .margin { display: none; } }
+    .margin {
+      padding: 5rem 0.75rem 2rem; border-right: 1px solid #ddd8ce;
+      font-family: 'Newsreader', serif; font-style: italic; font-size: 0.85rem;
+      color: #8a8478; writing-mode: vertical-rl; transform: rotate(180deg);
+      letter-spacing: 0.04em; animation: drift 5s ease-in-out infinite alternate;
+    }
+    .main { padding: 1.5rem 1.75rem 3rem; }
+    .brand {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.8rem, 7vw, 4.2rem); letter-spacing: -0.03em;
+      margin: 2.5rem 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .note {
+      margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #ddd8ce;
+      font-family: 'Newsreader', serif; font-size: 1.25rem; color: #3a3832;
+      animation: fade 1s ease both;
+    }
+  `,
+  body: `
+    <div class="folio">
+      <aside class="margin anim-fade" aria-hidden="true">f′(x) · round 2 · first to three</aside>
+      <div class="main">
+        <nav class="nav anim-fade" style="padding:0">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">guide</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">A quiet page for loud stakes. Show your work at competitive speed.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">Challenge friend</a>
+        </div>
+        <p class="note" aria-hidden="true">If y = e<sup>2x</sup>, then dy/dx = …</p>
+      </div>
+    </div>
+  `,
+});
+
+// 55 — Nested radical / nested parentheses visual wash
+add({
+  id: 55,
+  title: 'Nested radical wash',
+  fonts: ['fraunces', 'ibmMono'],
+  motionNote: 'rise+fade+pulse',
+  css: `
+    body { font-family: 'IBM Plex Mono', monospace; background: #f2f1ec; }
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
+    }
+    .wash {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: 'Fraunces', serif; font-size: clamp(4rem, 18vw, 11rem);
+      color: rgba(20,20,18,0.05); pointer-events: none; letter-spacing: -0.04em;
+      animation: pulseSoft 5s ease-in-out infinite;
+    }
+    .content { position: relative; z-index: 1; padding: 0 1.5rem 3rem; max-width: 640px; margin-top: auto; }
+    .brand {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.9rem, 7vw, 4.4rem); letter-spacing: -0.03em;
+      margin: 0 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  `,
+  body: `
+    <div class="hero">
+      <div class="wash" aria-hidden="true">√( )</div>
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <div class="content">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Peel the layers. Chain rule, product rule, then submit before they finish nesting.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Queue ranked</a>
+          <a class="cta-ghost" href="#">Warm-up</a>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
+// 56 — Ranked ascent: three ascending steps as the visual
+add({
+  id: 56,
+  title: 'Ranked ascent steps',
+  fonts: ['syne', 'ibmPlex'],
+  motionNote: 'rise+fade+drift',
+  css: `
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f5f6f4; color: #1f3d2c; }
+    .cta { background: #1f3d2c; }
+    .shell {
+      max-width: 900px; margin: 0 auto; padding: 1.5rem;
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: end;
+    }
+    @media (max-width: 800px) { .shell { grid-template-columns: 1fr; align-items: stretch; } }
+    .brand {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 3.8rem); letter-spacing: -0.045em;
+      margin: 0 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: #5a6b5e; line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .steps {
+      display: flex; align-items: flex-end; gap: 0.6rem; height: 220px; padding-bottom: 0.5rem;
+    }
+    .steps b {
+      flex: 1; background: #dfe8e1; display: block;
+      animation: rise 800ms ease both, drift 4s ease-in-out infinite alternate;
+    }
+    .steps b:nth-child(1) { height: 35%; }
+    .steps b:nth-child(2) { height: 58%; animation-delay: 80ms, 0.2s; }
+    .steps b:nth-child(3) { height: 88%; animation-delay: 160ms, 0.4s; background: #c5d4c9; }
+  `,
+  body: `
+    <div class="shell">
+      <div>
+        <nav class="nav anim-fade" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">ELO</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Win rounds. Climb ranks. Harder derivatives wait one step higher.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play ranked</a>
+          <a class="cta-ghost" href="#">View board</a>
+        </div>
+      </div>
+      <div class="steps anim-fade" aria-hidden="true">
+        <b></b><b></b><b></b>
+      </div>
+    </div>
+  `,
+});
+
+// 57 — Monospace duel prompt with blinking caret
+add({
+  id: 57,
+  title: 'Monospace caret prompt',
+  fonts: ['jetbrains', 'geist'],
+  motionNote: 'rise+fade+pulse',
+  css: `
+    body { font-family: 'Geist', sans-serif; background: #f0f0ec; }
+    .shell { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; min-height: 100vh; }
+    .brand {
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      font-size: clamp(2.2rem, 6vw, 3.2rem); letter-spacing: -0.04em;
+      margin: 2.5rem 0 0.75rem; line-height: 1.1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .prompt {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.95rem;
+      padding: 1.25rem 0; border-top: 1px solid var(--line);
+      color: #333; line-height: 1.7;
+    }
+    .prompt .line { opacity: 0.45; }
+    .prompt .active { opacity: 1; }
+    .caret {
+      display: inline-block; width: 0.55ch; height: 1.05em; background: #111;
+      vertical-align: text-bottom; margin-left: 2px;
+      animation: pulseSoft 1.1s steps(1) infinite;
+    }
+  `,
+  body: `
+    <div class="shell">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">docs</a><a href="#">login</a></div>
+      </nav>
+      <h1 class="brand anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Type the derivative. Hit enter. Rematch until the rating moves.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Open arena</a>
+        <a class="cta-ghost" href="#">Challenge friend</a>
+      </div>
+      <div class="prompt anim-fade" aria-hidden="true">
+        <div class="line">&gt; f(x) = x^5 + 2x^3</div>
+        <div class="active">&gt; f'(x) = <span class="caret"></span></div>
+      </div>
+    </div>
+  `,
+});
+
+// 58 — Soft sine curtain as full-bleed background plane
+add({
+  id: 58,
+  title: 'Soft sine curtain',
+  fonts: ['instrument', 'dmSans'],
+  motionNote: 'rise+draw+fade',
+  css: `
+    body { font-family: 'DM Sans', sans-serif; background: #f6f5f1; }
+    .scene {
+      min-height: 100vh; position: relative; display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .curtain {
+      position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
+    }
+    .curtain path {
+      fill: none; stroke: rgba(17,17,17,0.12); stroke-width: 1.2;
+      stroke-dasharray: 800; animation: draw 2s ease both;
+    }
+    .copy {
+      position: relative; z-index: 1; margin-top: auto;
+      padding: 2rem 1.5rem 3.5rem; max-width: 600px;
+    }
+    .brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 4.8rem); letter-spacing: -0.03em;
+      margin: 0 0 0.75rem; line-height: 0.98;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  `,
+  body: `
+    <div class="scene">
+      <svg class="curtain anim-fade" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 400 Q150 280, 300 400 T600 400 T900 400 T1200 400" />
+        <path d="M0 480 Q150 360, 300 480 T600 480 T900 480 T1200 480" />
+        <path d="M0 560 Q150 440, 300 560 T600 560 T900 560 T1200 560" />
+      </svg>
+      <nav class="nav anim-fade" style="position:relative;z-index:1">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Waves of problems. Read the slope, not the noise.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">Daily challenge</a>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
+// 59 — Bracketed problem reveal with staggered lines
+add({
+  id: 59,
+  title: 'Bracketed problem reveal',
+  fonts: ['archivo', 'ibmMono'],
+  motionNote: 'rise+fade+drift',
+  css: `
+    body { font-family: 'IBM Plex Mono', monospace; background: #f5f5f3; }
+    .shell {
+      max-width: 720px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+    .brand {
+      font-family: 'Archivo', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 7vw, 4rem); letter-spacing: -0.045em;
+      margin: 2rem 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .bracket {
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: stretch;
+      margin-top: auto;
+    }
+    .brace {
+      font-family: 'Archivo', sans-serif; font-size: 4.5rem; line-height: 1; color: #222;
+      animation: fade 900ms ease both;
+    }
+    .lines { display: grid; gap: 0.65rem; padding: 0.5rem 0; }
+    .lines p {
+      margin: 0; font-size: 0.95rem; color: #333;
+      animation: rise 700ms ease both, drift 4s ease-in-out infinite alternate;
+    }
+    .lines p:nth-child(2) { animation-delay: 100ms, 0.2s; }
+    .lines p:nth-child(3) { animation-delay: 200ms, 0.4s; opacity: 0.55; }
+  `,
+  body: `
+    <div class="shell">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">rules</a><a href="#">login</a></div>
+      </nav>
+      <h1 class="brand anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">One bracketed problem at a time. Expand, differentiate, finish first.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Start a duel</a>
+        <a class="cta-ghost" href="#">Practice</a>
+      </div>
+      <div class="bracket anim-fade" aria-hidden="true">
+        <div class="brace">{</div>
+        <div class="lines">
+          <p>y = (2x + 1)<sup>5</sup></p>
+          <p>find dy/dx</p>
+          <p>submit · rematch</p>
+        </div>
+      </div>
+    </div>
+  `,
+});
+
+// 60 — Twin path fork: two routes, one correct derivative
+add({
+  id: 60,
+  title: 'Twin path fork',
+  fonts: ['geist', 'ibmMono'],
+  motionNote: 'rise+fade+draw',
+  css: `
+    body { font-family: 'Geist', sans-serif; background: #f4f5f6; color: #1a1a1a; }
+    .wrap { min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+    .copy { padding: 0 1.5rem; max-width: 640px; }
+    .brand {
+      font-size: clamp(2.8rem, 7vw, 4.2rem); font-weight: 700;
+      letter-spacing: -0.045em; margin: 1.5rem 0 0.75rem; line-height: 0.98;
+    }
+    .lead {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+      color: var(--muted); line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem;
+    }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .fork {
+      display: grid; place-items: center; padding: 1rem 1.5rem 3rem;
+    }
+    .fork svg { width: min(100%, 420px); height: auto; }
+    .fork path {
+      fill: none; stroke: #222; stroke-width: 1.5;
+      stroke-dasharray: 220; animation: draw 1.5s ease both;
+    }
+    .fork path.dim { stroke: #999; stroke-width: 1.2; animation-delay: 0.2s; }
+    .fork text {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: #555;
+      animation: fade 1s 0.5s ease both;
+    }
+  `,
+  body: `
+    <div class="wrap">
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">how it works</a><a href="#">login</a></div>
+      </nav>
+      <div class="copy">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Two paths look plausible. Only one derivative is right — and the clock is running.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Challenge a friend</a>
+        </div>
+      </div>
+      <div class="fork anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 400 160">
+          <path d="M40 80 L160 80" />
+          <path d="M160 80 Q220 80, 280 40 L360 40" />
+          <path class="dim" d="M160 80 Q220 80, 280 120 L360 120" />
+          <text x="300" y="32">f′ correct</text>
+          <text x="300" y="144">trap</text>
+        </svg>
+      </div>
+    </div>
+  `,
+});
+
+// Matrix fill disabled — variants 1–60 are all handcrafted above.
+// for (let id = 46; id <= 60; id++) addMatrixVariant(id);
 
 function writeAll() {
   fs.mkdirSync(OUT_DIR, { recursive: true });

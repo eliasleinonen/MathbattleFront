@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>wide / forest / geist · Derivative Duel alt 48</title>
+  <title>Twin ledger columns · Derivative Duel alt 48</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,43 +98,56 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Mono', monospace; }
-      h1, .brand-display { font-family: 'Geist', sans-serif; }
-      
-    :root { --ink: #1f3d2c; --paper: #f3f6f3; --soft: #e6eee8; --accent: #1f3d2c; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'IBM Plex Mono', monospace; background: #f7f6f2; color: #1a1a18; }
+    .page { max-width: 880px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; min-height: 100vh; }
+    .brand {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.8rem, 7vw, 4.2rem); letter-spacing: -0.03em;
+      margin: 2rem 0 0.75rem; line-height: 1;
     }
+    .lead {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+      color: var(--muted); line-height: 1.65; margin: 0 0 1.75rem; max-width: 32rem;
+    }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .ledger {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      border-top: 1px solid #cfcfc8; border-bottom: 1px solid #cfcfc8;
+    }
+    @media (max-width: 600px) { .ledger { grid-template-columns: 1fr; } }
+    .col { padding: 1.5rem 1.25rem; }
+    .col + .col { border-left: 1px solid #cfcfc8; }
+    @media (max-width: 600px) { .col + .col { border-left: none; border-top: 1px solid #cfcfc8; } }
+    .col .label { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #888; margin: 0 0 0.75rem; }
+    .col .eq { font-size: 1.05rem; line-height: 1.5; margin: 0; animation: drift 4s ease-in-out infinite alternate; }
+    .col.answer .eq { font-family: 'Newsreader', serif; font-size: 1.35rem; }
   
-        .shell { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
-        h1 { font-size: clamp(2.8rem, 5vw, 4.2rem); letter-spacing: -0.045em; margin: 0 0 1rem; }
-        .lead { color: var(--muted); line-height: 1.55; margin-bottom: 1.75rem; max-width: 34rem; }
-        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .media { min-height: 300px; background:
-          repeating-linear-gradient(-45deg, var(--soft), var(--soft) 12px, transparent 12px, transparent 24px),
-          #fff; border: 1px solid var(--line); display: grid; place-items: center; }
-      
-      
-      .cta { letter-spacing: 0.02em; }
-      .media { position: relative; overflow: hidden; }
-      .media::after {
-        content: '';
-        position: absolute; inset: auto 10% 18% 10%; height: 1px;
-        background: var(--ink); opacity: 0.15;
-        animation: fade 1.2s ease both;
-      }
-    
-      @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
-      .anim-rise { animation: slideIn 650ms ease both; }
-    
-    
   </style>
 </head>
-<body data-variant="48" data-motion="slide+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><div><h1 class="anim-rise" style="font-family:'Geist', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">From practice to duel.</strong> Turn homework drills into real-time matches.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">d/dx [x⁷−4x⁵]</p></div></main>
+<body data-variant="48" data-motion="rise+fade+drift">
+
+    <div class="page">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">guide</a><a href="#">login</a></div>
+      </nav>
+      <h1 class="brand anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Two columns. One clock. Close the gap before they do.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Start a duel</a>
+        <a class="cta-ghost" href="#">Daily challenge</a>
+      </div>
+      <div class="ledger anim-fade" aria-hidden="true">
+        <div class="col">
+          <p class="label">Given</p>
+          <p class="eq">f(x) = ln(3x² + 1)</p>
+        </div>
+        <div class="col answer">
+          <p class="label">Find</p>
+          <p class="eq">f′(x) = …</p>
+        </div>
+      </div>
+    </div>
+  
 </body>
 </html>

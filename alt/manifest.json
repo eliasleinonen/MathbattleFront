@@ -452,151 +452,151 @@
   {
     "id": 46,
     "file": "variant-46.html",
-    "title": "asymmetric / olive / archivo",
-    "fonts": [
-      "archivo",
-      "literata"
-    ],
-    "motion": "slide+fade"
-  },
-  {
-    "id": 47,
-    "file": "variant-47.html",
-    "title": "narrow / ink / jetbrains",
-    "fonts": [
-      "jetbrains",
-      "ibmPlex"
-    ],
-    "motion": "slide+fade"
-  },
-  {
-    "id": 48,
-    "file": "variant-48.html",
-    "title": "wide / forest / geist",
-    "fonts": [
-      "geist",
-      "ibmMono"
-    ],
-    "motion": "slide+fade"
-  },
-  {
-    "id": 49,
-    "file": "variant-49.html",
-    "title": "stack / slate / literata",
-    "fonts": [
-      "literata",
-      "dmSans"
-    ],
-    "motion": "slide+fade"
-  },
-  {
-    "id": 50,
-    "file": "variant-50.html",
-    "title": "frame / rust / ibmPlex",
-    "fonts": [
-      "ibmPlex",
-      "ibmMono"
-    ],
-    "motion": "slide+fade"
-  },
-  {
-    "id": 51,
-    "file": "variant-51.html",
-    "title": "center / navy / spaceGrotesk",
-    "fonts": [
-      "spaceGrotesk",
-      "ibmMono"
-    ],
-    "motion": "rise+fade"
-  },
-  {
-    "id": 52,
-    "file": "variant-52.html",
-    "title": "left / olive / instrument",
+    "title": "Slope field center",
     "fonts": [
       "instrument",
       "ibmPlex"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+fade+pulse"
   },
   {
-    "id": 53,
-    "file": "variant-53.html",
-    "title": "split / ink / fraunces",
-    "fonts": [
-      "fraunces",
-      "dmSans"
-    ],
-    "motion": "rise+fade"
-  },
-  {
-    "id": 54,
-    "file": "variant-54.html",
-    "title": "topMedia / forest / syne",
+    "id": 47,
+    "file": "variant-47.html",
+    "title": "Limit corridor",
     "fonts": [
       "syne",
-      "ibmPlex"
-    ],
-    "motion": "rise+fade"
-  },
-  {
-    "id": 55,
-    "file": "variant-55.html",
-    "title": "bottomBar / slate / newsreader",
-    "fonts": [
-      "newsreader",
       "dmSans"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+fade+draw"
   },
   {
-    "id": 56,
-    "file": "variant-56.html",
-    "title": "asymmetric / rust / archivo",
+    "id": 48,
+    "file": "variant-48.html",
+    "title": "Twin ledger columns",
+    "fonts": [
+      "newsreader",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 49,
+    "file": "variant-49.html",
+    "title": "Soft chalkboard wash",
+    "fonts": [
+      "fraunces",
+      "geist"
+    ],
+    "motion": "rise+fade+draw"
+  },
+  {
+    "id": 50,
+    "file": "variant-50.html",
+    "title": "Concentric rate rings",
     "fonts": [
       "archivo",
       "literata"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+fade+pulse"
   },
   {
-    "id": 57,
-    "file": "variant-57.html",
-    "title": "narrow / navy / jetbrains",
+    "id": 51,
+    "file": "variant-51.html",
+    "title": "Instantaneous tick stage",
     "fonts": [
-      "jetbrains",
-      "ibmPlex"
-    ],
-    "motion": "rise+fade"
-  },
-  {
-    "id": 58,
-    "file": "variant-58.html",
-    "title": "wide / olive / geist",
-    "fonts": [
-      "geist",
+      "spaceGrotesk",
       "ibmMono"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+fade+drift"
   },
   {
-    "id": 59,
-    "file": "variant-59.html",
-    "title": "stack / ink / literata",
+    "id": 52,
+    "file": "variant-52.html",
+    "title": "Quiet match clock",
+    "fonts": [
+      "ibmPlex",
+      "jetbrains"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 53,
+    "file": "variant-53.html",
+    "title": "Secant into tangent",
     "fonts": [
       "literata",
       "dmSans"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+draw+fade"
+  },
+  {
+    "id": 54,
+    "file": "variant-54.html",
+    "title": "Folio margin notation",
+    "fonts": [
+      "newsreader",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 55,
+    "file": "variant-55.html",
+    "title": "Nested radical wash",
+    "fonts": [
+      "fraunces",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 56,
+    "file": "variant-56.html",
+    "title": "Ranked ascent steps",
+    "fonts": [
+      "syne",
+      "ibmPlex"
+    ],
+    "motion": "rise+fade+drift"
+  },
+  {
+    "id": 57,
+    "file": "variant-57.html",
+    "title": "Monospace caret prompt",
+    "fonts": [
+      "jetbrains",
+      "geist"
+    ],
+    "motion": "rise+fade+pulse"
+  },
+  {
+    "id": 58,
+    "file": "variant-58.html",
+    "title": "Soft sine curtain",
+    "fonts": [
+      "instrument",
+      "dmSans"
+    ],
+    "motion": "rise+draw+fade"
+  },
+  {
+    "id": 59,
+    "file": "variant-59.html",
+    "title": "Bracketed problem reveal",
+    "fonts": [
+      "archivo",
+      "ibmMono"
+    ],
+    "motion": "rise+fade+drift"
   },
   {
     "id": 60,
     "file": "variant-60.html",
-    "title": "frame / forest / ibmPlex",
+    "title": "Twin path fork",
     "fonts": [
-      "ibmPlex",
+      "geist",
       "ibmMono"
     ],
-    "motion": "rise+fade"
+    "motion": "rise+fade+draw"
   }
 ]

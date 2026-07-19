@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>narrow / navy / jetbrains · Derivative Duel alt 57</title>
+  <title>Monospace caret prompt · Derivative Duel alt 57</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,32 +98,48 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Sans', sans-serif; }
-      h1, .brand-display { font-family: 'JetBrains Mono', monospace; }
-      
-    :root { --ink: #152238; --paper: #f2f4f8; --soft: #e4e8f0; --accent: #152238; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'Geist', sans-serif; background: #f0f0ec; }
+    .shell { max-width: 640px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; min-height: 100vh; }
+    .brand {
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      font-size: clamp(2.2rem, 6vw, 3.2rem); letter-spacing: -0.04em;
+      margin: 2.5rem 0 0.75rem; line-height: 1.1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .prompt {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.95rem;
+      padding: 1.25rem 0; border-top: 1px solid var(--line);
+      color: #333; line-height: 1.7;
+    }
+    .prompt .line { opacity: 0.45; }
+    .prompt .active { opacity: 1; }
+    .caret {
+      display: inline-block; width: 0.55ch; height: 1.05em; background: #111;
+      vertical-align: text-bottom; margin-left: 2px;
+      animation: pulseSoft 1.1s steps(1) infinite;
     }
   
-        .shell { max-width: 480px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
-        h1 { font-size: clamp(2.4rem, 8vw, 3.4rem); letter-spacing: -0.04em; margin: 2rem 0 1rem; }
-        .lead { color: var(--muted); line-height: 1.6; margin-bottom: 1.75rem; }
-        .actions { display: grid; gap: 0.6rem; }
-        .cta, .cta-ghost { width: 100%; }
-        .media { margin-top: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--line); text-align: center; }
-      
-      
-      .brand-mark { font-weight: 600; }
-      h1::first-letter { font-size: 1.08em; }
-    
-    
   </style>
 </head>
-<body data-variant="57" data-motion="rise+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><p class="brand-mark">∂ Derivative Duel</p><h1 class="anim-rise" style="font-family:'JetBrains Mono', monospace">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Quiet UI. Loud stakes..</strong> A focused arena for derivative speed and accuracy.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">f(x)=(2x+1)⁵</p></div></main>
+<body data-variant="57" data-motion="rise+fade+pulse">
+
+    <div class="shell">
+      <nav class="nav anim-fade" style="padding:0">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">docs</a><a href="#">login</a></div>
+      </nav>
+      <h1 class="brand anim-rise">Derivative Duel</h1>
+      <p class="lead anim-rise-2">Type the derivative. Hit enter. Rematch until the rating moves.</p>
+      <div class="actions anim-rise-3">
+        <a class="cta" href="#">Open arena</a>
+        <a class="cta-ghost" href="#">Challenge friend</a>
+      </div>
+      <div class="prompt anim-fade" aria-hidden="true">
+        <div class="line">&gt; f(x) = x^5 + 2x^3</div>
+        <div class="active">&gt; f'(x) = <span class="caret"></span></div>
+      </div>
+    </div>
+  
 </body>
 </html>

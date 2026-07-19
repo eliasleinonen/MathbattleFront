@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>asymmetric / olive / archivo · Derivative Duel alt 46</title>
+  <title>Slope field center · Derivative Duel alt 46</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Literata:opsz,wght@7..72,400;7..72,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,32 +98,57 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'Literata', serif; }
-      h1, .brand-display { font-family: 'Archivo', sans-serif; }
-      
-    :root { --ink: #3a3f2b; --paper: #f6f5ec; --soft: #ecead9; --accent: #3a3f2b; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f4f4f0; }
+    .scene {
+      min-height: 100vh; display: flex; flex-direction: column;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 45%, #e8e8e0 0%, transparent 60%),
+        #f4f4f0;
     }
+    .field {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+      background-image:
+        radial-gradient(circle at 12% 18%, rgba(17,17,17,0.07) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 28% 62%, rgba(17,17,17,0.06) 1px, transparent 1.2px),
+        radial-gradient(circle at 48% 30%, rgba(17,17,17,0.07) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 70% 55%, rgba(17,17,17,0.05) 1px, transparent 1.2px),
+        radial-gradient(circle at 86% 22%, rgba(17,17,17,0.06) 1.2px, transparent 1.4px),
+        radial-gradient(circle at 18% 80%, rgba(17,17,17,0.05) 1px, transparent 1.2px);
+      background-size: 100% 100%;
+      animation: pulseSoft 5s ease-in-out infinite;
+    }
+    .hero {
+      position: relative; flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 2rem 1.5rem 4rem; max-width: 640px; margin: 0 auto;
+    }
+    .brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3rem, 8vw, 4.8rem); letter-spacing: -0.03em;
+      margin: 0 0 0.85rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
   
-        .shell { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 2rem; align-items: end; }
-        @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
-        h1 { font-size: clamp(2.6rem, 6vw, 4rem); letter-spacing: -0.045em; margin: 2rem 0 1rem; }
-        .lead { color: var(--muted); line-height: 1.55; margin-bottom: 1.75rem; }
-        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .media { min-height: 220px; background: var(--soft); display: grid; place-items: center; transform: translateY(-1.5rem); }
-      
-      
-      @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
-      .anim-rise { animation: slideIn 650ms ease both; }
-    
-    
   </style>
 </head>
-<body data-variant="46" data-motion="slide+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><div><h1 class="anim-rise" style="font-family:'Archivo', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Your daily derivative.</strong> Warm up with the daily challenge, then enter ranked.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">y=cos(x²)</p></div></main>
+<body data-variant="46" data-motion="rise+fade+pulse">
+
+    <div class="scene" style="position:relative">
+      <div class="field" aria-hidden="true"></div>
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <main class="hero">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Every point has a slope. Find it faster than the person across from you.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">Challenge a friend</a>
+        </div>
+      </main>
+    </div>
+  
 </body>
 </html>

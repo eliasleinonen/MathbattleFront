@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>topMedia / forest / syne · Derivative Duel alt 54</title>
+  <title>Folio margin notation · Derivative Duel alt 54</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,34 +98,53 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Sans', sans-serif; }
-      h1, .brand-display { font-family: 'Syne', sans-serif; }
-      
-    :root { --ink: #1f3d2c; --paper: #f3f6f3; --soft: #e6eee8; --accent: #1f3d2c; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'IBM Plex Sans', sans-serif; background: #f7f5f0; }
+    .folio {
+      max-width: 820px; margin: 0 auto; min-height: 100vh;
+      display: grid; grid-template-columns: 7rem 1fr; gap: 0;
+      border-left: 1px solid #ddd8ce;
+    }
+    @media (max-width: 640px) { .folio { grid-template-columns: 1fr; border-left: none; } .margin { display: none; } }
+    .margin {
+      padding: 5rem 0.75rem 2rem; border-right: 1px solid #ddd8ce;
+      font-family: 'Newsreader', serif; font-style: italic; font-size: 0.85rem;
+      color: #8a8478; writing-mode: vertical-rl; transform: rotate(180deg);
+      letter-spacing: 0.04em; animation: drift 5s ease-in-out infinite alternate;
+    }
+    .main { padding: 1.5rem 1.75rem 3rem; }
+    .brand {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.8rem, 7vw, 4.2rem); letter-spacing: -0.03em;
+      margin: 2.5rem 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .note {
+      margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid #ddd8ce;
+      font-family: 'Newsreader', serif; font-size: 1.25rem; color: #3a3832;
+      animation: fade 1s ease both;
     }
   
-        .media { min-height: 48vh; display: grid; place-items: center;
-          background:
-            linear-gradient(120deg, var(--soft), var(--paper) 55%, #fff);
-          border-bottom: 1px solid var(--line); }
-        .shell { max-width: 720px; margin: 0 auto; padding: 2.25rem 1.5rem 4rem; }
-        h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); letter-spacing: -0.03em; margin: 0 0 0.75rem; }
-        .lead { color: var(--muted); margin: 0 0 1.75rem; line-height: 1.55; }
-        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-      
-      
-      .brand-mark { font-weight: 600; }
-      h1::first-letter { font-size: 1.08em; }
-    
-    
   </style>
 </head>
-<body data-variant="54" data-motion="rise+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">y=cos(x²)</p></div><main class="shell"><h1 class="anim-rise" style="font-family:'Syne', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Mathbattle mode.</strong> Queue ranked or invite a friend. First to three rounds.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></main>
+<body data-variant="54" data-motion="rise+fade+drift">
+
+    <div class="folio">
+      <aside class="margin anim-fade" aria-hidden="true">f′(x) · round 2 · first to three</aside>
+      <div class="main">
+        <nav class="nav anim-fade" style="padding:0">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">guide</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">A quiet page for loud stakes. Show your work at competitive speed.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Play random</a>
+          <a class="cta-ghost" href="#">Challenge friend</a>
+        </div>
+        <p class="note" aria-hidden="true">If y = e<sup>2x</sup>, then dy/dx = …</p>
+      </div>
+    </div>
+  
 </body>
 </html>

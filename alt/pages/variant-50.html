@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>frame / rust / ibmPlex · Derivative Duel alt 50</title>
+  <title>Concentric rate rings · Derivative Duel alt 50</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Literata:opsz,wght@7..72,400;7..72,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,37 +98,60 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Mono', monospace; }
-      h1, .brand-display { font-family: 'IBM Plex Sans', sans-serif; }
-      
-    :root { --ink: #5c2e1f; --paper: #f8f4f1; --soft: #f0e7e2; --accent: #5c2e1f; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'Literata', serif; background: #f3f4f6; color: #152238; }
+    .cta { background: #152238; }
+    .shell {
+      max-width: 960px; margin: 0 auto; padding: 1.5rem;
+      min-height: 100vh; display: grid; grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem; align-items: center;
+    }
+    @media (max-width: 800px) { .shell { grid-template-columns: 1fr; } }
+    .brand {
+      font-family: 'Archivo', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 3.9rem); letter-spacing: -0.04em;
+      margin: 0 0 0.75rem; line-height: 0.98;
+    }
+    .lead { color: #5a6570; line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .rings {
+      aspect-ratio: 1; max-width: 360px; width: 100%; margin: 0 auto;
+      display: grid; place-items: center; position: relative;
+    }
+    .rings span {
+      position: absolute; border: 1px solid rgba(21,34,56,0.22); border-radius: 50%;
+      animation: pulseSoft 4s ease-in-out infinite;
+    }
+    .rings span:nth-child(1) { width: 36%; aspect-ratio: 1; animation-delay: 0s; }
+    .rings span:nth-child(2) { width: 58%; aspect-ratio: 1; animation-delay: 0.35s; }
+    .rings span:nth-child(3) { width: 82%; aspect-ratio: 1; animation-delay: 0.7s; }
+    .rings .core {
+      position: relative; z-index: 1;
+      font-family: 'Archivo', sans-serif; font-weight: 600; font-size: 1.5rem;
+      animation: fade 900ms ease both;
     }
   
-        body { padding: 1rem; }
-        .frame { border: 1px solid var(--line); background: #fff; min-height: calc(100vh - 2rem); display: flex; flex-direction: column; }
-        .shell { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 3rem; width: 100%; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); letter-spacing: -0.04em; margin: 0 0 1rem; }
-        .lead { color: var(--muted); line-height: 1.55; margin-bottom: 1.75rem; }
-        .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .media { border-top: 1px solid var(--line); padding: 1.5rem; text-align: center; background: var(--soft); }
-      
-      
-      .cta { border-radius: 0; }
-      .cta-ghost { border-radius: 0; }
-      body { background-image: radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px); background-size: 18px 18px; }
-    
-      @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
-      .anim-rise { animation: slideIn 650ms ease both; }
-    
-    
   </style>
 </head>
-<body data-variant="50" data-motion="slide+fade">
-<div class="frame"><nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><h1 class="anim-rise" style="font-family:'IBM Plex Sans', sans-serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">∂ in real time.</strong> Countdown. Problem. Answer. Rematch.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></main><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">y=tan(x)·x²</p></div></div>
+<body data-variant="50" data-motion="rise+fade+pulse">
+
+    <div class="shell">
+      <div>
+        <nav class="nav anim-fade" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">ELO</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Instantaneous rate at the center. Expand your skill as the rings grow harder.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Queue ranked</a>
+          <a class="cta-ghost" href="#">Challenge friend</a>
+        </div>
+      </div>
+      <div class="rings anim-fade" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <div class="core">∂</div>
+      </div>
+    </div>
+  
 </body>
 </html>

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>bottomBar / slate / newsreader · Derivative Duel alt 55</title>
+  <title>Nested radical wash · Derivative Duel alt 55</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,37 +98,45 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'DM Sans', sans-serif; }
-      h1, .brand-display { font-family: 'Newsreader', serif; }
-      
-    :root { --ink: #243447; --paper: #f4f6f8; --soft: #e7ebf0; --accent: #243447; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'IBM Plex Mono', monospace; background: #f2f1ec; }
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      position: relative; overflow: hidden;
     }
+    .wash {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: 'Fraunces', serif; font-size: clamp(4rem, 18vw, 11rem);
+      color: rgba(20,20,18,0.05); pointer-events: none; letter-spacing: -0.04em;
+      animation: pulseSoft 5s ease-in-out infinite;
+    }
+    .content { position: relative; z-index: 1; padding: 0 1.5rem 3rem; max-width: 640px; margin-top: auto; }
+    .brand {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.9rem, 7vw, 4.4rem); letter-spacing: -0.03em;
+      margin: 0 0 0.75rem; line-height: 1;
+    }
+    .lead { color: var(--muted); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1.75rem; max-width: 30rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   
-        body { display: flex; flex-direction: column; }
-        .shell { flex: 1; max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; width: 100%; display: flex; flex-direction: column; justify-content: center; }
-        h1 { font-size: clamp(2.8rem, 7vw, 4.4rem); letter-spacing: -0.04em; margin: 0 0 1rem; }
-        .lead { color: var(--muted); max-width: 34rem; line-height: 1.55; }
-        .media { display: none; }
-        .bar { border-top: 1px solid var(--line); padding: 1rem 1.5rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; background: #fff; align-items: center; }
-        .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-      
-      
-      .cta { border-radius: 0; }
-      .cta-ghost { border-radius: 0; }
-      body { background-image: radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px); background-size: 18px 18px; }
-    
-      .brand-mark { font-weight: 600; }
-      h1::first-letter { font-size: 1.08em; }
-    
-    
   </style>
 </head>
-<body data-variant="55" data-motion="rise+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><h1 class="anim-rise" style="font-family:'Newsreader', serif">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Speed meets calculus.</strong> Answer correctly before they do. Climb the board.</p></main><div class="bar anim-rise-3"><span style="color:var(--muted);font-size:0.9rem">f(x)=√(4x+1)</span><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div></div>
+<body data-variant="55" data-motion="rise+fade+pulse">
+
+    <div class="hero">
+      <div class="wash" aria-hidden="true">√( )</div>
+      <nav class="nav anim-fade">
+        <div class="brand-mark">∂ Derivative Duel</div>
+        <div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div>
+      </nav>
+      <div class="content">
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Peel the layers. Chain rule, product rule, then submit before they finish nesting.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Queue ranked</a>
+          <a class="cta-ghost" href="#">Warm-up</a>
+        </div>
+      </div>
+    </div>
+  
 </body>
 </html>

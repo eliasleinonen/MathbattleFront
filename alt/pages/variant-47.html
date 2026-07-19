@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>narrow / ink / jetbrains · Derivative Duel alt 47</title>
+  <title>Limit corridor · Derivative Duel alt 47</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --ink: #111111;
@@ -98,32 +98,56 @@
     .anim-rise-3 { animation: rise 900ms 220ms ease both; }
     .anim-fade { animation: fade 900ms ease both; }
     
-      body { font-family: 'IBM Plex Sans', sans-serif; }
-      h1, .brand-display { font-family: 'JetBrains Mono', monospace; }
-      
-    :root { --ink: #111111; --paper: #f7f7f5; --soft: #ecece8; --accent: #111111; }
-    body { background: var(--paper); color: var(--ink); }
-    .cta { background: var(--ink); }
-    .hero-eq {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      opacity: 0.88;
+    body { font-family: 'DM Sans', sans-serif; background: #f6f5f1; }
+    .wrap { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 800px) { .wrap { grid-template-columns: 1fr; } .corridor { min-height: 40vh; order: -1; } }
+    .copy { padding: 1.75rem 2rem 3rem; display: flex; flex-direction: column; }
+    .brand {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.6rem, 6vw, 4rem); letter-spacing: -0.045em;
+      margin: auto 0 0.75rem; line-height: 0.95;
+    }
+    .lead { color: var(--muted); line-height: 1.55; margin: 0 0 1.75rem; max-width: 28rem; }
+    .actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: auto; }
+    .corridor {
+      background: linear-gradient(180deg, #ebe8e0, #f6f5f1 70%);
+      display: grid; place-items: center; position: relative; overflow: hidden;
+    }
+    .corridor svg { width: 72%; max-width: 320px; height: auto; }
+    .corridor path {
+      fill: none; stroke: #222; stroke-width: 1.4;
+      stroke-dasharray: 200; animation: draw 1.5s ease both;
+    }
+    .corridor .dot {
+      fill: #111; animation: fade 1s 0.6s ease both;
     }
   
-        .shell { max-width: 480px; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
-        h1 { font-size: clamp(2.4rem, 8vw, 3.4rem); letter-spacing: -0.04em; margin: 2rem 0 1rem; }
-        .lead { color: var(--muted); line-height: 1.6; margin-bottom: 1.75rem; }
-        .actions { display: grid; gap: 0.6rem; }
-        .cta, .cta-ghost { width: 100%; }
-        .media { margin-top: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--line); text-align: center; }
-      
-      
-      @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
-      .anim-rise { animation: slideIn 650ms ease both; }
-    
-    
   </style>
 </head>
-<body data-variant="47" data-motion="slide+fade">
-<nav class="nav"><div class="brand-mark" aria-label="Derivative Duel">∂</div><div class="nav-links"><a href="#">leaderboard</a><a href="#">login</a></div></nav><main class="shell"><p class="brand-mark">∂ Derivative Duel</p><h1 class="anim-rise" style="font-family:'JetBrains Mono', monospace">Derivative Duel</h1><p class="lead anim-rise-2"><strong style="color:var(--ink)">Quiet UI. Loud stakes..</strong> A focused arena for derivative speed and accuracy.</p><div class="actions anim-rise-3"><a class="cta" href="#">Play random</a><a class="cta-ghost" href="#">Challenge friend</a></div><div class="media anim-fade" aria-hidden="true"><p class="hero-eq eq">f(x)=√(4x+1)</p></div></main>
+<body data-variant="47" data-motion="rise+fade+draw">
+
+    <div class="wrap">
+      <section class="copy">
+        <nav class="nav" style="padding:0 0 2rem">
+          <div class="brand-mark">∂</div>
+          <div class="nav-links"><a href="#">how it works</a><a href="#">login</a></div>
+        </nav>
+        <h1 class="brand anim-rise">Derivative Duel</h1>
+        <p class="lead anim-rise-2">Approach the answer as h goes to zero. Your opponent is racing the same limit.</p>
+        <div class="actions anim-rise-3">
+          <a class="cta" href="#">Enter matchmaking</a>
+          <a class="cta-ghost" href="#">Warm-up</a>
+        </div>
+      </section>
+      <aside class="corridor anim-fade" aria-hidden="true">
+        <svg viewBox="0 0 200 160">
+          <path d="M20 140 L100 30 L180 140" />
+          <path d="M50 140 L100 55 L150 140" />
+          <path d="M75 140 L100 85 L125 140" />
+          <circle class="dot" cx="100" cy="28" r="3.5" />
+        </svg>
+      </aside>
+    </div>
+  
 </body>
 </html>

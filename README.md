@@ -1,4 +1,4 @@
-# Derivative Duel ⚔️
+# Derivative Duel
 
 > A competitive 1v1 math game where players battle by solving derivative problems in real-time
 
@@ -9,27 +9,27 @@
 > [!NOTE]
 > **Backend Service Status**: The backend server (Render.com) is currently spun down to save costs. The live demo frontend loads, but game functionality (matchmaking, questions) will not respond. To play, please clone the repo and run the backend locally.
 
-## 🎯 About This Project
+## About This Project
 
 **Derivative Duel** is a full-stack web application that gamifies calculus learning through competitive 1v1 matches. Players face off by solving derivative problems, with an ELO ranking system that dynamically adjusts question difficulty based on skill level.
 
-**🌐 Live Demo:** [www.mathbattle.xyz](https://www.mathbattle.xyz)
+**Live Demo:** [www.mathbattle.xyz](https://www.mathbattle.xyz)
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-- **🎮 Two Game Modes** - Random matchmaking and friend challenges
-- **📊 ELO Ranking System** - Dynamic difficulty scaling (1000-2000+ ELO)
-- **🔐 JWT Authentication** - Secure user accounts with session management
-- **⚡ Smooth Animations** - Countdown timers and transitions with Framer Motion
-- **🧮 Auto-Generated Questions** - Calculus problems generated on-the-fly based on player skill
-- **🏆 Competitive Format** - First to 3 rounds wins the match
-- **📈 Leaderboards** - Track top players and climb the ranks
+- **Two Game Modes** - Random matchmaking and friend challenges
+- **ELO Ranking System** - Dynamic difficulty scaling (1000-2000+ ELO)
+- **Google Sign-In** - Secure OAuth authentication with JWT session management
+- **Smooth Animations** - Countdown timers and transitions with Framer Motion
+- **Auto-Generated Questions** - Calculus problems generated on-the-fly based on player skill
+- **Competitive Format** - First to 3 rounds wins the match
+- **Leaderboards** - Track top players and climb the ranks
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 This project uses a **decoupled frontend-backend architecture**:
 
@@ -52,16 +52,16 @@ This project uses a **decoupled frontend-backend architecture**:
 
 ---
 
-## 🎮 How It Works
+## How It Works
 
 ### Game Flow
 
-1. **Login/Register** → Authenticate with email/password
-2. **Choose Mode** → Random opponent or friend match
-3. **Countdown** → Animated 3-2-1 countdown
-4. **Solve** → Derivative problem appears (e.g., "f(x) = x^5, find f'(4)")
-5. **Battle** → First to answer correctly wins the round
-6. **Victory** → First to 3 rounds wins the match
+1. **Sign In** - Authenticate with Google, or continue as a guest
+2. **Choose Mode** - Random opponent or friend match
+3. **Countdown** - Animated 3-2-1 countdown
+4. **Solve** - Derivative problem appears (e.g., "f(x) = x^5, find f'(4)")
+5. **Battle** - First to answer correctly wins the round
+6. **Victory** - First to 3 rounds wins the match
 
 ### ELO System
 
@@ -80,7 +80,7 @@ Questions adapt to player skill:
 
 ---
 
-## 🚀 Tech Stack
+## Tech Stack
 
 ### Frontend
 ```
@@ -104,7 +104,7 @@ SymPy            - Symbolic mathematics
 
 ---
 
-## 📦 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -141,7 +141,7 @@ SymPy            - Symbolic mathematics
    npm run dev
    ```
 
-   Open [http://localhost:5173](http://localhost:5173) in your browser!
+   Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Production Build
 
@@ -152,7 +152,7 @@ npm run preview
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 mathbattle/
@@ -172,13 +172,12 @@ mathbattle/
 
 ---
 
-## 🔌 API Integration
+## API Integration
 
 The frontend communicates with the backend via REST API:
 
 ### Authentication
-- `POST /auth/register` - Create account
-- `POST /auth/login` - Login
+- `POST /auth/google` - Sign in with Google
 - `GET /user/profile` - Get user stats
 
 ### Game
@@ -193,11 +192,10 @@ All authenticated endpoints require `Authorization: Bearer <token>` header.
 
 ---
 
-## 🎨 Design Choices
+## Design Choices
 
 ### Color Scheme
-- **Primary:** Blue (#3B82F6) - Trust, intelligence
-- **Background:** White (#FFFFFF) - Clean, minimal
+- **Primary:** Black and white - Clean, minimal, distraction-free
 - **Accents:** Green (correct), Red (incorrect)
 
 ### UX Features
@@ -209,7 +207,7 @@ All authenticated endpoints require `Authorization: Bearer <token>` header.
 
 ---
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Real-time WebSocket multiplayer
 - [ ] More derivative types (chain rule, product rule, quotient rule)
@@ -223,7 +221,7 @@ All authenticated endpoints require `Authorization: Bearer <token>` header.
 
 ---
 
-## 📊 Performance
+## Performance
 
 - **Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
 - **First Contentful Paint:** < 1.5s
@@ -232,9 +230,9 @@ All authenticated endpoints require `Authorization: Bearer <token>` header.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please check out [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome. Please check out [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -244,22 +242,20 @@ Contributions are welcome! Please check out [CONTRIBUTING.md](CONTRIBUTING.md) f
 
 ---
 
-## 👨‍💻 Author
+## Author
 
-**Your Name**
-- Portfolio: [yourportfolio.com](#)
-- LinkedIn: [linkedin.com/in/yourprofile](#)
+**Elias Leinonen**
 - GitHub: [@Skriptiensolmija](https://github.com/Skriptiensolmija)
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Inspired by competitive coding platforms like LeetCode and CodeWars
 - Math rendering powered by browser's native MathML support
@@ -269,8 +265,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**[🌐 Visit Live Site](https://www.mathbattle.xyz)** • **[📖 Documentation](DEVELOPMENT.md)** • **[🐛 Report Bug](https://github.com/Skriptiensolmija/mathbattle/issues)**
-
-Made with ❤️ and calculus
+**[Visit Live Site](https://www.mathbattle.xyz)** • **[Documentation](DEVELOPMENT.md)** • **[Report Bug](https://github.com/Skriptiensolmija/mathbattle/issues)**
 
 </div>

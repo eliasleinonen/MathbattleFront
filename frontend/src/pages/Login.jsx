@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
-import TermsAndPrivacy from '../components/TermsAndPrivacy';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,15 +21,16 @@ export default function Login() {
           callback: handleCredentialResponse,
         });
 
-        window.google.accounts.id.renderButton(
-          document.getElementById('googleSignInButton'),
-          {
-            theme: 'outline',
-            size: 'large',
-            text: 'continue_with',
-            shape: 'rectangular',
-          }
-        );
+        const buttonContainer = document.getElementById('googleSignInButton');
+        window.google.accounts.id.renderButton(buttonContainer, {
+          theme: 'outline',
+          size: 'large',
+          text: 'continue_with',
+          shape: 'rectangular',
+          logo_alignment: 'center',
+          // Match the full-width "continue as guest" button below it
+          width: buttonContainer.offsetWidth,
+        });
       }
     };
 
@@ -71,25 +71,60 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-8">
-      <div className="bg-white border border-gray-300 rounded p-12 max-w-md w-full">
-        <div className="flex items-center mb-8">
-          <button
-            onClick={() => navigate('/')}
-            className="text-primary hover:text-secondary transition-colors mr-3"
-          >
-            ← Back
-          </button>
-          <h1 className="text-2xl font-medium text-gray-800 text-center w-full">
-            derivative duel
-          </h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
+      <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-10 max-w-md w-full">
+        <div className="text-center mb-8">
+          <div className="mb-3 text-4xl font-medium text-gray-900 select-none">
+            &#8706;
+          </div>
+          <h1 className="text-2xl font-semibold text-gray-900">derivative duel</h1>
+          <p className="text-sm text-gray-500 mt-2">
+            Sign in to save your ELO, match history, and challenge friends.
+          </p>
         </div>
 
-        <div className="space-y-4">
-          <div id="googleSignInButton" className="flex justify-center"></div>
+        <div id="googleSignInButton" className="flex justify-center min-h-[44px]">
+          {loading && <p className="text-sm text-gray-500">Signing you in…</p>}
         </div>
+
+        <div className="flex items-center gap-3 my-6">
+          <div className="flex-1 h-px bg-gray-200"></div>
+          <span className="text-xs text-gray-400 uppercase tracking-wide">or</span>
+          <div className="flex-1 h-px bg-gray-200"></div>
+        </div>
+
+        <button
+          onClick={continueAsGuest}
+          className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 text-sm py-2.5 rounded transition-colors"
+        >
+          continue as guest
+        </button>
+
+        <p className="text-xs text-gray-400 text-center mt-6">
+          By continuing, you agree to our{' '}
+          <button
+            onClick={() => navigate('/terms-and-services')}
+            className="underline text-gray-500 hover:text-gray-900"
+          >
+            Terms and Services
+          </button>{' '}
+          and{' '}
+          <button
+            onClick={() => navigate('/privacy-policy')}
+            className="underline text-gray-500 hover:text-gray-900"
+          >
+            Privacy Policy
+          </button>
+          .
+        </p>
       </div>
-      <TermsAndPrivacy />
+
+      <button
+        onClick={() => navigate('/')}
+        className="mt-6 text-sm text-gray-500 hover:text-gray-900 underline"
+      >
+        ← back to home
+      </button>
     </div>
   );
 }

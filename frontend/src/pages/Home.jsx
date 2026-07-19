@@ -73,7 +73,12 @@ export default function Home() {
   return (
     <div className="min-h-screen p-8 bg-gray-50">
       <nav className="flex justify-between items-center mb-16">
-        <h1 className="text-2xl font-medium text-gray-800">derivative duel</h1>
+        <h1
+          aria-label="derivative duel"
+          className="text-3xl font-medium text-gray-900 select-none"
+        >
+          &#8706;
+        </h1>
         <div className="flex items-center gap-8">
           <button
             onClick={() => navigate('/leaderboard')}
@@ -111,10 +116,10 @@ export default function Home() {
         <div className="mb-12 hidden md:block">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Competitive derivative battles</h2>
           <p className="text-gray-600 mb-3">
-            Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the <button onClick={() => navigate('/leaderboard')} className="text-blue-600 hover:text-blue-700 underline">leaderboard</button>.
+            Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the <button onClick={() => navigate('/leaderboard')} className="text-gray-900 hover:text-gray-600 underline">leaderboard</button>.
           </p>
           <p className="text-gray-600">
-            Play <button onClick={() => navigate('/play/random')} className="text-blue-600 hover:text-blue-700 underline">random matches</button> or <button onClick={() => navigate('/play/friend')} className="text-blue-600 hover:text-blue-700 underline">challenge friends</button>; each duel drills core differentiation rules. Need a refresher? Open the <button onClick={() => navigate('/how-to-derivate')} className="text-blue-600 hover:text-blue-700 underline">derivative guide</button>.
+            Play <button onClick={() => navigate('/play/random')} className="text-gray-900 hover:text-gray-600 underline">random matches</button> or <button onClick={() => navigate('/play/friend')} className="text-gray-900 hover:text-gray-600 underline">challenge friends</button>; each duel drills core differentiation rules. Need a refresher? Open the <button onClick={() => navigate('/how-to-derivate')} className="text-gray-900 hover:text-gray-600 underline">derivative guide</button>.
           </p>
         </div>
 
@@ -200,7 +205,7 @@ export default function Home() {
             <li className="mt-3">
               <button
                 onClick={() => navigate('/how-to-derivate')}
-                className="text-blue-600 hover:text-blue-700 underline"
+                className="text-gray-900 hover:text-gray-600 underline"
               >
                 how to derivate →
               </button>
@@ -209,11 +214,11 @@ export default function Home() {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-4 justify-center text-sm text-gray-600">
-          <button onClick={() => navigate('/about')} className="hover:text-blue-600">About</button>
+          <button onClick={() => navigate('/about')} className="underline hover:text-gray-900">About</button>
           <span>•</span>
-          <button onClick={() => navigate('/faq')} className="hover:text-blue-600">FAQ</button>
+          <button onClick={() => navigate('/faq')} className="underline hover:text-gray-900">FAQ</button>
           <span>•</span>
-          <button onClick={() => navigate('/privacy-policy')} className="hover:text-blue-600">Privacy Policy</button>
+          <button onClick={() => navigate('/privacy-policy')} className="underline hover:text-gray-900">Privacy Policy</button>
         </div>
       </div>
       <TermsAndPrivacy />

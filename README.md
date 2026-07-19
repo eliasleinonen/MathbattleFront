@@ -33,7 +33,7 @@
 
 This project uses a **decoupled frontend-backend architecture**:
 
-![Architecture Diagram](https://raw.githubusercontent.com/Skriptiensolmija/mathbattle/master/docs/architecture.png)
+![Architecture Diagram](docs/architecture.png)
 
 ### Frontend (This Repository)
 - **Framework:** Vite + React
@@ -115,8 +115,8 @@ SymPy            - Symbolic mathematics
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Skriptiensolmija/mathbattle.git
-   cd mathbattle
+   git clone https://github.com/eliasleinonen/MathbattleFront.git
+   cd MathbattleFront
    ```
 
 2. **Install dependencies**
@@ -245,7 +245,7 @@ Contributions are welcome. Please check out [CONTRIBUTING.md](CONTRIBUTING.md) f
 ## Author
 
 **Elias Leinonen**
-- GitHub: [@Skriptiensolmija](https://github.com/Skriptiensolmija)
+- GitHub: [@eliasleinonen](https://github.com/eliasleinonen)
 
 ---
 
@@ -265,6 +265,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 <div align="center">
 
-**[Visit Live Site](https://www.mathbattle.xyz)** • **[Documentation](DEVELOPMENT.md)** • **[Report Bug](https://github.com/Skriptiensolmija/mathbattle/issues)**
+**[Visit Live Site](https://www.mathbattle.xyz)** • **[Documentation](DEVELOPMENT.md)** • **[Report Bug](https://github.com/eliasleinonen/MathbattleFront/issues)**
 
 </div>

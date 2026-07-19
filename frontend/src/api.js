@@ -13,6 +13,11 @@ const getApiUrl = () => {
     return url;
   }
   
+  // Guard for build-time prerendering, where there is no browser window
+  if (typeof window === 'undefined') {
+    return '/api';
+  }
+
   // Auto-detect based on current domain
   if (window.location.hostname === 'www.mathbattle.xyz' || window.location.hostname === 'mathbattle.xyz') {
     console.log('[API] Auto-detected production domain, using Railway backend');

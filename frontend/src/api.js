@@ -31,12 +31,28 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
-// Add auth token to requests
+// Guests need a stable, unique identity so the backend can tell two guests
+// apart (e.g. so a friend match's creator and joiner aren't the same user).
+// We persist a `guest-<uuid>` id per browser and send it when there is no
+// real login token. This is intentionally a different storage key than
+// `token`, so it never bypasses login-gated features like the daily challenge.
+const getOrCreateGuestId = () => {
+  let guestId = localStorage.getItem('guestId');
+  if (!guestId) {
+    const uuid =
+      (window.crypto && window.crypto.randomUUID && window.crypto.randomUUID()) ||
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    guestId = `guest-${uuid}`;
+    localStorage.setItem('guestId', guestId);
+  }
+  return guestId;
+};
+
+// Add auth token to requests: real login token when present, otherwise the
+// per-browser guest identity.
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  config.headers.Authorization = `Bearer ${token || getOrCreateGuestId()}`;
   return config;
 });
 

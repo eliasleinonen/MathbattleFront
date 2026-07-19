@@ -6,6 +6,7 @@ import api from '../api';
 
 export default function Game() {
   const countdownIntervalRef = useRef(null);
+  const joinAttemptedRef = useRef(false);
   const navigate = useNavigate();
   const { matchCode } = useParams();
   
@@ -68,6 +69,20 @@ export default function Game() {
     const checkMatchStatus = async () => {
       try {
         const response = await api.get(`/game/friend/status/${matchCode}`);
+        if (response.data.status === 'waiting') {
+          // Reaching the game via a shared link means we still need to join.
+          // Attempt it once; the match creator is rejected ("Cannot join your
+          // own match"), which is expected and safe to ignore while they wait.
+          if (!joinAttemptedRef.current) {
+            joinAttemptedRef.current = true;
+            try {
+              await api.post('/game/friend/join', { match_code: matchCode });
+            } catch (joinError) {
+              console.debug('Join attempt skipped:', joinError?.response?.data?.detail);
+            }
+          }
+          return;
+        }
         if (response.data.status === 'active') {
           setGameState(prev => ({ ...prev, matchId: response.data.match_id }));
           setIsWaiting(false);

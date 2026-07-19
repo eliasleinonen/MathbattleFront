@@ -1,11 +1,31 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import Seo, { SITE_URL } from '../components/Seo';
+
+const guideJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'How to Derivate - Derivative Rules Reference',
+  description:
+    'Quick reference for differentiation rules: power rule, product rule, quotient rule, chain rule, and common derivatives of sin, cos, tan, ln, and exponential functions.',
+  url: `${SITE_URL}/how-to-derivate`,
+  author: {
+    '@type': 'Organization',
+    name: 'Derivative Duel',
+  },
+};
 
 export default function HowToDerivate() {
   const navigate = useNavigate();
   
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Derivative Rules Reference - Power, Product, Quotient & Chain Rule | Derivative Duel"
+        description="Learn how to find derivatives with this quick reference: power rule, product rule, quotient rule, chain rule, and common derivatives of sin, cos, tan, ln x, and e^x."
+        path="/how-to-derivate"
+        jsonLd={guideJsonLd}
+      />
       <div className="max-w-2xl mx-auto">
         <button
           onClick={() => navigate(-1)}

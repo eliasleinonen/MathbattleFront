@@ -1,10 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 export default function About() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="About Derivative Duel - Competitive Calculus Learning"
+        description="Derivative Duel makes learning calculus fun through competitive 1v1 derivative battles, an ELO rating system, and daily challenges. Learn about our mission."
+        path="/about"
+      />
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate('/')}

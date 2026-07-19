@@ -1,10 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 export default function PrivacyPolicy() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Privacy Policy | Derivative Duel"
+        description="How Derivative Duel collects, uses, and protects your personal data, including account information, gameplay statistics, and cookies."
+        path="/privacy-policy"
+      />
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate('/')}

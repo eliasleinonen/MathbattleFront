@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Seo from '../components/Seo';
 
-export default function FAQ() {
-  const navigate = useNavigate();
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const faqs = [
+export const faqs = [
     {
       question: "How do I start playing?",
       answer: "Simply create a free account and you can immediately start playing! Choose 'Play Random' to be matched with an opponent of similar skill level, or 'Challenge Friend' to play against someone specific."
@@ -56,8 +53,31 @@ export default function FAQ() {
     }
   ];
 
+export const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+};
+
+export default function FAQ() {
+  const navigate = useNavigate();
+  const [openIndex, setOpenIndex] = useState(null);
+
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="FAQ - Derivative Duel | Frequently Asked Questions"
+        description="Answers to common questions about Derivative Duel: how matches work, the ELO rating system, daily challenges, derivative rules you need, and more."
+        path="/faq"
+        jsonLd={faqJsonLd}
+      />
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate('/')}

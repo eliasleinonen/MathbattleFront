@@ -2,6 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
+import Seo from '../components/Seo';
+
+const playRandomSeo = (
+  <Seo
+    title="Play Random Match - 1v1 Derivative Battle | Derivative Duel"
+    description="Get matched with an opponent at your skill level and race to solve calculus derivatives. Win rounds, climb the ELO ladder - free and no download."
+    path="/play/random"
+  />
+);
 
 const createInitialGameState = () => ({
   matchId: '',
@@ -778,6 +787,7 @@ export default function PlayRandom() {
   if (gameState.phase === 'countdown') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        {playRandomSeo}
         <div className="text-8xl font-light text-gray-900">
           {gameState.countdown}
         </div>
@@ -801,6 +811,7 @@ export default function PlayRandom() {
     
     return (
       <div className="min-h-screen flex items-center justify-center p-8 bg-gray-50">
+        {playRandomSeo}
         <div className="bg-white border border-gray-300 rounded p-12 text-center max-w-md">
           <h1 className="text-2xl font-light text-gray-900 mb-6">
             {won ? 'you won' : 'you lost'}
@@ -845,6 +856,7 @@ export default function PlayRandom() {
   if (isSearching) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        {playRandomSeo}
         <div className="bg-white border border-gray-200 rounded-lg p-10 text-center shadow-sm max-w-md w-full">
           <div className="text-sm text-gray-500 mb-2">searching for an opponent</div>
           <div className="text-6xl font-light text-gray-900 mb-4">{searchTime}s</div>
@@ -864,6 +876,7 @@ export default function PlayRandom() {
 
   return (
     <>
+      {playRandomSeo}
       <div className="min-h-screen p-8 bg-gray-50">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-12">

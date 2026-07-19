@@ -3,10 +3,16 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
 import api from '../api';
+import { resolveCountdownStart } from '../utils/serverTime';
 
 export default function Game() {
   const countdownIntervalRef = useRef(null);
   const joinAttemptedRef = useRef(false);
+  // Single-flight guard: several code paths (answer submitted, opponent won,
+  // tie advance, refresh resume) can trigger the next round; only one may run.
+  const advancingRef = useRef(false);
+  const currentRoundIdRef = useRef(null);
+  const questionRetryRef = useRef(null);
   const navigate = useNavigate();
   const { matchCode } = useParams();
   
@@ -21,6 +27,8 @@ export default function Game() {
   const [player2Name, setPlayer2Name] = useState('Player 2');
   const [isWaiting, setIsWaiting] = useState(true);
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [opponentConnected, setOpponentConnected] = useState(true);
+  const [connectionIssue, setConnectionIssue] = useState(false);
   const elapsedTimerRef = useRef(null);
   const [gameState, setGameState] = useState({
     matchId: '',
@@ -93,6 +101,25 @@ export default function Game() {
           await fetchGameStatus(response.data.match_id, currentUserId);
           
           startCountdown(response.data.match_id);
+          return;
+        }
+        if (response.data.status === 'completed') {
+          // Refreshed after the match ended: show the result instead of an
+          // endless waiting screen.
+          const currentUserId = userId || (await gameAPI.getProfile()).data.id;
+          setUserId(currentUserId);
+          const statusRes = await gameAPI.getStatus(response.data.match_id);
+          setIsPlayer1(currentUserId === statusRes.data.player1_id);
+          setIsWaiting(false);
+          setGameState(prev => ({
+            ...prev,
+            matchId: response.data.match_id,
+            player1Score: statusRes.data.player1_score,
+            player2Score: statusRes.data.player2_score,
+            phase: 'finished',
+            matchWinner: statusRes.data.winner_id,
+            eloChange: statusRes.data.elo_change || 0,
+          }));
         }
       } catch (error) {
         console.error('Failed to check match status:', error);
@@ -119,6 +146,44 @@ export default function Game() {
   };
 
   const startCountdown = async (matchId) => {
+    if (advancingRef.current) return;
+    advancingRef.current = true;
+
+    // Load the question FIRST. Timers and visible state are only reset after
+    // the fetch succeeds, so a slow or failed request can never freeze the
+    // screen on a blank 0.0s timer.
+    let res;
+    try {
+      res = await Promise.race([
+        gameAPI.getQuestion(matchId),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Question fetch timeout')), 10000)
+        )
+      ]);
+    } catch (error) {
+      console.error('Failed to load question:', error);
+      advancingRef.current = false;
+      // Never eject the player from an active match. If the match actually
+      // ended, the status poll will move us to the finished screen; anything
+      // else is treated as transient and retried.
+      if (error?.response?.status === 400 || error?.response?.status === 403) {
+        return;
+      }
+      setConnectionIssue(true);
+      questionRetryRef.current = setTimeout(() => startCountdown(matchId), 2000);
+      return;
+    }
+
+    setConnectionIssue(false);
+
+    // Same round we are already showing (e.g. a duplicate advance trigger or
+    // a poll race): keep the running timer instead of resetting the round.
+    if (res.data.round_id && res.data.round_id === currentRoundIdRef.current) {
+      advancingRef.current = false;
+      return;
+    }
+    currentRoundIdRef.current = res.data.round_id || null;
+
     // Clear any previous countdown interval
     if (countdownIntervalRef.current) {
       clearInterval(countdownIntervalRef.current);
@@ -132,58 +197,41 @@ export default function Game() {
     }
     setElapsedTime(0);
     
-    // Load question first, THEN set countdown phase
-    try {
-      const res = await Promise.race([
-        gameAPI.getQuestion(matchId),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Question fetch timeout')), 10000)
-        )
-      ]);
-      
-      console.log('Question data:', res.data);
-      console.log('ask_for_derivative_only:', res.data.ask_for_derivative_only);
-      
-      // Now set countdown phase after question is loaded
-      setGameState(prev => ({ 
-        ...prev, 
-        countdown: 3, 
-        phase: 'countdown',
-        currentRound: prev.currentRound + 1,
-        question: res.data.expression,
-        evaluateAt: res.data.evaluate_at,
-        askForDerivativeOnly: res.data.ask_for_derivative_only ?? true,
-      }));
-      
-      // Use server timestamp if available for better sync
-      const serverTime = res.data.round_start_time ? new Date(res.data.round_start_time).getTime() : null;
-      const countdownStart = serverTime || Date.now();
-      const durationMs = 3000;
+    // Now set countdown phase after question is loaded
+    setGameState(prev => ({ 
+      ...prev, 
+      countdown: 3, 
+      phase: 'countdown',
+      currentRound: prev.currentRound + 1,
+      question: res.data.expression,
+      evaluateAt: res.data.evaluate_at,
+      askForDerivativeOnly: res.data.ask_for_derivative_only ?? true,
+    }));
+    
+    // Sync the countdown to the server round start when the timestamp is sane
+    const countdownStart = resolveCountdownStart(res.data.round_start_time);
+    const durationMs = 3000;
 
-      const updateCountdown = () => {
-        const elapsed = Date.now() - countdownStart;
-        const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
-        if (remaining <= 0) {
-          setGameState(prev => ({ ...prev, countdown: 0, phase: 'question' }));
-          return false;
-        }
-        setGameState(prev => ({ ...prev, countdown: remaining }));
-        return true;
-      };
-
-      if (updateCountdown()) {
-        countdownIntervalRef.current = setInterval(() => {
-          if (!updateCountdown()) {
-            clearInterval(countdownIntervalRef.current);
-            countdownIntervalRef.current = null;
-          }
-        }, 100);
+    const updateCountdown = () => {
+      const elapsed = Date.now() - countdownStart;
+      const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
+      if (remaining <= 0) {
+        setGameState(prev => ({ ...prev, countdown: 0, phase: 'question' }));
+        return false;
       }
-    } catch (error) {
-      console.error('Failed to load question:', error);
-      alert('Failed to load question. Returning to home...');
-      navigate('/');
+      setGameState(prev => ({ ...prev, countdown: remaining }));
+      return true;
+    };
+
+    if (updateCountdown()) {
+      countdownIntervalRef.current = setInterval(() => {
+        if (!updateCountdown()) {
+          clearInterval(countdownIntervalRef.current);
+          countdownIntervalRef.current = null;
+        }
+      }, 100);
     }
+    advancingRef.current = false;
   };
 
   // Stopwatch timer for question phase
@@ -214,6 +262,9 @@ export default function Game() {
       }
       if (elapsedTimerRef.current) {
         clearInterval(elapsedTimerRef.current);
+      }
+      if (questionRetryRef.current) {
+        clearTimeout(questionRetryRef.current);
       }
     };
   }, []);
@@ -312,7 +363,9 @@ export default function Game() {
   };
 
   const giveUpRound = async () => {
-    if (gameState.gaveUp || !gameState.matchId) return;
+    // Allow re-sending give-up when the opponent disconnected: the backend
+    // then resolves the round as a tie so the match can continue.
+    if ((gameState.gaveUp && opponentConnected) || !gameState.matchId) return;
     try {
       await gameAPI.giveUpRound(gameState.matchId);
       setGameState(prev => ({ ...prev, gaveUp: true }));
@@ -338,6 +391,9 @@ export default function Game() {
         // Update player names
         if (res.data.player1_name) setPlayer1Name(res.data.player1_name);
         if (res.data.player2_name) setPlayer2Name(res.data.player2_name);
+
+        // Opponent presence (older backends omit the field; assume connected)
+        setOpponentConnected(res.data.opponent_connected !== false);
 
         // Update scores if they changed
         if (
@@ -407,7 +463,7 @@ export default function Game() {
             setGameState(prev => {
               // Don't start new round if match is finished
               if (prev.player1Score >= 3 || prev.player2Score >= 3) {
-                return { ...prev, phase: 'finished', matchWinner: res.winner_id, eloChange: res.elo_change || 0 };
+                return { ...prev, phase: 'finished', matchWinner: res.data.winner_id, eloChange: res.data.elo_change || 0 };
               }
               return {
                 ...prev,
@@ -535,6 +591,18 @@ export default function Game() {
             </div>
           </div>
 
+          {!opponentConnected && gameState.phase !== 'finished' && (
+            <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
+              {displayOpponentName} seems to have disconnected. you can keep playing to finish the match.
+            </div>
+          )}
+
+          {connectionIssue && (
+            <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
+              connection hiccup – reconnecting...
+            </div>
+          )}
+
           {gameState.question && (
             <div className="bg-white border border-gray-300 rounded p-8 mb-8">
               {gameState.phase === 'question' && (
@@ -569,7 +637,7 @@ export default function Game() {
                   </button>
                   <button
                     onClick={giveUpRound}
-                    disabled={gameState.gaveUp && !gameState.opponentGaveUp || gameState.opponentWon}
+                    disabled={(gameState.gaveUp && !gameState.opponentGaveUp && opponentConnected) || gameState.opponentWon}
                     className={
                       `text-white text-sm px-6 py-3 rounded transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed ` +
                       (gameState.opponentGaveUp && !gameState.gaveUp
@@ -580,7 +648,9 @@ export default function Game() {
                     {gameState.gaveUp
                       ? (gameState.opponentGaveUp
                           ? 'both gave up! advancing...'
-                          : 'waiting for opponent...')
+                          : (opponentConnected
+                              ? 'waiting for opponent...'
+                              : 'opponent left – click to advance'))
                       : (gameState.opponentGaveUp
                           ? 'opponent gave up – click to advance'
                           : 'give up this round')}

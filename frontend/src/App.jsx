@@ -14,6 +14,7 @@ import TermsAndServices from './pages/TermsAndServices';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

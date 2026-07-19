@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../api';
 import { gameAPI } from '../api';
+import Seo from '../components/Seo';
 
 export default function PlayFriend() {
   const navigate = useNavigate();
@@ -152,6 +153,11 @@ export default function PlayFriend() {
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Challenge a Friend - Private Derivative Duel | Derivative Duel"
+        description="Create a private match and challenge a friend to a calculus derivative battle. Share a link or match code and see who differentiates faster."
+        path="/play/friend"
+      />
       <div className="max-w-2xl mx-auto">
         <button
           onClick={() => navigate('/')}

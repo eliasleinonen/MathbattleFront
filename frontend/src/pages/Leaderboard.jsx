@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { leaderboardAPI } from '../api';
+import Seo from '../components/Seo';
+
+const leaderboardSeo = (
+  <Seo
+    title="Leaderboard - Top Players | Derivative Duel"
+    description="See the top-rated Derivative Duel players ranked by ELO and the fastest time trial solvers. Play matches to climb the leaderboard."
+    path="/leaderboard"
+  />
+);
 
 export default function Leaderboard() {
   const navigate = useNavigate();
@@ -38,6 +47,7 @@ export default function Leaderboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+        {leaderboardSeo}
         <div className="text-2xl font-bold text-primary">Loading...</div>
       </div>
     );
@@ -45,6 +55,7 @@ export default function Leaderboard() {
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      {leaderboardSeo}
       <div className="max-w-3xl mx-auto">
         <button
           onClick={() => navigate('/')}

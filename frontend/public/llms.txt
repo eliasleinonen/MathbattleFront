@@ -1,0 +1,19 @@
+# Derivative Duel
+
+> Derivative Duel (www.mathbattle.xyz) is a free online multiplayer math game where players compete 1v1 by solving calculus derivative problems in real time. Players earn an ELO rating, and question difficulty adapts to skill level. It is aimed at high school and university calculus students who want a fun way to practice differentiation.
+
+Key facts:
+
+- Free to play, works in any web browser, no install needed
+- Game modes: random matchmaking, friend challenges via share link, and a daily challenge with a global leaderboard
+- Covers the power rule, product rule, quotient rule, chain rule, and derivatives of common functions (sin, cos, tan, ln, e^x)
+- First to win 3 rounds takes the match; ELO adjusts after every game
+
+## Pages
+
+- [Home](https://www.mathbattle.xyz/): Overview and game mode selection
+- [Daily Challenge](https://www.mathbattle.xyz/daily-challenge): One new derivative problem every day, ranked by solve time
+- [Derivative Rules Reference](https://www.mathbattle.xyz/how-to-derivate): Quick reference for differentiation rules and common derivatives
+- [Leaderboard](https://www.mathbattle.xyz/leaderboard): Top players by ELO and fastest time trial solvers
+- [FAQ](https://www.mathbattle.xyz/faq): How matches, ratings, and daily challenges work
+- [About](https://www.mathbattle.xyz/about): Mission and background

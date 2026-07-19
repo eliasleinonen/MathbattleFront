@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../api';
+import Seo from '../components/Seo';
+
+const dailyChallengeSeo = (
+  <Seo
+    title="Daily Derivative Challenge - New Calculus Problem Every Day | Derivative Duel"
+    description="Solve today's derivative problem and compete for the fastest time. One new calculus challenge every day with a global leaderboard."
+    path="/daily-challenge"
+  />
+);
 
 export default function DailyChallenge() {
   const navigate = useNavigate();
@@ -18,6 +27,10 @@ export default function DailyChallenge() {
   const [userCompletions, setUserCompletions] = useState({});
   const [loading, setLoading] = useState(true);
   const [todayStr, setTodayStr] = useState(() => new Date().toISOString().split('T')[0]);
+  // SSR-safe: window does not exist during build-time prerendering
+  const [isLoggedIn] = useState(
+    () => typeof window !== 'undefined' && !!window.localStorage.getItem('token')
+  );
 
   // Fetch server time on mount to sync with backend
   useEffect(() => {
@@ -33,14 +46,6 @@ export default function DailyChallenge() {
     };
     fetchServerTime();
   }, []);
-
-  // Check if user is logged in
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
-  }, [navigate]);
 
   // Timer
   useEffect(() => {
@@ -58,67 +63,59 @@ export default function DailyChallenge() {
   }, []);
 
   const loadDailyChallenge = async () => {
-    try {
-      console.log('[DEBUG] loadDailyChallenge called');
-      const [challengeRes, leaderboardRes, historyRes] = await Promise.all([
-        api.get('/daily-challenge/today'),
-        api.get('/daily-challenge/leaderboard'),
-        api.get('/daily-challenge/history')
-      ]);
-      
-      console.log('[DEBUG] Challenge response:', challengeRes.data);
-      console.log('[DEBUG] Leaderboard response:', leaderboardRes.data);
-      console.log('[DEBUG] History response:', historyRes.data);
-      
-      setTodayChallenge(challengeRes.data);
-      
+    // allSettled so guests still see whatever public data the backend
+    // returns even when auth-gated endpoints reject the request
+    const [challengeRes, leaderboardRes, historyRes] = await Promise.allSettled([
+      api.get('/daily-challenge/today'),
+      api.get('/daily-challenge/leaderboard'),
+      api.get('/daily-challenge/history')
+    ]);
+
+    if (challengeRes.status === 'fulfilled') {
+      setTodayChallenge(challengeRes.value.data);
+    } else {
+      console.error('Failed to load today\'s challenge:', challengeRes.reason);
+    }
+
+    if (leaderboardRes.status === 'fulfilled') {
       // Handle leaderboard - can be direct array or wrapped in object
       let leaderboardData = [];
-      if (Array.isArray(leaderboardRes.data)) {
-        leaderboardData = leaderboardRes.data;
-      } else if (leaderboardRes.data && leaderboardRes.data.top_times) {
-        leaderboardData = leaderboardRes.data.top_times;
+      if (Array.isArray(leaderboardRes.value.data)) {
+        leaderboardData = leaderboardRes.value.data;
+      } else if (leaderboardRes.value.data && leaderboardRes.value.data.top_times) {
+        leaderboardData = leaderboardRes.value.data.top_times;
       }
-      console.log('[DEBUG] Leaderboard data:', leaderboardData);
       setLeaderboard(leaderboardData);
-      
+    }
+
+    if (historyRes.status === 'fulfilled') {
       // Convert history to array - handle both array and object responses
       let history = [];
       let userCompletionsData = {};
-      if (Array.isArray(historyRes.data)) {
-        history = historyRes.data;
-      } else if (historyRes.data && typeof historyRes.data === 'object') {
+      if (Array.isArray(historyRes.value.data)) {
+        history = historyRes.value.data;
+      } else if (historyRes.value.data && typeof historyRes.value.data === 'object') {
         // New API structure: {challenges: Array, user_completions: Object}
-        history = historyRes.data.challenges || historyRes.data.history || [];
-        userCompletionsData = historyRes.data.user_completions || {};
+        history = historyRes.value.data.challenges || historyRes.value.data.history || [];
+        userCompletionsData = historyRes.value.data.user_completions || {};
       }
-      
-      console.log('[DEBUG] History challenges:', history);
-      console.log('[DEBUG] User completions data:', userCompletionsData);
       setPastChallenges(history);
-      
+
       // Create user completions map from the dedicated user_completions object
       const completionMap = {};
       if (userCompletionsData && typeof userCompletionsData === 'object') {
         Object.keys(userCompletionsData).forEach(date => {
           const completion = userCompletionsData[date];
-          console.log(`[DEBUG] Mapping completion for ${date}:`, completion);
           completionMap[date] = {
             time: completion.time || completion.your_time,
             rank: completion.rank
           };
         });
       }
-      console.log('[DEBUG] Final completionMap:', completionMap);
       setUserCompletions(completionMap);
-      setLoading(false);
-    } catch (error) {
-      console.error('Failed to load daily challenge:', error);
-      setLoading(false);
-      if (error.response?.status === 401) {
-        navigate('/login');
-      }
     }
+
+    setLoading(false);
   };
 
   const startChallenge = () => {
@@ -350,6 +347,7 @@ export default function DailyChallenge() {
   if (loading) {
     return (
       <div className="min-h-screen p-8 bg-gray-50 flex items-center justify-center">
+        {dailyChallengeSeo}
         <div className="text-gray-600">Loading...</div>
       </div>
     );
@@ -473,6 +471,7 @@ export default function DailyChallenge() {
   // Overview page
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      {dailyChallengeSeo}
       <div className="max-w-6xl mx-auto">
         <button
           onClick={() => navigate('/')}
@@ -487,7 +486,24 @@ export default function DailyChallenge() {
           {/* Today's Challenge */}
           <div className="lg:col-span-2 bg-white border border-gray-200 rounded p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Today's Challenge</h2>
-            {todayChallenge ? (
+            {!isLoggedIn ? (
+              <div className="py-4">
+                <p className="text-gray-600 mb-4">
+                  Every day there is one new derivative problem. Everyone gets the same
+                  function, and the leaderboard ranks players by solve time - one attempt per day.
+                </p>
+                <div className="bg-gray-50 p-6 rounded mb-6">
+                  <p className="text-sm text-gray-600 mb-2">Sign in to see today's function and post your time.</p>
+                  <p className="text-gray-700">Your streak and results are saved to your account.</p>
+                </div>
+                <button
+                  onClick={() => navigate('/login')}
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-3 rounded font-medium transition-colors w-full"
+                >
+                  Sign in to play
+                </button>
+              </div>
+            ) : todayChallenge ? (
               <>
                 {todayChallenge.user_completed ? (
                   <div className="text-center py-8">

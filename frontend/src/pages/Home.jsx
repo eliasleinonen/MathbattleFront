@@ -2,6 +2,33 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '../api';
 import TermsAndPrivacy from '../components/TermsAndPrivacy';
+import Seo, { SITE_URL, SITE_NAME } from '../components/Seo';
+
+const homeJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+    description:
+      'Competitive online math game where players battle by solving calculus derivative problems in real-time 1v1 matches.',
+    genre: 'Educational',
+    gamePlatform: 'Web browser',
+    playMode: 'MultiPlayer',
+    applicationCategory: 'Game',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  },
+];
 
 export default function Home() {
   const navigate = useNavigate();
@@ -72,6 +99,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Derivative Duel - Competitive Calculus Math Game | Learn Derivatives Through 1v1 Battles"
+        description="Battle opponents by solving calculus derivative problems in real-time. Challenge friends, improve your ELO rating, and master differentiation through fast-paced 1v1 matches."
+        path="/"
+        jsonLd={homeJsonLd}
+      />
       <nav className="flex justify-between items-center mb-16">
         <h1
           aria-label="derivative duel"
@@ -112,8 +145,8 @@ export default function Home() {
       </nav>
 
       <div className="max-w-3xl mx-auto">
-        {/* SEO Content Section - Hidden on mobile */}
-        <div className="mb-12 hidden md:block">
+        {/* Visible on all viewports so mobile-first crawlers index this content */}
+        <div className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-3">Competitive derivative battles</h2>
           <p className="text-gray-600 mb-3">
             Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the <button onClick={() => navigate('/leaderboard')} className="text-gray-900 hover:text-gray-600 underline">leaderboard</button>.

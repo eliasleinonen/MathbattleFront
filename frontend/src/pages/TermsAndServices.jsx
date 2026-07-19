@@ -1,11 +1,17 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import Seo from '../components/Seo';
 
 export default function TermsAndServices() {
   const navigate = useNavigate();
   
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Terms of Service & GDPR | Derivative Duel"
+        description="Terms of service for Derivative Duel, including data collection, GDPR rights, and fair play rules."
+        path="/terms-and-services"
+      />
       <div className="max-w-2xl mx-auto">
         <button
           onClick={() => navigate(-1)}

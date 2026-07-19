@@ -16,8 +16,10 @@ const app = (
   </React.StrictMode>
 );
 
-// Prerendered pages already contain server HTML: hydrate instead of re-rendering
-if (container.hasChildNodes()) {
+// Prerendered pages already contain server HTML: hydrate instead of re-rendering.
+// firstElementChild (not hasChildNodes) so the SPA shell's whitespace/comment
+// nodes don't trigger a bogus hydration attempt.
+if (container.firstElementChild !== null) {
   ReactDOM.hydrateRoot(container, app);
 } else {
   ReactDOM.createRoot(container).render(app);

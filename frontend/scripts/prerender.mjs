@@ -4,37 +4,35 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { PRERENDER_ROUTES } from '../src/prerender-routes.js';
 
 const frontendDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const distDir = join(frontendDir, 'dist');
 
 const { render } = await import(join(distDir, 'server', 'entry-server.js'));
 
-// Only routes whose initial render is meaningful for crawlers. Game routes
-// (auth/session-bound) are intentionally excluded.
-const routes = [
-  '/',
-  '/login',
-  '/leaderboard',
-  '/daily-challenge',
-  '/play/random',
-  '/play/friend',
-  '/how-to-derivate',
-  '/faq',
-  '/about',
-  '/privacy-policy',
-  '/terms-and-services',
-];
-
 const template = readFileSync(join(distDir, 'index.html'), 'utf-8');
+
+// String.replace silently no-ops on a missing marker, which would ship pages
+// without content or head tags; fail the build instead.
+for (const marker of ['<!--app-head-->', '<!--app-html-->']) {
+  if (!template.includes(marker)) {
+    throw new Error(`prerender: ${marker} marker missing from dist/index.html`);
+  }
+}
 
 // Keep the empty SPA shell for non-prerendered routes (game pages, unknown URLs).
 // The Vercel catch-all rewrite targets this file so junk URLs don't get served
-// prerendered homepage content.
-writeFileSync(join(distDir, 'spa-shell.html'), template);
+// prerendered homepage content. Strip the placeholder comment so the client
+// entry sees a truly empty #root and takes the createRoot path.
+writeFileSync(join(distDir, 'spa-shell.html'), template.replace('<!--app-html-->', ''));
 
-for (const route of routes) {
+for (const route of PRERENDER_ROUTES) {
   const { html, head } = render(route);
+
+  if (!head.includes('<title')) {
+    throw new Error(`prerender: ${route} rendered without a title - is its Seo component missing?`);
+  }
 
   const page = template
     // The Seo component provides the per-page title; drop the static fallback

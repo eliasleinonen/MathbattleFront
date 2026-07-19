@@ -3,8 +3,16 @@
 // context when no document exists, so these tests must not use jsdom.
 import { describe, it, expect } from 'vitest';
 import { render } from './entry-server';
+import { PRERENDER_ROUTES } from './prerender-routes';
 
 describe('entry-server prerendering', () => {
+  it.each(PRERENDER_ROUTES)('renders %s with a title, description, and canonical', (route) => {
+    const { head } = render(route);
+    expect(head).toMatch(/<title[^>]*>[^<]+<\/title>/);
+    expect(head).toContain('name="description"');
+    expect(head).toContain('rel="canonical"');
+  });
+
   it('renders the FAQ route with full content and per-page head tags', () => {
     const { html, head } = render('/faq');
     expect(html).toContain('Frequently Asked Questions');

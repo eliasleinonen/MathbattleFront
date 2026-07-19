@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
+import { useRoundAdvance } from '../hooks/useRoundAdvance';
 
 const playRandomSeo = (
   <Seo
@@ -36,8 +37,6 @@ const createInitialGameState = () => ({
 });
 
 export default function PlayRandom() {
-  const countdownIntervalRef = useRef(null);
-  const countdownLockRef = useRef(false);
   const navigate = useNavigate();
   const { matchCode } = useParams();
 
@@ -75,6 +74,22 @@ export default function PlayRandom() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const elapsedTimerRef = useRef(null);
   const [gameState, setGameState] = useState(createInitialGameState());
+
+  const { startCountdown, retryRound, resetRound, connectionIssue, roundError } = useRoundAdvance({
+    setGameState,
+    trackTimeLimit: true,
+    onRoundStart: () => {
+      if (elapsedTimerRef.current) {
+        clearInterval(elapsedTimerRef.current);
+        elapsedTimerRef.current = null;
+      }
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+        searchTimeoutRef.current = null;
+      }
+      setElapsedTime(0);
+    },
+  });
 
   // Load user profile once so we know our id/elo for winner detection and names
   useEffect(() => {
@@ -136,8 +151,8 @@ export default function PlayRandom() {
       // Start countdown for the match
       startCountdown(match_id);
     } catch (error) {
+      // Invalid or expired match code: nothing to resume, go home
       console.error('Failed to load match by code:', error);
-      alert('Failed to load match. Returning to home...');
       navigate('/');
     }
   };
@@ -235,11 +250,7 @@ export default function PlayRandom() {
   };
 
   const resetTimers = () => {
-    countdownLockRef.current = false;
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
+    resetRound();
     if (elapsedTimerRef.current) {
       clearInterval(elapsedTimerRef.current);
       elapsedTimerRef.current = null;
@@ -264,88 +275,6 @@ export default function PlayRandom() {
     searchForMatch();
   };
 
-  const startCountdown = async (matchId) => {
-    if (countdownLockRef.current) return;
-    countdownLockRef.current = true;
-
-    // Clear any previous countdown interval
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-    
-    // Clear elapsed timer
-    if (elapsedTimerRef.current) {
-      clearInterval(elapsedTimerRef.current);
-      elapsedTimerRef.current = null;
-    }
-    setElapsedTime(0);
-    
-    // Load question first, THEN set countdown phase
-    try {
-      const res = await Promise.race([
-        gameAPI.getQuestion(matchId),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Question fetch timeout')), 10000)
-        )
-      ]);
-      
-      console.log('Question data:', res.data);
-      console.log('ask_for_derivative_only:', res.data.ask_for_derivative_only);
-      
-      const timeLimit = res.data.time_limit || null;
-      
-      // Now set countdown phase after question is loaded
-      setGameState(prev => ({ 
-        ...prev, 
-        countdown: 3, 
-        phase: 'countdown',
-        currentRound: prev.currentRound + 1,
-        question: res.data.expression,
-        evaluateAt: res.data.evaluate_at,
-        askForDerivativeOnly: res.data.ask_for_derivative_only ?? true,
-        timeLimit: timeLimit,
-        timeRemaining: timeLimit
-      }));
-      
-      // Local 3-second countdown to enter question phase
-      const countdownStart = Date.now();
-      const durationMs = 3000;
-
-      const updateCountdown = () => {
-        const elapsed = Date.now() - countdownStart;
-        const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
-        if (remaining <= 0) {
-          countdownLockRef.current = false;
-          console.log('[DEBUG] Countdown finished, entering question phase. Setting timeRemaining to timeLimit.');
-          setGameState(prev => ({ 
-            ...prev, 
-            countdown: 0, 
-            phase: 'question',
-            timeRemaining: prev.timeLimit // Ensure timer starts at full value
-          }));
-          return false;
-        }
-        setGameState(prev => ({ ...prev, countdown: remaining }));
-        return true;
-      };
-
-      if (updateCountdown()) {
-        countdownIntervalRef.current = setInterval(() => {
-          if (!updateCountdown()) {
-            clearInterval(countdownIntervalRef.current);
-            countdownIntervalRef.current = null;
-          }
-        }, 100);
-      }
-    } catch (error) {
-      console.error('Failed to load question:', error);
-      countdownLockRef.current = false;
-      alert('Failed to load question. Returning to home...');
-      navigate('/');
-    }
-  };
-
   // Stopwatch timer for question phase (excluding bot matches which have their own timer)
   useEffect(() => {
     if (gameState.phase === 'question' && !isBot) {
@@ -366,12 +295,9 @@ export default function PlayRandom() {
     };
   }, [gameState.phase, isBot]);
 
-  // Clean up timers on unmount
+  // Clean up timers on unmount (round timers are owned by useRoundAdvance)
   useEffect(() => {
     return () => {
-      if (countdownIntervalRef.current) {
-        clearInterval(countdownIntervalRef.current);
-      }
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
       }
@@ -506,25 +432,6 @@ export default function PlayRandom() {
       setGameState(prev => ({ ...prev, gaveUp: true }));
     } catch (error) {
       console.error('Failed to give up:', error);
-    }
-  };
-
-  const loadQuestion = async (matchId) => {
-    // This function is no longer needed since we load in startCountdown
-    // But keeping it for compatibility
-    try {
-      const res = await gameAPI.getQuestion(matchId);
-      const timeLimit = res.data.time_limit || null;
-      setGameState(prev => ({
-        ...prev,
-        question: res.data.expression,
-        evaluateAt: res.data.evaluate_at,
-        askForDerivativeOnly: res.data.ask_for_derivative_only || false,
-        timeLimit: timeLimit,
-        timeRemaining: timeLimit
-      }));
-    } catch (error) {
-      console.error('Failed to load question:', error);
     }
   };
 
@@ -888,6 +795,28 @@ export default function PlayRandom() {
               <span className="text-gray-600">{isPlayer1 ? player2Name : player1Name}: {isPlayer1 ? gameState.player2Score : gameState.player1Score}</span>
             </div>
           </div>
+
+          {connectionIssue && (
+            <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
+              connection hiccup – reconnecting...
+            </div>
+          )}
+
+          {roundError && (
+            <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
+              couldn't load the next round.{' '}
+              <button
+                onClick={() => retryRound(gameState.matchId)}
+                className="underline hover:text-gray-900"
+              >
+                try again
+              </button>{' '}
+              or{' '}
+              <button onClick={() => navigate('/')} className="underline hover:text-gray-900">
+                return home
+              </button>
+            </div>
+          )}
 
           {gameState.question && (
             <div className="bg-white border border-gray-300 rounded p-8 mb-8">

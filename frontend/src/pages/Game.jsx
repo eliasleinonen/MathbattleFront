@@ -3,16 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
 import api from '../api';
-import { resolveCountdownStart } from '../utils/serverTime';
+import { useRoundAdvance } from '../hooks/useRoundAdvance';
 
 export default function Game() {
-  const countdownIntervalRef = useRef(null);
   const joinAttemptedRef = useRef(false);
-  // Single-flight guard: several code paths (answer submitted, opponent won,
-  // tie advance, refresh resume) can trigger the next round; only one may run.
-  const advancingRef = useRef(false);
-  const currentRoundIdRef = useRef(null);
-  const questionRetryRef = useRef(null);
   const navigate = useNavigate();
   const { matchCode } = useParams();
   
@@ -28,7 +22,6 @@ export default function Game() {
   const [isWaiting, setIsWaiting] = useState(true);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [opponentConnected, setOpponentConnected] = useState(true);
-  const [connectionIssue, setConnectionIssue] = useState(false);
   const elapsedTimerRef = useRef(null);
   const [gameState, setGameState] = useState({
     matchId: '',
@@ -49,6 +42,17 @@ export default function Game() {
     submitting: false,
     gaveUp: false,
     opponentGaveUp: false,
+  });
+
+  const { startCountdown, retryRound, connectionIssue, roundError } = useRoundAdvance({
+    setGameState,
+    onRoundStart: () => {
+      if (elapsedTimerRef.current) {
+        clearInterval(elapsedTimerRef.current);
+        elapsedTimerRef.current = null;
+      }
+      setElapsedTime(0);
+    },
   });
 
   // Load user profile once so we know our id/elo for winner detection and names
@@ -145,95 +149,6 @@ export default function Game() {
     }
   };
 
-  const startCountdown = async (matchId) => {
-    if (advancingRef.current) return;
-    advancingRef.current = true;
-
-    // Load the question FIRST. Timers and visible state are only reset after
-    // the fetch succeeds, so a slow or failed request can never freeze the
-    // screen on a blank 0.0s timer.
-    let res;
-    try {
-      res = await Promise.race([
-        gameAPI.getQuestion(matchId),
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Question fetch timeout')), 10000)
-        )
-      ]);
-    } catch (error) {
-      console.error('Failed to load question:', error);
-      advancingRef.current = false;
-      // Never eject the player from an active match. If the match actually
-      // ended, the status poll will move us to the finished screen; anything
-      // else is treated as transient and retried.
-      if (error?.response?.status === 400 || error?.response?.status === 403) {
-        return;
-      }
-      setConnectionIssue(true);
-      questionRetryRef.current = setTimeout(() => startCountdown(matchId), 2000);
-      return;
-    }
-
-    setConnectionIssue(false);
-
-    // Same round we are already showing (e.g. a duplicate advance trigger or
-    // a poll race): keep the running timer instead of resetting the round.
-    if (res.data.round_id && res.data.round_id === currentRoundIdRef.current) {
-      advancingRef.current = false;
-      return;
-    }
-    currentRoundIdRef.current = res.data.round_id || null;
-
-    // Clear any previous countdown interval
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-    
-    // Clear elapsed timer
-    if (elapsedTimerRef.current) {
-      clearInterval(elapsedTimerRef.current);
-      elapsedTimerRef.current = null;
-    }
-    setElapsedTime(0);
-    
-    // Now set countdown phase after question is loaded
-    setGameState(prev => ({ 
-      ...prev, 
-      countdown: 3, 
-      phase: 'countdown',
-      currentRound: prev.currentRound + 1,
-      question: res.data.expression,
-      evaluateAt: res.data.evaluate_at,
-      askForDerivativeOnly: res.data.ask_for_derivative_only ?? true,
-    }));
-    
-    // Sync the countdown to the server round start when the timestamp is sane
-    const countdownStart = resolveCountdownStart(res.data.round_start_time);
-    const durationMs = 3000;
-
-    const updateCountdown = () => {
-      const elapsed = Date.now() - countdownStart;
-      const remaining = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
-      if (remaining <= 0) {
-        setGameState(prev => ({ ...prev, countdown: 0, phase: 'question' }));
-        return false;
-      }
-      setGameState(prev => ({ ...prev, countdown: remaining }));
-      return true;
-    };
-
-    if (updateCountdown()) {
-      countdownIntervalRef.current = setInterval(() => {
-        if (!updateCountdown()) {
-          clearInterval(countdownIntervalRef.current);
-          countdownIntervalRef.current = null;
-        }
-      }, 100);
-    }
-    advancingRef.current = false;
-  };
-
   // Stopwatch timer for question phase
   useEffect(() => {
     if (gameState.phase === 'question') {
@@ -254,17 +169,11 @@ export default function Game() {
     };
   }, [gameState.phase]);
 
-  // Clean up timers on unmount
+  // Clean up the stopwatch on unmount (round timers are owned by useRoundAdvance)
   useEffect(() => {
     return () => {
-      if (countdownIntervalRef.current) {
-        clearInterval(countdownIntervalRef.current);
-      }
       if (elapsedTimerRef.current) {
         clearInterval(elapsedTimerRef.current);
-      }
-      if (questionRetryRef.current) {
-        clearTimeout(questionRetryRef.current);
       }
     };
   }, []);
@@ -600,6 +509,22 @@ export default function Game() {
           {connectionIssue && (
             <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
               connection hiccup – reconnecting...
+            </div>
+          )}
+
+          {roundError && (
+            <div className="mb-4 text-center text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded p-3">
+              couldn't load the next round.{' '}
+              <button
+                onClick={() => retryRound(gameState.matchId)}
+                className="underline hover:text-gray-900"
+              >
+                try again
+              </button>{' '}
+              or{' '}
+              <button onClick={() => navigate('/')} className="underline hover:text-gray-900">
+                return home
+              </button>
             </div>
           )}
 

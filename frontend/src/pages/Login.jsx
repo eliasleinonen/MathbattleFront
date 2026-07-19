@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import Seo from '../components/Seo';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -72,6 +73,12 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
+      <Seo
+        title="Sign In | Derivative Duel"
+        description="Sign in to Derivative Duel with Google to save your ELO rating and match history, or continue as a guest."
+        path="/login"
+        noindex
+      />
       <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-10 max-w-md w-full">
         <div className="text-center mb-8">
           <div className="mb-3 text-4xl font-medium text-gray-900 select-none">

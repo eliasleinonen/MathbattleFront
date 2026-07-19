@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import api from '../api';
+import Seo from '../components/Seo';
 
 export default function DailyChallenge() {
   const navigate = useNavigate();
@@ -473,6 +474,11 @@ export default function DailyChallenge() {
   // Overview page
   return (
     <div className="min-h-screen p-8 bg-gray-50">
+      <Seo
+        title="Daily Derivative Challenge - New Calculus Problem Every Day | Derivative Duel"
+        description="Solve today's derivative problem and compete for the fastest time. One new calculus challenge every day with a global leaderboard."
+        path="/daily-challenge"
+      />
       <div className="max-w-6xl mx-auto">
         <button
           onClick={() => navigate('/')}

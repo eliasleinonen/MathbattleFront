@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import api from '../api';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
@@ -20,6 +19,7 @@ export default function PlayFriend() {
   const [isLoading, setIsLoading] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   // Cleanup: cancel pending challenge when component unmounts
   useEffect(() => {
@@ -82,18 +82,19 @@ export default function PlayFriend() {
 
   const createMatchWithLink = async () => {
     setIsLoading(true);
+    setErrorMsg('');
     try {
       const response = await api.post('/game/friend/create', {
         opponent_username: null
       });
       setGeneratedCode(response.data.match_code);
       setCreatedMatchId(response.data.match_id);
-      // Always use production URL for share link
-      setShareLink(`https://www.mathbattle.xyz/game/${response.data.match_code}`);
+      const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://www.mathbattle.xyz';
+      setShareLink(`${origin}/game/${response.data.match_code}`);
       setMode('create');
     } catch (error) {
       console.error('Failed to create match:', error);
-      alert('Failed to create match. Please try again.');
+      setErrorMsg('Failed to create match. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +102,7 @@ export default function PlayFriend() {
 
   const challengeUser = async (username) => {
     setIsLoading(true);
+    setErrorMsg('');
     try {
       const response = await api.post('/game/friend/create', {
         opponent_username: username
@@ -113,7 +115,7 @@ export default function PlayFriend() {
       navigate(`/game/${response.data.match_code}`);
     } catch (error) {
       console.error('Failed to create match:', error);
-      alert('Failed to challenge user. Please try again.');
+      setErrorMsg('Failed to challenge user. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -123,6 +125,7 @@ export default function PlayFriend() {
     if (!code.trim()) return;
 
     setIsLoading(true);
+    setErrorMsg('');
     try {
       const response = await api.post('/game/friend/join', {
         match_code: code.toUpperCase()
@@ -130,7 +133,7 @@ export default function PlayFriend() {
       navigate(`/game/${code.toUpperCase()}`);
     } catch (error) {
       console.error('Failed to join match:', error);
-      alert(error.response?.data?.detail || 'Failed to join match. Please check the code.');
+      setErrorMsg(error.response?.data?.detail || 'Failed to join match. Please check the code.');
     } finally {
       setIsLoading(false);
     }
@@ -141,7 +144,9 @@ export default function PlayFriend() {
   };
 
   const copyToClipboard = (text, type) => {
-    navigator.clipboard.writeText(text);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
     if (type === 'code') {
       setCopiedCode(true);
       setTimeout(() => setCopiedCode(false), 2000);
@@ -169,6 +174,12 @@ export default function PlayFriend() {
         <h1 className="text-2xl font-medium text-gray-800 mb-8">
           play with friend
         </h1>
+
+        {errorMsg && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded text-sm text-center">
+            {errorMsg}
+          </div>
+        )}
 
         {!mode && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

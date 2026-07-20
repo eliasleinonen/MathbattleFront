@@ -38,7 +38,6 @@ export default function DailyChallenge() {
       try {
         const res = await api.get('/server-time');
         setTodayStr(res.data.date);
-        console.log('[DEBUG] Server date:', res.data.date);
       } catch (e) {
         console.warn('Failed to fetch server time, using local time:', e.message);
         // Fall back to local time if API fails
@@ -48,6 +47,7 @@ export default function DailyChallenge() {
   }, []);
 
   // Timer
+
   useEffect(() => {
     if (phase === 'playing' && startTime) {
       const interval = setInterval(() => {
@@ -141,9 +141,6 @@ export default function DailyChallenge() {
     const timeTaken = (Date.now() - startTime) / 1000;
     // Normalize caret to exponent for backend parsing
     const normalizedAnswer = userAnswer.replace(/\^/g, '**').trim();
-    
-    console.log('[DEBUG] Submitting answer:', normalizedAnswer);
-    console.log('[DEBUG] Time taken:', timeTaken);
 
     try {
       const response = await api.post('/daily-challenge/submit', {
@@ -151,10 +148,7 @@ export default function DailyChallenge() {
         time: timeTaken
       });
       
-      console.log('[DEBUG] Submit response:', response.data);
-      
       if (response.data.correct) {
-        console.log('[DEBUG] Answer correct! Clearing error.');
         setErrorMessage('');
         setResults(response.data);
         setPhase('results');
@@ -162,16 +156,15 @@ export default function DailyChallenge() {
         loadDailyChallenge();
       } else {
         // Wrong answer - keep input and show inline message
-        console.log('[DEBUG] Answer wrong! Showing error, keeping input.');
         setErrorMessage('wrong answer');
         // DON'T clear userAnswer here
       }
     } catch (error) {
-      console.error('[DEBUG] Failed to submit answer:', error);
       setErrorMessage('wrong answer');
       // DON'T clear userAnswer here either
     }
   };
+
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -200,7 +193,7 @@ export default function DailyChallenge() {
       <div className="bg-white border border-gray-200 rounded p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
-          {months.reverse().map(({ month, year, name }) => {
+          {[...months].reverse().map(({ month, year, name }) => {
             const firstDay = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
             const daysInMonth = lastDay.getDate();
@@ -275,11 +268,8 @@ export default function DailyChallenge() {
                       ? 'bg-gray-100 border-gray-300'
                       : 'bg-gray-50 border-gray-200';
                     
-                    if (isToday) {
-                      console.log('[DEBUG] Today cell:', date, 'userCompletion:', userCompletion, 'isCompleted:', isCompleted, 'isWinner:', isWinner, 'showWinner:', showWinner, 'showCompleted:', showCompleted);
-                    }
-                    
                     if (isFuture) {
+
                       return (
                         <div
                           key={date}
@@ -405,7 +395,7 @@ export default function DailyChallenge() {
                 type="text"
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleAnswerSubmit()}
+                onKeyDown={(e) => e.key === 'Enter' && handleAnswerSubmit()}
                 placeholder="Enter your answer..."
                 className="w-full p-4 border border-gray-300 rounded text-lg focus:outline-none focus:border-blue-500"
                 autoFocus
@@ -560,17 +550,6 @@ export default function DailyChallenge() {
         {/* Calendar */}
         <div key={JSON.stringify(userCompletions)}>
           {renderCalendar()}
-          {/* Debug helper to force Tailwind to keep these classes */}
-          <div className="hidden">
-            <span className="bg-green-300 border-green-500"></span>
-            <span className="bg-yellow-300 border-yellow-500"></span>
-          </div>
-          <div className="mt-2 text-xs text-gray-500">
-            <div>Build marker: calendar-inline-v3</div>
-            <div>Today status: {userCompletions[new Date().toISOString().split('T')[0]] ? 'completed' : 'not completed'}</div>
-            <div>Today data: {JSON.stringify(userCompletions[new Date().toISOString().split('T')[0]])}</div>
-            <div>Rendered color (today): {userCompletions[new Date().toISOString().split('T')[0]] ? 'green inline style' : 'gray'}</div>
-          </div>
         </div>
       </div>
     </div>

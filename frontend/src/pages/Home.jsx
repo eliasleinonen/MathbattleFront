@@ -81,13 +81,16 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [navigate]);
 
+  const [challengeError, setChallengeError] = useState('');
+
   const acceptChallenge = async (matchId, matchCode) => {
+    setChallengeError('');
     try {
       await api.post(`/challenges/accept/${matchId}`);
       navigate(`/game/${matchCode}`);
     } catch (error) {
       console.error('Failed to accept challenge:', error);
-      alert('Failed to accept challenge');
+      setChallengeError('Failed to accept challenge. Please try again.');
     }
   };
 

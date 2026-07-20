@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
 import api from '../api';
+import Seo from '../components/Seo';
 import { useRoundAdvance } from '../hooks/useRoundAdvance';
 
 export default function Game() {
@@ -488,6 +488,11 @@ export default function Game() {
 
   return (
     <>
+      <Seo
+        title={`Match ${matchCode} | Derivative Duel`}
+        description="Live 1v1 derivative battle"
+        path={`/game/${matchCode}`}
+      />
       <div className="min-h-screen p-8 bg-gray-50">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-12">
@@ -547,16 +552,16 @@ export default function Game() {
                     type="text"
                     value={gameState.userAnswer}
                     onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
-                    onKeyPress={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && submitAnswer()}
+                    onKeyDown={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && !gameState.gaveUp && submitAnswer()}
                     className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded focus:outline-none focus:border-gray-900"
                     placeholder="e.g., 2*x or 2·x"
                     autoFocus
-                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || gameState.opponentWon}
+                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || gameState.opponentWon || gameState.gaveUp}
                   />
                   <button
                     onClick={submitAnswer}
                     className="bg-gray-900 hover:bg-gray-800 text-white text-sm px-6 py-3 rounded transition-colors"
-                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || !gameState.userAnswer.trim() || gameState.opponentWon}
+                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || !gameState.userAnswer.trim() || gameState.opponentWon || gameState.gaveUp}
                   >
                     submit
                   </button>

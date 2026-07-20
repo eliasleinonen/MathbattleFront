@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from 'react-router-dom';
 import Seo, { SITE_URL } from '../components/Seo';
 
@@ -28,10 +27,10 @@ export default function HowToDerivate() {
       />
       <div className="max-w-2xl mx-auto">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           className="text-sm text-gray-600 hover:text-gray-900 mb-8"
         >
-          ← back
+          ← back to home
         </button>
         
         <div className="bg-white rounded-lg shadow p-8 text-gray-800">

@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
 import { useRoundAdvance } from '../hooks/useRoundAdvance';
@@ -358,7 +357,6 @@ export default function PlayRandom() {
             try {
               const profileRes = await gameAPI.getProfile();
               if (profileRes.data.elo) {
-                console.log('[DEBUG] Updated ELO after timeout:', profileRes.data.elo);
                 setUserElo(profileRes.data.elo);
               }
             } catch (err) {
@@ -393,7 +391,6 @@ export default function PlayRandom() {
             try {
               const profileRes = await gameAPI.getProfile();
               if (profileRes.data.elo) {
-                console.log('[DEBUG] Updated ELO after correct answer:', profileRes.data.elo);
                 setUserElo(profileRes.data.elo);
               }
             } catch (err) {
@@ -439,8 +436,6 @@ export default function PlayRandom() {
   useEffect(() => {
     if (gameState.phase !== 'question' || !isBot || gameState.timeLimit === null) return;
     
-    console.log('[DEBUG] Starting bot timer. timeLimit:', gameState.timeLimit, 'timeRemaining:', gameState.timeRemaining);
-    
     const timerInterval = setInterval(async () => {
       setGameState(prev => {
         if (prev.timeRemaining === null || prev.timeRemaining <= 0) {
@@ -449,7 +444,6 @@ export default function PlayRandom() {
         const newTime = prev.timeRemaining - 0.1;
         if (newTime <= 0) {
           // Time's up! User loses the round - submit empty answer to record timeout
-          console.log('[DEBUG] Bot timer hit 0, timeout reached. Will submit answer.');
           return { ...prev, timeRemaining: 0 };
         }
         return { ...prev, timeRemaining: newTime };
@@ -457,7 +451,6 @@ export default function PlayRandom() {
     }, 100);
     
     return () => {
-      console.log('[DEBUG] Clearing bot timer interval');
       clearInterval(timerInterval);
     };
   }, [gameState.phase, gameState.timeLimit, isBot]);
@@ -466,7 +459,6 @@ export default function PlayRandom() {
   useEffect(() => {
     if (gameState.timeRemaining !== 0 || gameState.phase !== 'question' || !isBot || gameState.submitting) return;
     
-    console.log('[DEBUG] Time is 0, auto-submitting empty answer');
     let submitted = false;
     
     // Submit with empty answer to record the timeout in backend
@@ -479,7 +471,6 @@ export default function PlayRandom() {
         const res = await gameAPI.submitAnswer(gameState.matchId, '');
         
         // Update scores
-        console.log('[DEBUG AUTO-SUBMIT] Response scores:', res.data.player1_score, '-', res.data.player2_score, 'Match winner:', res.data.match_winner);
         setGameState(prev => ({
           ...prev,
           player1Score: res.data.player1_score,
@@ -489,7 +480,6 @@ export default function PlayRandom() {
         
         // Bot won
         if (res.data.already_won) {
-          console.log('[DEBUG] Answer submission confirms opponent already won');
           setGameState(prev => ({
             ...prev,
             opponentWon: true,
@@ -499,12 +489,9 @@ export default function PlayRandom() {
           // Schedule next round after delay
           setTimeout(async () => {
             setGameState(prev => {
-              console.log('[DEBUG TIMEOUT CHECK] Checking if match is finished. Scores:', prev.player1Score, '-', prev.player2Score);
               if (prev.player1Score >= 3 || prev.player2Score >= 3) {
-                console.log('[DEBUG TIMEOUT CHECK] Match is finished! Setting phase to finished.');
                 return { ...prev, phase: 'finished', matchWinner: res.data.match_winner, eloChange: res.data.elo_change || 0 };
               }
-              console.log('[DEBUG TIMEOUT CHECK] Match continues. Starting next round.');
               return {
                 ...prev,
                 userAnswer: '',
@@ -521,7 +508,6 @@ export default function PlayRandom() {
               try {
                 const profileRes = await gameAPI.getProfile();
                 if (profileRes.data.elo) {
-                  console.log('[DEBUG] Updated ELO after auto-submit timeout:', profileRes.data.elo);
                   setUserElo(profileRes.data.elo);
                 }
               } catch (err) {
@@ -536,7 +522,7 @@ export default function PlayRandom() {
           }, 1500);
         }
       } catch (error) {
-        console.error('[DEBUG] Failed to submit timeout answer:', error);
+        console.error('Failed to submit timeout answer:', error);
         setGameState(prev => ({ ...prev, submitting: false }));
       }
     };
@@ -548,16 +534,12 @@ export default function PlayRandom() {
   useEffect(() => {
     if (!gameState.opponentWon || gameState.phase !== 'question') return;
     
-    console.log('[DEBUG] Opponent won, scheduling next round');
     const timeoutId = setTimeout(() => {
       setGameState(prev => {
-        console.log('[DEBUG] Opponent won timeout - checking if match finished');
         // Don't start new round if match is finished
         if (prev.player1Score >= 3 || prev.player2Score >= 3) {
-          console.log('[DEBUG] Match is finished, not starting new round');
           return { ...prev, phase: 'finished', matchWinner: prev.player1Score >= 3 ? (isPlayer1 ? userId : 'opponent') : (isPlayer1 ? 'opponent' : userId), opponentWon: false };
         }
-        console.log('[DEBUG] Advancing to next round');
         return {
           ...prev,
           userAnswer: '',
@@ -846,7 +828,7 @@ export default function PlayRandom() {
                     type="text"
                     value={gameState.userAnswer}
                     onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
-                    onKeyPress={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && submitAnswer()}
+                    onKeyDown={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && submitAnswer()}
                     className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded focus:outline-none focus:border-gray-900"
                     placeholder="e.g., 2*x or 2·x"
                     autoFocus

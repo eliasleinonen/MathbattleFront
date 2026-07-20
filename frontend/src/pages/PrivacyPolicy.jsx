@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
         </button>
 
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
-        <p className="text-gray-600 mb-8">Last updated: December 11, 2025</p>
+        <p className="text-gray-600 mb-8">Last updated: July 20, 2026</p>
 
         <div className="bg-white rounded-lg shadow-sm p-8 space-y-8">
           <section>
@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Information We Collect</h2>
             <h3 className="text-xl font-semibold text-gray-800 mb-2">2.1 Information You Provide</h3>
             <ul className="list-disc list-inside text-gray-700 space-y-2 mb-4">
-              <li><strong>Account Information:</strong> Username, email address, and password when you register</li>
+              <li><strong>Account Information:</strong> Username and email address when you sign in</li>
               <li><strong>Profile Data:</strong> Optional profile information you choose to provide</li>
               <li><strong>Game Data:</strong> Match results, scores, ELO ratings, and gameplay statistics</li>
             </ul>

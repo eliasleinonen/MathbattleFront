@@ -5,7 +5,7 @@ import Seo from '../components/Seo';
 export const faqs = [
     {
       question: "How do I start playing?",
-      answer: "Simply create a free account and you can immediately start playing! Choose 'Play Random' to be matched with an opponent of similar skill level, or 'Challenge Friend' to play against someone specific."
+      answer: "You can immediately start playing as a guest or with your account! Choose 'Play Random' to be matched with an opponent, or 'Play Friend' to challenge someone specific."
     },
     {
       question: "What is ELO rating?",
@@ -13,27 +13,23 @@ export const faqs = [
     },
     {
       question: "How does the Daily Challenge work?",
-      answer: "Every day, a new derivative problem is posted. All players solve the same problem, and the leaderboard ranks players by completion time. You only get one attempt per day, so make it count!"
+      answer: "Every day, a new derivative problem is posted. All players solve the same problem, and the leaderboard ranks players by completion time."
     },
     {
       question: "What derivative rules do I need to know?",
       answer: "You should be familiar with: Power Rule, Product Rule, Quotient Rule, Chain Rule, and derivatives of basic functions (sin, cos, e^x, ln x). Check our 'How to Derivate' guide for a full review."
     },
     {
-      question: "Can I practice without competing?",
-      answer: "Yes! Use Practice Mode to solve derivative problems at your own pace without affecting your ELO rating. This is great for learning new rules or warming up before ranked matches."
-    },
-    {
       question: "How is match difficulty determined?",
-      answer: "The difficulty of derivative problems adapts to your ELO rating. Higher-rated players receive more complex problems involving chain rule, product rule, and special functions."
+      answer: "The difficulty of derivative problems adapts to your rating. Higher-rated players receive more complex problems involving chain rule, product rule, and special functions."
     },
     {
       question: "What happens if I don't answer in time?",
-      answer: "In competitive matches, you have 60 seconds per question. If time runs out, it counts as an incorrect answer and your opponent gets the point. In Practice Mode, there's no time limit."
+      answer: "In competitive matches, you have 60 seconds per question. If time runs out, it counts as an incorrect answer and your opponent gets the point."
     },
     {
       question: "How do I challenge a specific friend?",
-      answer: "Click 'Challenge Friend', search for their username, and send them a challenge. They'll receive a notification and can accept to start the match. You can also share your match code directly."
+      answer: "Click 'Play Friend', search for their username, and send them a challenge. They'll receive a notification and can accept to start the match. You can also share your match code directly."
     },
     {
       question: "Can I play on mobile?",
@@ -45,7 +41,7 @@ export const faqs = [
     },
     {
       question: "How do I improve my derivative skills?",
-      answer: "Practice regularly! Start with our 'How to Derivate' tutorial, use Practice Mode to drill specific rules, and play Daily Challenges to compete against others. Consistent practice is key."
+      answer: "Practice regularly! Start with our 'How to Derivate' tutorial and play Daily Challenges to compete against others. Consistent practice is key."
     },
     {
       question: "What if I find a bug or have a suggestion?",
@@ -94,6 +90,8 @@ export default function FAQ() {
             <div key={index} className="border-b border-gray-200 last:border-b-0">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
                 className="w-full text-left p-6 hover:bg-gray-50 transition-colors"
               >
                 <div className="flex justify-between items-start">
@@ -104,7 +102,7 @@ export default function FAQ() {
                 </div>
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-6">
+                <div id={`faq-answer-${index}`} className="px-6 pb-6">
                   <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
                 </div>
               )}

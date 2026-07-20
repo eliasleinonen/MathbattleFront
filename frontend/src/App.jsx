@@ -6,7 +6,6 @@ import PlayFriend from './pages/PlayFriend';
 import Game from './pages/Game';
 import Leaderboard from './pages/Leaderboard';
 import Login from './pages/Login';
-import Register from './pages/Register';
 import SetUsername from './pages/SetUsername';
 import DailyChallenge from './pages/DailyChallenge';
 import HowToDerivate from './pages/HowToDerivate';
@@ -21,7 +20,6 @@ function App() {
     <div className="bg-white min-h-screen">
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/set-username" element={<SetUsername />} />
         <Route path="/" element={<Home />} />
         <Route path="/play/random" element={<PlayRandom />} />

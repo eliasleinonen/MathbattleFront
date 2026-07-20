@@ -42,3 +42,8 @@ Thumbs.db
 .cache/
 .vercel/
 .temp/
+
+# Markdown files
+*.md
+!README.md
+

@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { leaderboardAPI } from '../api';
 import Seo from '../components/Seo';
 
 const leaderboardSeo = (
   <Seo
     title="Leaderboard - Top Players | Derivative Duel"
-    description="See the top-rated Derivative Duel players ranked by ELO and the fastest time trial solvers. Play matches to climb the leaderboard."
+    description="See the top-rated Derivative Duel players ranked by ELO and the fastest daily challenge solvers. Play matches to climb the leaderboard."
     path="/leaderboard"
   />
 );
@@ -34,7 +33,7 @@ export default function Leaderboard() {
   }, []);
 
   const formatTime = (seconds) => {
-    if (!seconds) return '-';
+    if (seconds == null) return '-';
     const mins = Math.floor(seconds / 60);
     const secs = (seconds % 60).toFixed(2);
     return mins > 0 ? `${mins}:${secs.padStart(5, '0')}` : `${secs}s`;
@@ -176,10 +175,10 @@ export default function Leaderboard() {
               <div className="text-center py-12">
                 <p className="text-sm text-gray-500">no time trial records yet</p>
                 <button
-                  onClick={() => navigate('/time-trial')}
+                  onClick={() => navigate('/daily-challenge')}
                   className="mt-4 text-sm text-gray-600 hover:text-gray-900"
                 >
-                  be the first →
+                  play daily challenge →
                 </button>
               </div>
             )}

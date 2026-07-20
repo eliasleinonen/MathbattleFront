@@ -42,8 +42,11 @@ export default function Login() {
     };
   }, []);
 
+  const [error, setError] = useState('');
+
   const handleCredentialResponse = async (response) => {
     setLoading(true);
+    setError('');
     try {
       const res = await api.post('/auth/google', { token: response.credential });
       localStorage.setItem('token', res.data.access_token);
@@ -60,7 +63,7 @@ export default function Login() {
       }
     } catch (error) {
       console.error('Login failed:', error);
-      alert('Login failed. Please try again.');
+      setError('Login failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -89,6 +92,12 @@ export default function Login() {
             Sign in to save your ELO, match history, and challenge friends.
           </p>
         </div>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded text-sm text-center">
+            {error}
+          </div>
+        )}
 
         <div id="googleSignInButton" className="flex justify-center min-h-[44px]">
           {loading && <p className="text-sm text-gray-500">Signing you in…</p>}

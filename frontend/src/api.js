@@ -9,7 +9,6 @@ const getApiUrl = () => {
     if (!url.endsWith('/api')) {
       url = url + '/api';
     }
-    console.log('[API] Using VITE_API_URL from environment:', url);
     return url;
   }
   
@@ -20,17 +19,14 @@ const getApiUrl = () => {
 
   // Auto-detect based on current domain
   if (window.location.hostname === 'www.mathbattle.xyz' || window.location.hostname === 'mathbattle.xyz') {
-    console.log('[API] Auto-detected production domain, using Railway backend');
     return 'https://mathbattlebackend-production.up.railway.app/api';
   }
   
   // Default to localhost for development
-  console.log('[API] Using localhost default');
   return 'http://localhost:8080/api';
 };
 
 const API_URL = getApiUrl();
-console.log('[API] Final API URL:', API_URL);
 
 const api = axios.create({
   baseURL: API_URL,

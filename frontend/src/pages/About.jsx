@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 
 export default function About() {
@@ -40,7 +40,6 @@ export default function About() {
               <li><strong>Ranked Matches:</strong> Compete against random opponents and climb the ELO leaderboard</li>
               <li><strong>Challenge Friends:</strong> Create private matches and challenge your classmates</li>
               <li><strong>Daily Challenge:</strong> Solve the daily derivative problem and compete for the fastest time</li>
-              <li><strong>Practice Mode:</strong> Improve your skills at your own pace</li>
             </ul>
           </section>
 
@@ -63,7 +62,7 @@ export default function About() {
             <p className="text-gray-700 leading-relaxed">
               Derivative Duel was created by students who struggled to stay motivated while learning calculus. 
               We realized that the competitive element of gaming could transform boring practice into an addictive challenge. 
-              Today, thousands of students use Derivative Duel to master derivatives while having fun.
+              Today, students use Derivative Duel to master derivatives while having fun.
             </p>
           </section>
 
@@ -79,9 +78,9 @@ export default function About() {
 
           <section className="pt-6 border-t border-gray-200">
             <p className="text-sm text-gray-600">
-              © 2025 Derivative Duel. All rights reserved. | 
-              <a href="/privacy-policy" className="text-blue-600 hover:underline ml-2">Privacy Policy</a> | 
-              <a href="/faq" className="text-blue-600 hover:underline ml-2">FAQ</a>
+              © 2025–2026 Derivative Duel. All rights reserved. | 
+              <Link to="/privacy-policy" className="text-blue-600 hover:underline ml-2">Privacy Policy</Link> | 
+              <Link to="/faq" className="text-blue-600 hover:underline ml-2">FAQ</Link>
             </p>
           </section>
         </div>

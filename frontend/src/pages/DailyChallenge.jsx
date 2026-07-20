@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import HeatMap from '@uiw/react-heat-map';
 import api from '../api';
 import Seo from '../components/Seo';
+import { buildActivityHeatmapValues, heatmapRangeFromToday, ACTIVITY_PANEL_COLORS } from '../utils/activityHeatmap';
 
 const dailyChallengeSeo = (
   <Seo
@@ -172,161 +174,56 @@ export default function DailyChallenge() {
     return mins > 0 ? `${mins}:${secs.padStart(5, '0')}` : `${secs}s`;
   };
 
-  const renderCalendar = () => {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
-    // Use state todayStr instead of computing here
-    
-    // Generate last 12 months including current
-    const months = [];
-    for (let i = 11; i >= 0; i--) {
-      const monthDate = new Date(currentYear, currentMonth - i, 1);
-      months.push({
-        month: monthDate.getMonth(),
-        year: monthDate.getFullYear(),
-        name: monthDate.toLocaleDateString('en-US', { month: 'short' })
-      });
-    }
+  const heatMapValue = buildActivityHeatmapValues(pastChallenges, userCompletions, todayStr);
+  const { startDate: heatMapStart, endDate: heatMapEnd } = heatmapRangeFromToday(todayStr, 12);
 
+  const renderCalendar = () => {
     return (
       <div className="bg-white border border-gray-200 rounded p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8">
-          {[...months].reverse().map(({ month, year, name }) => {
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startDayOfWeek = firstDay.getDay();
-            
-            const days = [];
-            
-            // Add empty cells for days before month starts
-            for (let i = 0; i < startDayOfWeek; i++) {
-              days.push(null);
-            }
-            
-            // Add days of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-              const dateObj = new Date(year, month, day);
-              const dateStr = dateObj.toISOString().split('T')[0];
-              // Compare by date string to avoid time-of-day or timezone marking today as future
-              const isFuture = dateStr > todayStr;
-              
-              const challenge = Array.isArray(pastChallenges) ? pastChallenges.find(c => c && c.date === dateStr) : null;
-              const userCompletion = userCompletions[dateStr];
-              
-              days.push({
-                day,
-                date: dateStr,
-                dateObj,
-                challenge,
-                userCompletion,
-                isFuture
-              });
-            }
-            
-            return (
-              <div key={`${year}-${month}`} className="flex justify-center">
-                <div>
-                  <h4 className="text-xs font-medium text-gray-700 mb-2 text-center">{name}</h4>
-                  <div className="grid grid-cols-7 gap-1" style={{width: 'fit-content'}}>
-                    {days.map((dayData, idx) => {
-                    if (!dayData) {
-                      return <div key={`empty-${idx}`} className="w-4 h-4"></div>;
-                    }
-                    
-                    const { date, dateObj, challenge, userCompletion, isFuture } = dayData;
-                    const isCompleted = !!userCompletion;
-                    const isWinner = userCompletion && userCompletion.rank === 1;
-                    const isToday = date === todayStr;
-
-                    // Show green immediately today, even if rank is #1; gold only after the day passes
-                    const showWinner = isWinner && !isToday;
-                    const showCompleted = isCompleted && !showWinner;
-
-                    // Inline colors to avoid any Tailwind purge issues
-                    const bgColor = showWinner
-                      ? '#facc15' // yellow-300
-                      : showCompleted
-                      ? '#86efac' // green-300
-                      : challenge
-                      ? '#f3f4f6' // gray-100
-                      : '#f9fafb'; // gray-50
-                    const borderColor = showWinner
-                      ? '#eab308' // yellow-500
-                      : showCompleted
-                      ? '#22c55e' // green-500
-                      : challenge
-                      ? '#d1d5db' // gray-300
-                      : '#e5e7eb'; // gray-200
-                    const colorClass = showWinner
-                      ? 'bg-[#facc15] border-[#eab308]'
-                      : showCompleted
-                      ? 'bg-[#86efac] border-[#22c55e]'
-                      : challenge
-                      ? 'bg-gray-100 border-gray-300'
-                      : 'bg-gray-50 border-gray-200';
-                    
-                    if (isFuture) {
-
-                      return (
-                        <div
-                          key={date}
-                          className="w-4 h-4 rounded-sm border border-gray-200 bg-gray-50"
-                        />
-                      );
-                    }
-                    
-                    return (
-                      <div
-                        key={date}
-                        className={`w-4 h-4 rounded-sm border transition-all hover:shadow-md transition-shadow cursor-pointer group relative ${colorClass}`}
-                        style={{
-                          backgroundColor: bgColor,
-                          borderColor: borderColor,
-                          borderWidth: '1px',
-                          borderStyle: 'solid'
-                        }}
-                        data-bgcolor={bgColor}
-                        data-bordercolor={borderColor}
-                        data-showwinner={showWinner}
-                        data-showcompleted={showCompleted}
-                        title={challenge ? `${dateObj.toLocaleDateString()}\n${challenge.expression}` : dateObj.toLocaleDateString()}
-                      >
-                        {/* Tooltip */}
-                        {challenge && (
-                          <div className="hidden group-hover:block absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-64 bg-gray-900 text-white text-xs rounded p-3 z-10 shadow-lg whitespace-normal">
-                            <p className="font-semibold mb-1">{dateObj.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
-                            <p className="mb-2">f(x) = <span dangerouslySetInnerHTML={{ __html: challenge.expression }} /></p>
-                            {challenge.winner_username && (
-                              <p className="text-yellow-400">Winner: {challenge.winner_username} - {formatTime(challenge.best_time)}</p>
-                            )}
-                            {isCompleted && (
-                              <p className="text-green-400 mt-1">Your time: {formatTime(userCompletion.time)}</p>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="overflow-x-auto">
+          <HeatMap
+            value={heatMapValue}
+            startDate={heatMapStart}
+            endDate={heatMapEnd}
+            rectSize={12}
+            space={3}
+            legendCellSize={0}
+            panelColors={ACTIVITY_PANEL_COLORS}
+            weekLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
+            rectProps={{ rx: 2 }}
+            rectRender={(props, data) => {
+              const status = data.status || 'empty';
+              const completion = data.completion;
+              const titleParts = [String(data.date || '').replaceAll('/', '-')];
+              if (data.challenge) {
+                titleParts.push('challenge available');
+              }
+              if (completion?.time != null) {
+                titleParts.push(`your time ${formatTime(completion.time)}`);
+              }
+              if (status === 'winner') {
+                titleParts.push('you placed #1');
+              }
+              return (
+                <rect {...props} data-status={status}>
+                  <title>{titleParts.filter(Boolean).join(' · ')}</title>
+                </rect>
+              );
+            }}
+          />
         </div>
-        <div className="mt-4 flex gap-4 text-xs text-gray-600">
+        <div className="mt-4 flex flex-wrap gap-4 text-xs text-gray-600">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-gray-100 border border-gray-300 rounded-sm"></div>
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: ACTIVITY_PANEL_COLORS[0] }} />
             <span>Not completed</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-green-300 border border-green-500 rounded-sm"></div>
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: ACTIVITY_PANEL_COLORS[1] }} />
             <span>Completed</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 bg-yellow-300 border border-yellow-500 rounded-sm"></div>
+            <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: ACTIVITY_PANEL_COLORS[2] }} />
             <span>Winner</span>
           </div>
         </div>

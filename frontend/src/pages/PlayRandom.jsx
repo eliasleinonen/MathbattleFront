@@ -799,82 +799,86 @@ export default function PlayRandom() {
           )}
 
           {gameState.question && (
-            <div className="bg-white border border-gray-300 rounded p-8 mb-8">
-              {isBot && gameState.timeRemaining !== null && gameState.phase === 'question' && (
-                <div className="text-center mb-6">
-                  <div className={`text-6xl font-light ${gameState.timeRemaining <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
-                    {Math.ceil(gameState.timeRemaining)}
+            <div className="bg-white border border-gray-300 rounded p-8 mb-8 min-h-[320px] flex flex-col justify-between">
+              <div>
+                {isBot && gameState.timeRemaining !== null && gameState.phase === 'question' && (
+                  <div className="text-center mb-6">
+                    <div className={`text-6xl font-light ${gameState.timeRemaining <= 5 ? 'text-red-600' : 'text-gray-900'}`}>
+                      {Math.ceil(gameState.timeRemaining)}
+                    </div>
+                    <div className="text-sm text-gray-500 mt-2">seconds remaining</div>
                   </div>
-                  <div className="text-sm text-gray-500 mt-2">seconds remaining</div>
-                </div>
-              )}
-              {!isBot && gameState.phase === 'question' && (
-                <div className="text-center mb-4">
-                  <div className="text-3xl font-light text-gray-900">
-                    {elapsedTime.toFixed(1)}s
+                )}
+                {!isBot && gameState.phase === 'question' && (
+                  <div className="text-center mb-4">
+                    <div className="text-3xl font-light text-gray-900">
+                      {elapsedTime.toFixed(1)}s
+                    </div>
                   </div>
-                </div>
-              )}
-              
-              <h2 className="text-xl font-light text-gray-900 text-center mb-8">
-                f(x) = <span dangerouslySetInnerHTML={{ __html: gameState.question }} />, find f'(x)
-              </h2>
+                )}
+                
+                <h2 className="text-xl font-light text-gray-900 text-center mb-8">
+                  f(x) = <span dangerouslySetInnerHTML={{ __html: gameState.question }} />, find f'(x)
+                </h2>
+              </div>
 
-              {gameState.phase === 'question' && (
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <input
-                    type="text"
-                    value={gameState.userAnswer}
-                    onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
-                    onKeyDown={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && submitAnswer()}
-                    className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded focus:outline-none focus:border-gray-900"
-                    placeholder="e.g., 2*x or 2·x"
-                    autoFocus
-                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || gameState.opponentWon}
-                  />
-                  <button
-                    onClick={submitAnswer}
-                    className="bg-gray-900 hover:bg-gray-800 text-white text-sm px-6 py-3 rounded transition-colors"
-                    disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || !gameState.userAnswer.trim() || gameState.opponentWon}
-                  >
-                    submit
-                  </button>
-                  <button
-                    onClick={giveUpRound}
-                    disabled={gameState.gaveUp && !gameState.opponentGaveUp || gameState.opponentWon}
-                    className={
-                      `text-white text-sm px-6 py-3 rounded transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed ` +
-                      (gameState.opponentGaveUp && !gameState.gaveUp
-                        ? 'bg-green-600 hover:bg-green-700'
-                        : 'bg-gray-600 hover:bg-gray-700')
-                    }
-                  >
-                    {gameState.gaveUp
-                      ? (gameState.opponentGaveUp
-                          ? 'both gave up! advancing...'
-                          : 'waiting for opponent...')
-                      : (gameState.opponentGaveUp
-                          ? 'opponent gave up – click to advance'
-                          : 'give up this round')}
-                  </button>
-                </div>
-              )}
+              <div>
+                {gameState.phase === 'question' && (
+                  <div className="flex flex-col sm:flex-row gap-3 mb-4">
+                    <input
+                      type="text"
+                      value={gameState.userAnswer}
+                      onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
+                      onKeyDown={(e) => e.key === 'Enter' && !gameState.submitting && gameState.question && gameState.phase === 'question' && submitAnswer()}
+                      className="flex-1 px-4 py-3 text-lg border border-gray-300 rounded focus:outline-none focus:border-gray-900"
+                      placeholder="e.g., 2*x or 2·x"
+                      autoFocus
+                      disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || gameState.opponentWon}
+                    />
+                    <button
+                      onClick={submitAnswer}
+                      className="bg-gray-900 hover:bg-gray-800 text-white text-sm px-6 py-3 rounded transition-colors"
+                      disabled={!gameState.question || gameState.phase !== 'question' || gameState.submitting || !gameState.userAnswer.trim() || gameState.opponentWon}
+                    >
+                      submit
+                    </button>
+                    <button
+                      onClick={giveUpRound}
+                      disabled={gameState.gaveUp && !gameState.opponentGaveUp || gameState.opponentWon}
+                      className={
+                        `text-white text-sm px-6 py-3 rounded transition-colors disabled:bg-gray-500 disabled:cursor-not-allowed ` +
+                        (gameState.opponentGaveUp && !gameState.gaveUp
+                          ? 'bg-green-600 hover:bg-green-700'
+                          : 'bg-gray-600 hover:bg-gray-700')
+                      }
+                    >
+                      {gameState.gaveUp
+                        ? (gameState.opponentGaveUp
+                            ? 'both gave up! advancing...'
+                            : 'waiting for opponent...')
+                        : (gameState.opponentGaveUp
+                            ? 'opponent gave up – click to advance'
+                            : 'give up this round')}
+                    </button>
+                  </div>
+                )}
 
-              {gameState.isCorrect !== null && (
-                <div className="text-center p-8 bg-white border border-gray-300 rounded">
-                  <h3 className="text-lg font-light text-gray-900">
-                    {gameState.isCorrect ? 'you got it right' : 'wrong answer'}
-                  </h3>
-                </div>
-              )}
+                {gameState.isCorrect !== null && (
+                  <div className="text-center py-4">
+                    <h3 className="text-lg font-light text-gray-900">
+                      {gameState.isCorrect ? 'you got it right' : 'wrong answer'}
+                    </h3>
+                  </div>
+                )}
 
-              {gameState.opponentWon && (
-                <div className="text-center p-8 bg-white border border-gray-300 rounded">
-                  <h3 className="text-lg font-light text-gray-900">
-                    {displayOpponentName} got it right
-                  </h3>
-                </div>
-              )}
+                {gameState.opponentWon && (
+                  <div className="text-center py-4">
+                    <h3 className="text-lg font-light text-gray-900">
+                      {displayOpponentName} got it right
+                    </h3>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>

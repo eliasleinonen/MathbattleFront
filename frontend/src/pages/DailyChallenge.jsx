@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import HeatMap from '@uiw/react-heat-map';
 import api from '../api';
 import Seo from '../components/Seo';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { buildActivityHeatmapValues, heatmapRangeFromToday, ACTIVITY_PANEL_COLORS } from '../utils/activityHeatmap';
 
 const dailyChallengeSeo = (
@@ -235,7 +236,7 @@ export default function DailyChallenge() {
     return (
       <div className="min-h-screen p-8 bg-gray-50 flex items-center justify-center">
         {dailyChallengeSeo}
-        <div className="text-gray-600">Loading...</div>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { leaderboardAPI } from '../api';
 import Seo from '../components/Seo';
 
+import LoadingSpinner from '../components/LoadingSpinner';
+
 const leaderboardSeo = (
   <Seo
     title="Leaderboard - Top Players | Derivative Duel"
@@ -45,9 +47,9 @@ export default function Leaderboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         {leaderboardSeo}
-        <div className="text-2xl font-bold text-primary">Loading...</div>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

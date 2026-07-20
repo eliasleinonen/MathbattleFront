@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 import Seo from '../components/Seo';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -100,7 +101,12 @@ export default function Login() {
         )}
 
         <div id="googleSignInButton" className="flex justify-center min-h-[44px]">
-          {loading && <p className="text-sm text-gray-500">Signing you in…</p>}
+          {loading && (
+            <div className="flex items-center text-sm text-gray-500">
+              <LoadingSpinner size="sm" className="mr-2" />
+              <span>Signing you in…</span>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-3 my-6">

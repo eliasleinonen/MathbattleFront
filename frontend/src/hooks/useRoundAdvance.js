@@ -110,7 +110,8 @@ export function useRoundAdvance({ setGameState, onRoundStart, trackTimeLimit = f
     // single-flight lock through the whole countdown instead.
     const releaseLockAfterCountdown = !res.data.round_id;
 
-    const countdownStart = resolveCountdownStart(res.data.round_start_time);
+    // Start the 3-second countdown from the moment the question arrives in the frontend
+    const countdownStart = Date.now();
     const updateCountdown = () => {
       const elapsed = Date.now() - countdownStart;
       const remaining = Math.max(0, Math.ceil((COUNTDOWN_MS - elapsed) / 1000));

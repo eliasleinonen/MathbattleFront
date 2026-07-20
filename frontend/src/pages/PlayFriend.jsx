@@ -15,7 +15,6 @@ export default function PlayFriend() {
   const [shareLink, setShareLink] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedOpponent, setSelectedOpponent] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -31,7 +30,6 @@ export default function PlayFriend() {
   }, [pendingChallengeId]);
 
   useEffect(() => {
-    // Anonymous play is now supported - no login required
     // If URL has a match code, auto-fill it
     if (urlMatchCode) {
       setMatchCode(urlMatchCode.toUpperCase());
@@ -107,33 +105,36 @@ export default function PlayFriend() {
       const response = await api.post('/game/friend/create', {
         opponent_username: username
       });
-      // Store the challenge ID to cancel if user navigates away
-      setPendingChallengeId(response.data.match_id);
-      setCreatedMatchId(response.data.match_id);
       setGeneratedCode(response.data.match_code);
-      // Navigate directly to game since opponent is specified
-      navigate(`/game/${response.data.match_code}`);
+      setCreatedMatchId(response.data.match_id);
+      setPendingChallengeId(response.data.match_id);
+      setMode('create');
     } catch (error) {
-      console.error('Failed to create match:', error);
-      setErrorMsg('Failed to challenge user. Please try again.');
+      console.error('Failed to challenge user:', error);
+      setErrorMsg(error.response?.data?.detail || 'Failed to challenge user. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const joinMatchByCode = async (code) => {
-    if (!code.trim()) return;
-
+    if (!code || !code.trim()) return;
     setIsLoading(true);
     setErrorMsg('');
+    const cleanCode = code.trim().toUpperCase();
+
     try {
       const response = await api.post('/game/friend/join', {
-        match_code: code.toUpperCase()
+        match_code: cleanCode
       });
-      navigate(`/game/${code.toUpperCase()}`);
+      navigate(`/game/${cleanCode}`);
     } catch (error) {
       console.error('Failed to join match:', error);
-      setErrorMsg(error.response?.data?.detail || 'Failed to join match. Please check the code.');
+      if (error.response?.data?.detail === 'Cannot join your own match') {
+        navigate(`/game/${cleanCode}`);
+      } else {
+        setErrorMsg(error.response?.data?.detail || 'Failed to join match. Please check the code.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -157,23 +158,29 @@ export default function PlayFriend() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-gray-50">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-mono">
       <Seo
         title="Challenge a Friend - Private Derivative Duel | Derivative Duel"
         description="Create a private match and challenge a friend to a calculus derivative battle. Share a link or match code and see who differentiates faster."
         path="/play/friend"
       />
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-xl mx-auto">
         <button
+          type="button"
           onClick={() => navigate('/')}
-          className="text-sm text-gray-600 hover:text-gray-900 mb-8"
+          className="text-sm text-gray-600 hover:text-gray-900 mb-6 flex items-center gap-1 transition-colors"
         >
           ← back
         </button>
 
-        <h1 className="text-2xl font-medium text-gray-800 mb-8">
-          play with friend
-        </h1>
+        <div className="mb-8">
+          <h1 className="text-3xl font-medium text-gray-900 tracking-tight mb-2">
+            Play with Friend
+          </h1>
+          <p className="text-sm text-gray-600">
+            Create a private 1v1 calculus battle or join with a room code.
+          </p>
+        </div>
 
         {errorMsg && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded text-sm text-center">
@@ -182,87 +189,102 @@ export default function PlayFriend() {
         )}
 
         {!mode && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <button
+              type="button"
               onClick={createMatchWithLink}
               disabled={isLoading}
-              className="bg-white border border-gray-300 hover:border-gray-400 p-6 rounded text-left transition-colors"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h2 className="text-lg font-medium text-gray-900 mb-1">create match link</h2>
-              <p className="text-sm text-gray-500">share link with anyone</p>
+              <div className="flex justify-between items-start mb-2">
+                <h2 className="text-lg font-medium text-gray-900 group-hover:text-black">Create Match Link</h2>
+                <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">LINK</span>
+              </div>
+              <p className="text-sm text-gray-500">Generate a unique invite link and share with anyone</p>
             </button>
 
             <button
+              type="button"
               onClick={() => setMode('search')}
-              className="bg-white border border-gray-300 hover:border-gray-400 p-6 rounded text-left transition-colors"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h2 className="text-lg font-medium text-gray-900 mb-1">challenge player</h2>
-              <p className="text-sm text-gray-500">search by username</p>
+              <div className="flex justify-between items-start mb-2">
+                <h2 className="text-lg font-medium text-gray-900 group-hover:text-black">Challenge Player</h2>
+                <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">DIRECT</span>
+              </div>
+              <p className="text-sm text-gray-500">Search registered players by username</p>
             </button>
 
             <button
+              type="button"
               onClick={() => setMode('join')}
-              className="bg-white border border-gray-300 hover:border-gray-400 p-6 rounded text-left transition-colors md:col-span-2"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h2 className="text-lg font-medium text-gray-900 mb-1">join with code</h2>
-              <p className="text-sm text-gray-500">enter match code</p>
+              <div className="flex justify-between items-start mb-2">
+                <h2 className="text-lg font-medium text-gray-900 group-hover:text-black">Join with Code</h2>
+                <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-mono">ROOM CODE</span>
+              </div>
+              <p className="text-sm text-gray-500">Enter a 6-character match code from a friend</p>
             </button>
           </div>
         )}
 
         {mode === 'create' && (
-          <div className="bg-white border border-gray-200 rounded p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">match created</h2>
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Match Created</h2>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-500 mb-2">match code</p>
-                <div className="bg-gray-50 border border-gray-300 rounded p-4 flex justify-between items-center">
-                  <p className="text-2xl font-light text-gray-900 tracking-wider">
+                <p className="text-xs text-gray-500 mb-2">MATCH CODE</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-md p-4 flex justify-between items-center">
+                  <p className="text-2xl font-mono text-gray-900 tracking-widest font-semibold">
                     {generatedCode}
                   </p>
                   <button
+                    type="button"
                     onClick={() => copyToClipboard(generatedCode, 'code')}
-                    className="text-sm text-gray-600 hover:text-gray-900"
+                    className="text-xs font-mono bg-white border border-gray-300 hover:border-gray-900 text-gray-900 px-3 py-1.5 rounded transition-colors"
                   >
-                    {copiedCode ? 'copied' : 'copy'}
+                    {copiedCode ? '✓ COPIED' : 'COPY CODE'}
                   </button>
                 </div>
               </div>
+
               <div>
-                <p className="text-xs text-gray-500 mb-2">share link</p>
-                <div className="bg-gray-50 border border-gray-300 rounded p-3 flex justify-between items-center">
-                  <p className="text-sm text-gray-700 truncate mr-2">
+                <p className="text-xs text-gray-500 mb-2">SHARE LINK</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-md p-3 flex justify-between items-center gap-2">
+                  <p className="text-xs font-mono text-gray-700 truncate">
                     {shareLink}
                   </p>
                   <button
+                    type="button"
                     onClick={() => copyToClipboard(shareLink, 'link')}
-                    className="text-sm text-gray-600 hover:text-gray-900 whitespace-nowrap"
+                    className="text-xs font-mono bg-white border border-gray-300 hover:border-gray-900 text-gray-900 px-3 py-1.5 rounded transition-colors whitespace-nowrap"
                   >
-                    {copiedLink ? 'copied' : 'copy'}
+                    {copiedLink ? '✓ COPIED' : 'COPY LINK'}
                   </button>
                 </div>
               </div>
+
               <button
-                onClick={() => {
-                  navigate(`/game/${generatedCode}`);
-                }}
-                className="w-full bg-gray-900 hover:bg-gray-800 text-white text-sm py-3 rounded transition-colors"
+                type="button"
+                onClick={() => navigate(`/game/${generatedCode}`)}
+                className="w-full bg-gray-900 hover:bg-black text-white text-sm font-mono py-3 rounded-md transition-colors mt-2"
               >
-                waiting for opponent...
+                Waiting for opponent... (Enter match)
               </button>
             </div>
           </div>
         )}
 
         {mode === 'search' && (
-          <div className="bg-white border border-gray-200 rounded p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">search player</h2>
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Search Player</h2>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded mb-4 text-gray-900 focus:outline-none focus:border-gray-900"
-              placeholder="enter username..."
+              className="w-full px-4 py-3 border border-gray-300 rounded-md mb-4 text-gray-900 font-mono text-sm focus:outline-none focus:border-gray-900"
+              placeholder="Enter username..."
               autoFocus
             />
 
@@ -271,68 +293,84 @@ export default function PlayFriend() {
                 {searchResults.map((user) => (
                   <button
                     key={user.username}
+                    type="button"
                     onClick={() => challengeUser(user.username)}
                     disabled={isLoading}
-                    className="w-full flex justify-between items-center p-3 border border-gray-200 rounded hover:border-gray-400 transition-colors text-left"
+                    className="w-full flex justify-between items-center p-3 border border-gray-200 rounded-md hover:border-gray-900 transition-colors text-left bg-gray-50/50 hover:bg-white"
                   >
-                    <span className="text-sm text-gray-900">{user.username}</span>
-                    <span className="text-sm text-gray-500">{user.elo} elo</span>
+                    <span className="text-sm font-medium text-gray-900">{user.username}</span>
+                    <span className="text-xs text-gray-500 font-mono">{user.elo} ELO</span>
                   </button>
                 ))}
               </div>
             ) : searchQuery.length >= 2 ? (
-              <p className="text-sm text-gray-500 text-center py-4">no players found</p>
+              <p className="text-sm text-gray-500 text-center py-4">No players found</p>
             ) : (
-              <p className="text-sm text-gray-500 text-center py-4">type to search</p>
+              <p className="text-sm text-gray-500 text-center py-4">Type to search players</p>
             )}
           </div>
         )}
 
         {mode === 'join' && (
-          <div className="bg-white border border-gray-200 rounded p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">join match</h2>
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <h2 className="text-lg font-medium text-gray-900 mb-4">Join Match</h2>
             <input
               type="text"
               value={matchCode}
               onChange={(e) => setMatchCode(e.target.value.toUpperCase())}
-              onKeyPress={(e) => e.key === 'Enter' && joinMatch()}
-              className="w-full px-4 py-3 border border-gray-300 rounded mb-4 text-center text-lg text-gray-900 focus:outline-none focus:border-gray-900"
-              placeholder="enter code"
+              onKeyDown={(e) => e.key === 'Enter' && joinMatch()}
+              className="w-full px-4 py-3 border border-gray-300 rounded-md mb-4 text-center font-mono text-xl tracking-widest text-gray-900 focus:outline-none focus:border-gray-900 uppercase"
+              placeholder="ENTER CODE"
               maxLength={6}
               autoFocus
             />
             <button
+              type="button"
               onClick={joinMatch}
               disabled={!matchCode.trim() || isLoading}
-              className="w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-400 text-white text-sm py-3 rounded transition-colors"
+              className="w-full bg-gray-900 hover:bg-black disabled:bg-gray-400 text-white text-sm font-mono py-3 rounded-md transition-colors"
             >
-              {isLoading ? 'joining...' : 'join match'}
+              {isLoading ? 'Joining...' : 'Join Match'}
             </button>
           </div>
         )}
 
         {mode && (
           <button
+            type="button"
             onClick={() => {
               setMode(null);
               setMatchCode('');
               setSearchQuery('');
               setGeneratedCode('');
               setShareLink('');
+              setErrorMsg('');
             }}
-            className="mt-4 text-sm text-gray-600 hover:text-gray-900"
+            className="mt-4 text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
-            ← back to options
+            ← Back to options
           </button>
         )}
 
-        <div className="mt-8 bg-white border border-gray-200 rounded p-6">
-          <h3 className="text-sm font-medium text-gray-700 mb-3">how it works</h3>
-          <ul className="space-y-1.5 text-sm text-gray-600">
-            <li>create match link and share with anyone</li>
-            <li>search and challenge players by username</li>
-            <li>or join with a friend's code</li>
-            <li>login optional - play as guest or sign in to track stats</li>
+        <div className="mt-8 bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <h3 className="text-sm font-medium text-gray-900 mb-3">How Private Duels Work</h3>
+          <ul className="space-y-2 text-xs text-gray-600 leading-relaxed">
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+              Create a match link and send it directly to a friend.
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+              Search and challenge registered players by username.
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+              Join directly with a 6-character room code.
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+              Guest friendly — no account or login required to play.
+            </li>
           </ul>
         </div>
       </div>

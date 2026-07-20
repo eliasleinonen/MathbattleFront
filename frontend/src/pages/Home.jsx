@@ -192,27 +192,27 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative z-10 border-t border-gray-200/80 bg-[#f2f3f0]/90 px-5 py-12 sm:px-8">
+      <div className="relative z-10 border-t border-gray-200 bg-gray-50 px-5 py-12 sm:px-8">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-10 text-sm text-gray-600 leading-relaxed space-y-2">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8 text-sm text-gray-600 leading-relaxed space-y-2">
             <p>
               Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the{' '}
-              <button type="button" onClick={() => navigate('/leaderboard')} className="text-gray-900 underline hover:text-gray-600">
+              <button type="button" onClick={() => navigate('/leaderboard')} className="text-gray-900 font-medium underline hover:text-gray-600">
                 leaderboard
               </button>
               .
             </p>
             <p>
               Play{' '}
-              <button type="button" onClick={() => navigate('/play/random')} className="text-gray-900 underline hover:text-gray-600">
+              <button type="button" onClick={() => navigate('/play/random')} className="text-gray-900 font-medium underline hover:text-gray-600">
                 random matches
               </button>{' '}
               or{' '}
-              <button type="button" onClick={() => navigate('/play/friend')} className="text-gray-900 underline hover:text-gray-600">
+              <button type="button" onClick={() => navigate('/play/friend')} className="text-gray-900 font-medium underline hover:text-gray-600">
                 challenge friends
               </button>
               ; need a refresher? Open the{' '}
-              <button type="button" onClick={() => navigate('/how-to-derivate')} className="text-gray-900 underline hover:text-gray-600">
+              <button type="button" onClick={() => navigate('/how-to-derivate')} className="text-gray-900 font-medium underline hover:text-gray-600">
                 derivative guide
               </button>
               .
@@ -226,22 +226,22 @@ export default function Home() {
           )}
 
           {challenges.length > 0 && (
-            <div className="border border-gray-300 bg-white/70 p-5 mb-8">
-              <h3 className="text-sm font-medium text-gray-700 mb-4">pending challenges</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8">
+              <h3 className="text-sm font-medium text-gray-900 mb-4">Pending Challenges</h3>
               <div className="space-y-3">
                 {challenges.map((challenge) => (
                   <div
                     key={challenge.match_id}
-                    className="flex justify-between items-center gap-3 p-3 border border-gray-200"
+                    className="flex justify-between items-center gap-3 p-3 border border-gray-200 rounded-md bg-gray-50"
                   >
                     <div>
-                      <p className="text-sm text-gray-900">{challenge.challenger}</p>
+                      <p className="text-sm font-medium text-gray-900">{challenge.challenger}</p>
                       <p className="text-xs text-gray-500">wants to challenge you</p>
                     </div>
                     <button
                       type="button"
                       onClick={() => acceptChallenge(challenge.match_id, challenge.match_code)}
-                      className="bg-gray-900 hover:bg-gray-800 text-white text-sm py-2 px-4 rounded transition-colors"
+                      className="bg-gray-900 hover:bg-black text-white text-sm py-2 px-4 rounded transition-colors"
                     >
                       accept
                     </button>
@@ -251,48 +251,63 @@ export default function Home() {
             </div>
           )}
 
-          <h2 className="font-sans text-xl font-bold text-gray-900 mb-4">Game Modes</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <h2 className="text-xl font-bold text-gray-900 mb-4 tracking-tight">Game Modes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <button
               type="button"
               onClick={() => navigate('/play/random')}
-              className="bg-white/80 border border-gray-300 hover:border-gray-500 p-5 text-left transition-colors"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h3 className="font-sans text-lg font-medium text-gray-900 mb-1">play random</h3>
-              <p className="text-sm text-gray-500">match with opponent</p>
+              <h3 className="text-lg font-medium text-gray-900 group-hover:text-black mb-1">Play Random</h3>
+              <p className="text-sm text-gray-500">Match instantly with an online opponent</p>
             </button>
 
             <button
               type="button"
               onClick={() => navigate('/play/friend')}
-              className="bg-white/80 border border-gray-300 hover:border-gray-500 p-5 text-left transition-colors"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h3 className="font-sans text-lg font-medium text-gray-900 mb-1">play friend</h3>
-              <p className="text-sm text-gray-500">challenge someone</p>
+              <h3 className="text-lg font-medium text-gray-900 group-hover:text-black mb-1">Play Friend</h3>
+              <p className="text-sm text-gray-500">Create room link or challenge by username</p>
             </button>
 
             <button
               type="button"
               onClick={() => navigate('/daily-challenge')}
-              className="bg-white/80 border border-gray-300 hover:border-gray-500 p-5 text-left transition-colors md:col-span-2"
+              className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group md:col-span-2"
             >
-              <h3 className="font-sans text-lg font-medium text-gray-900 mb-1">daily challenge</h3>
-              <p className="text-sm text-gray-500">one derivative puzzle every day - compete for the fastest time</p>
+              <div className="flex justify-between items-center mb-1">
+                <h3 className="text-lg font-medium text-gray-900 group-hover:text-black">Daily Challenge</h3>
+                <span className="text-[10px] bg-green-100 text-green-800 font-mono px-2 py-0.5 rounded">NEW PUZZLE EVERY DAY</span>
+              </div>
+              <p className="text-sm text-gray-500">One derivative problem every day — compete on the daily leaderboard for the fastest time</p>
             </button>
           </div>
 
-          <div className="mt-10 border-t border-gray-300 pt-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-3">rules</h3>
-            <ul className="space-y-1.5 text-sm text-gray-600">
-              <li>solve derivative problems</li>
-              <li>first to 3 rounds wins</li>
-              <li>elo changes based on results</li>
-              <li>harder questions at higher elo</li>
-              <li className="mt-3">
+          <div className="mt-8 bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <h3 className="text-sm font-medium text-gray-900 mb-3">Rules</h3>
+            <ul className="space-y-2 text-xs text-gray-600 leading-relaxed">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+                Solve calculus derivative problems as quickly as possible.
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+                First player to reach 3 round wins takes the match.
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+                ELO rating adjusts dynamically after every match.
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-gray-900 rounded-full"></span>
+                Higher ELO unlocks more complex derivative functions.
+              </li>
+              <li className="pt-2">
                 <button
                   type="button"
                   onClick={() => navigate('/how-to-derivate')}
-                  className="text-gray-900 hover:text-gray-600 underline"
+                  className="text-gray-900 font-medium hover:text-gray-600 underline"
                 >
                   how to derivate →
                 </button>
@@ -300,7 +315,7 @@ export default function Home() {
             </ul>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-4 justify-center text-sm text-gray-600 pb-8">
+          <div className="mt-8 flex flex-wrap gap-4 justify-center text-sm text-gray-600 pb-4">
             <button type="button" onClick={() => navigate('/about')} className="underline hover:text-gray-900">About</button>
             <span aria-hidden="true">•</span>
             <button type="button" onClick={() => navigate('/faq')} className="underline hover:text-gray-900">FAQ</button>

@@ -1,18 +1,18 @@
-import React from "react";
 import { useNavigate } from 'react-router-dom';
 
 export default function TermsAndPrivacy() {
   const navigate = useNavigate();
   return (
-    <div className="fixed bottom-0 left-0 w-full flex flex-col items-center z-50">
-      <div className="flex flex-row gap-6 mb-2">
+    <footer className="w-full py-6 bg-gray-50 border-t border-gray-200 text-center font-mono">
+      <div className="flex flex-row justify-center gap-6">
         <button
-          className="text-xs text-gray-500 underline hover:text-gray-900 bg-white/80 px-2 py-1 rounded"
+          type="button"
+          className="text-xs text-gray-500 underline hover:text-gray-900 transition-colors"
           onClick={() => navigate('/terms-and-services')}
         >
           Terms and Services / GDPR
         </button>
       </div>
-    </div>
+    </footer>
   );
 }

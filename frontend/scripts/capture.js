@@ -18,15 +18,21 @@ async function main() {
   });
 
   const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800 });
+  await page.setViewport({ width: 1280, height: 900 });
 
   await page.goto('http://127.0.0.1:4173/daily-challenge', { waitUntil: 'networkidle0' });
-  await new Promise(res => setTimeout(res, 500));
   await page.screenshot({ path: path.join(artifactDir, 'daily_challenge_fixed.png'), fullPage: false });
+
+  await page.goto('http://127.0.0.1:4173/play/friend', { waitUntil: 'networkidle0' });
+  await page.screenshot({ path: path.join(artifactDir, 'play_friend_fixed.png'), fullPage: false });
+
+  await page.goto('http://127.0.0.1:4173/', { waitUntil: 'networkidle0' });
+  await page.evaluate(() => window.scrollTo(0, 500));
+  await page.screenshot({ path: path.join(artifactDir, 'home_fixed.png'), fullPage: false });
 
   await browser.close();
   server.kill();
-  console.log('Saved screenshot!');
+  console.log('Saved screenshots!');
 }
 
 main().catch(err => {

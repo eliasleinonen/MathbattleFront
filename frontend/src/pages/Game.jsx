@@ -463,13 +463,13 @@ export default function Game() {
           <div className="flex gap-3 mt-4">
             <button
               onClick={() => navigate('/play/friend')}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm px-6 py-2 rounded transition-colors"
+              className="flex-1 bg-gray-900 hover:bg-black text-white text-sm px-6 py-2 rounded transition-colors"
             >
               play again
             </button>
             <button
               onClick={() => navigate('/')}
-              className="flex-1 bg-gray-900 hover:bg-gray-800 text-white text-sm px-6 py-2 rounded transition-colors"
+              className="flex-1 bg-white hover:bg-gray-50 text-gray-900 text-sm px-6 py-2 rounded border border-gray-300 hover:border-gray-900 transition-colors"
             >
               home
             </button>

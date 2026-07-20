@@ -34,17 +34,17 @@ describe('Home elo squiggle', () => {
     vi.clearAllMocks();
   });
 
-  it('shows the guest rating on the graph tip when logged out', async () => {
+  it('keeps guest elo on the curve metadata without a permanent tip label', async () => {
     renderHome();
 
     await waitFor(() => {
       expect(screen.getByRole('img', { name: `Rating curve at ${DEFAULT_ELO} elo` })).toBeDefined();
     });
-    expect(screen.getByText(String(DEFAULT_ELO))).toBeDefined();
+    expect(screen.queryByText(String(DEFAULT_ELO))).toBeNull();
     expect(api.get).not.toHaveBeenCalled();
   });
 
-  it('moves the graph tip to the profile elo when logged in', async () => {
+  it('uses profile elo for the hoverable curve when logged in', async () => {
     window.localStorage.setItem('token', 'test-token');
     api.get.mockImplementation((url) => {
       if (url === '/user/profile') {
@@ -63,7 +63,7 @@ describe('Home elo squiggle', () => {
     await waitFor(() => {
       expect(screen.getByRole('img', { name: 'Rating curve at 1642 elo' })).toBeDefined();
     });
-    expect(screen.getByText('1642')).toBeDefined();
+    expect(screen.queryByText('1642')).toBeNull();
     expect(screen.queryByText('Your Stats')).toBeNull();
   });
 

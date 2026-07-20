@@ -1,20 +1,37 @@
+import { useState } from 'react';
 import { buildEloSquigglePath } from '../utils/eloSquiggle';
 
 /**
- * Decorative rating curve for the home hero.
- * Renders only the squiggle + the readable elo on the tip — no axes/chrome.
+ * Full-bleed decorative curve for the home hero.
+ * Line always runs left edge → right edge; current elo appears only on hover.
  */
 export default function EloSquiggleGraph({ elo, className = '' }) {
-  const { path, endX, endY, elo: rating, width, height } = buildEloSquigglePath(elo);
-  const tipLeft = (endX / width) * 100;
-  const tipTop = (endY / height) * 100;
-  const tipOnRight = endX > width * 0.72;
+  const { path, elo: rating, width, height } = buildEloSquigglePath(elo);
+  const [hover, setHover] = useState(null);
+
+  const updateHover = (event) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    if (bounds.width <= 0 || bounds.height <= 0) return;
+    setHover({
+      x: ((event.clientX - bounds.left) / bounds.width) * 100,
+      y: ((event.clientY - bounds.top) / bounds.height) * 100,
+    });
+  };
+
+  const clearHover = () => setHover(null);
 
   return (
-    <div className={className} role="img" aria-label={`Rating curve at ${rating} elo`}>
+    <div
+      className={className}
+      role="img"
+      aria-label={`Rating curve at ${rating} elo`}
+      onPointerEnter={updateHover}
+      onPointerMove={updateHover}
+      onPointerLeave={clearHover}
+    >
       <div className="relative h-full w-full">
         <svg
-          className="absolute inset-0 h-full w-full text-inherit"
+          className="pointer-events-none absolute inset-0 h-full w-full text-inherit"
           viewBox={`0 0 ${width} ${height}`}
           preserveAspectRatio="none"
           aria-hidden="true"
@@ -27,25 +44,21 @@ export default function EloSquiggleGraph({ elo, className = '' }) {
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
-            className="elo-squiggle-path"
+            className="elo-squiggle-path origin-center"
           />
         </svg>
-        <span
-          className="elo-squiggle-tip absolute flex items-center gap-1.5 text-inherit"
-          style={{
-            left: `${tipLeft}%`,
-            top: `${tipTop}%`,
-            // Park the readable rating just above the tip so the stroke never crosses the digits.
-            transform: tipOnRight
-              ? 'translate(-100%, calc(-100% - 0.35rem))'
-              : 'translate(0.2rem, calc(-100% - 0.35rem))',
-          }}
-        >
-          <span className="elo-squiggle-dot inline-block h-2 w-2 shrink-0 rounded-full bg-current" aria-hidden="true" />
-          <span className="elo-squiggle-label font-sans text-xl font-semibold tabular-nums tracking-tight sm:text-2xl">
+        {hover && (
+          <span
+            className="elo-squiggle-hover pointer-events-none absolute z-10 font-sans text-sm font-semibold tabular-nums tracking-tight text-inherit sm:text-base"
+            style={{
+              left: `${hover.x}%`,
+              top: `${hover.y}%`,
+              transform: 'translate(-50%, calc(-100% - 0.55rem))',
+            }}
+          >
             {rating}
           </span>
-        </span>
+        )}
       </div>
     </div>
   );

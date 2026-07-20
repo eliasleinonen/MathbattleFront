@@ -163,7 +163,7 @@ export default function Home() {
 
         <EloSquiggleGraph
           elo={displayElo}
-          className="pointer-events-none absolute inset-x-[4%] top-[10%] bottom-[38%] z-0 text-[#1a1a1a] opacity-90 home-elo-graph"
+          className="absolute inset-x-0 top-[10%] bottom-[38%] z-10 cursor-crosshair text-[#1a1a1a] opacity-90 home-elo-graph"
         />
 
         <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-xl home-hero-copy">

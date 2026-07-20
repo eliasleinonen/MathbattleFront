@@ -1,7 +1,7 @@
 /** Default guest / unknown rating used across the app. */
 export const DEFAULT_ELO = 1000;
 
-/** Playable band used to place the curve tip on screen. */
+/** Playable band used only to seed curve personality. */
 export const ELO_DISPLAY_MIN = 600;
 export const ELO_DISPLAY_MAX = 2400;
 
@@ -14,19 +14,6 @@ export function normalizeElo(elo) {
   const n = typeof elo === 'string' ? Number(elo.trim()) : Number(elo);
   if (!Number.isFinite(n)) return DEFAULT_ELO;
   return Math.min(ELO_DISPLAY_MAX, Math.max(ELO_DISPLAY_MIN, Math.round(n)));
-}
-
-/**
- * Higher elo → higher on screen (smaller Y).
- */
-export function eloToEndY(
-  elo,
-  { minY = 40, maxY = 260, minElo = ELO_DISPLAY_MIN, maxElo = ELO_DISPLAY_MAX } = {}
-) {
-  const e = normalizeElo(elo);
-  const span = maxElo - minElo || 1;
-  const t = (e - minElo) / span;
-  return maxY - t * (maxY - minY);
 }
 
 function mulberry32(seed) {
@@ -58,48 +45,48 @@ function catmullRomToBezier(points) {
 }
 
 /**
- * Build a deterministic, always-squiggly path that ends at the rating height.
- * Only geometry — no axes/labels. The tip coordinates are returned so UI can
- * park the readable elo number on the line itself.
+ * Full-bleed squiggle: always starts at the left edge and ends at the right edge.
+ * Elo only seeds the wiggle personality — the UI span is the priority.
  */
 export function buildEloSquigglePath(
   elo,
-  { width = 800, height = 300, paddingX = 28, paddingY = 28 } = {}
+  { width = 800, height = 300, paddingY = 36 } = {}
 ) {
   const rating = normalizeElo(elo);
   const minY = paddingY;
   const maxY = height - paddingY;
-  const endX = width - paddingX;
-  const endY = eloToEndY(rating, { minY, maxY });
-  const startX = paddingX;
-  // Start opposite the tip so low and high ratings both get a lively climb/drop.
-  const startY = endY > height * 0.5 ? minY + (maxY - minY) * 0.28 : maxY - (maxY - minY) * 0.18;
+  const midY = (minY + maxY) / 2;
+  const startX = 0;
+  const endX = width;
 
   const rand = mulberry32(rating * 9973 + 42);
-  const segmentCount = 6;
+  // Keep start/end in a clear mid band so the full-bleed stroke stays obvious.
+  const startY = midY + (rand() - 0.5) * (maxY - minY) * 0.35;
+  const endY = midY + (rand() - 0.5) * (maxY - minY) * 0.3;
+
+  const segmentCount = 8;
   const points = [{ x: startX, y: startY }];
 
   for (let i = 1; i < segmentCount; i++) {
     const t = i / segmentCount;
     const x = startX + (endX - startX) * t;
     const baseY = startY + (endY - startY) * t;
-    // Keep amplitude high so guest 1000 (mid band) still looks playful.
-    const amp = 62 + rand() * 28;
+    const amp = 54 + rand() * 30;
     const wave =
-      Math.sin(t * Math.PI * 3.6 + rating * 0.017) * amp +
-      Math.sin(t * Math.PI * 7 + rating * 0.031) * (amp * 0.45) +
-      Math.cos(t * Math.PI * 2.2 + rating * 0.011) * (amp * 0.25) +
-      (rand() - 0.5) * 30;
+      Math.sin(t * Math.PI * 3.4 + rating * 0.019) * amp +
+      Math.sin(t * Math.PI * 6.8 + rating * 0.029) * (amp * 0.42) +
+      Math.cos(t * Math.PI * 2.1 + rating * 0.013) * (amp * 0.28) +
+      (rand() - 0.5) * 26;
     const y = Math.min(maxY, Math.max(minY, baseY + wave));
     points.push({ x, y });
   }
 
-  points.push({ x: endX, y: endY });
+  points.push({ x: endX, y: Math.min(maxY, Math.max(minY, endY)) });
 
   return {
     path: catmullRomToBezier(points),
     endX,
-    endY,
+    endY: points[points.length - 1].y,
     elo: rating,
     width,
     height,

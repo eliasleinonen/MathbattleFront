@@ -214,7 +214,7 @@ export default function Game() {
           setGameState(prev => {
             // Don't start new round if match is finished
             if (prev.player1Score >= 3 || prev.player2Score >= 3) {
-              return { ...prev, phase: 'finished', matchWinner: res.data.match_winner, eloChange: res.data.elo_change || 0 };
+              return { ...prev, phase: 'finished', matchWinner: res.data.match_winner || res.data.winner_id || res.data.winner, eloChange: res.data.elo_change || 0 };
             }
             return {
               ...prev,
@@ -242,7 +242,7 @@ export default function Game() {
             setGameState(prev => ({
               ...prev,
               phase: 'finished',
-              matchWinner: res.data.match_winner,
+              matchWinner: res.data.match_winner || res.data.winner_id || res.data.winner,
               eloChange: res.data.elo_change || 0,
             }));
           }, 2000);
@@ -432,16 +432,14 @@ export default function Game() {
   }
 
   if (gameState.phase === 'finished') {
-    const won = gameState.matchWinner === userId;
+    const userScore = isPlayer1 ? gameState.player1Score : gameState.player2Score;
+    const opponentScore = isPlayer1 ? gameState.player2Score : gameState.player1Score;
+    const won = gameState.matchWinner ? gameState.matchWinner === userId : userScore > opponentScore;
     const eloSign = won ? '+' : '-';
     const displayOldElo = oldElo;
     const displayNewElo = userElo;
     
     console.log('Match finished - oldElo:', oldElo, 'userElo:', userElo, 'eloChange:', gameState.eloChange);
-    
-    // Show current user's score first
-    const userScore = isPlayer1 ? gameState.player1Score : gameState.player2Score;
-    const opponentScore = isPlayer1 ? gameState.player2Score : gameState.player1Score;
     
     return (
       <div className="min-h-screen flex items-center justify-center p-8 bg-gray-50">

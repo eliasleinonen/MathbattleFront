@@ -685,7 +685,9 @@ export default function PlayRandom() {
   }
 
   if (gameState.phase === 'finished') {
-    const won = gameState.matchWinner === userId;
+    const userScore = isPlayer1 ? gameState.player1Score : gameState.player2Score;
+    const opponentScore = isPlayer1 ? gameState.player2Score : gameState.player1Score;
+    const won = gameState.matchWinner ? gameState.matchWinner === userId : userScore > opponentScore;
     const eloSign = won ? '+' : '-';
     // oldElo is stored before match, userElo is updated after
     const displayOldElo = oldElo;
@@ -693,10 +695,6 @@ export default function PlayRandom() {
     const absoluteEloChange = Math.abs(gameState.eloChange);
     
     console.log('Match finished - oldElo:', oldElo, 'userElo:', userElo, 'eloChange:', gameState.eloChange, 'won:', won);
-    
-    // Show current user's score first
-    const userScore = isPlayer1 ? gameState.player1Score : gameState.player2Score;
-    const opponentScore = isPlayer1 ? gameState.player2Score : gameState.player1Score;
     
     return (
       <div className="min-h-screen flex items-center justify-center p-8 bg-gray-50">

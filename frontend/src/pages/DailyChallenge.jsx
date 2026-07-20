@@ -182,7 +182,7 @@ export default function DailyChallenge() {
     return (
       <div className="bg-white border border-gray-200 rounded p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity</h3>
-        <div className="overflow-x-auto">
+        <div className="w-full overflow-x-auto [&_svg]:w-full [&_svg]:h-auto">
           <HeatMap
             value={heatMapValue}
             startDate={heatMapStart}

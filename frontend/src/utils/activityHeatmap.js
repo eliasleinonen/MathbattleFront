@@ -23,42 +23,63 @@ export function dateFromIso(isoDate) {
   return new Date(parts.year, parts.month - 1, parts.day);
 }
 
-/**
- * @param {Array<{ date?: string }>} pastChallenges
- * @param {Record<string, { time?: number, rank?: number }>} userCompletions
- * @param {string} todayStr YYYY-MM-DD from server
- */
-export function buildActivityHeatmapValues(pastChallenges, userCompletions, todayStr) {
-  const challenges = Array.isArray(pastChallenges) ? pastChallenges : [];
-  const completions = userCompletions && typeof userCompletions === 'object' ? userCompletions : {};
-  const today = todayStr || '';
-
-  return challenges
-    .filter((challenge) => challenge && typeof challenge.date === 'string')
-    .map((challenge) => {
-      const completion = completions[challenge.date];
-      const isToday = challenge.date === today;
-      const isWinner = Boolean(completion && completion.rank === 1 && !isToday);
-      const isCompleted = Boolean(completion);
-
-      let count = 0;
-      if (isWinner) count = 2;
-      else if (isCompleted) count = 1;
-
-      return {
-        date: toHeatmapDate(challenge.date),
-        count,
-        challenge,
-        completion: completion || null,
-        status: isWinner ? 'winner' : isCompleted ? 'completed' : 'not-completed',
-      };
-    });
-}
-
 export function heatmapRangeFromToday(todayStr, monthsBack = 12) {
   const end = dateFromIso(todayStr) || new Date();
   const start = new Date(end.getFullYear(), end.getMonth() - (monthsBack - 1), 1);
   return { startDate: start, endDate: end };
+}
+
+/**
+ * @param {Array<{ date?: string }>} pastChallenges
+ * @param {Record<string, { time?: number, rank?: number }>} userCompletions
+ * @param {string} todayStr YYYY-MM-DD from server
+ * @param {number} monthsBack
+ */
+export function buildActivityHeatmapValues(pastChallenges, userCompletions, todayStr, monthsBack = 12) {
+  const challengeMap = new Map();
+  if (Array.isArray(pastChallenges)) {
+    for (const c of pastChallenges) {
+      if (c && typeof c.date === 'string') {
+        challengeMap.set(c.date, c);
+      }
+    }
+  }
+
+  const completions = userCompletions && typeof userCompletions === 'object' ? userCompletions : {};
+  const today = todayStr || new Date().toISOString().split('T')[0];
+  const { startDate, endDate } = heatmapRangeFromToday(today, monthsBack);
+
+  const values = [];
+  const current = new Date(startDate);
+
+  while (current <= endDate) {
+    const year = current.getFullYear();
+    const month = String(current.getMonth() + 1).padStart(2, '0');
+    const day = String(current.getDate()).padStart(2, '0');
+    const dateStr = `${year}-${month}-${day}`;
+
+    const challenge = challengeMap.get(dateStr) || null;
+    const completion = completions[dateStr] || null;
+    const isToday = dateStr === today;
+    const isWinner = Boolean(completion && completion.rank === 1 && !isToday);
+    const isCompleted = Boolean(completion);
+
+    let count = 0;
+    if (isWinner) count = 2;
+    else if (isCompleted) count = 1;
+
+    values.push({
+      date: toHeatmapDate(dateStr),
+      count,
+      challenge,
+      completion,
+      status: isWinner ? 'winner' : isCompleted ? 'completed' : 'not-completed',
+    });
+
+    current.setDate(current.getDate() + 1);
+  }
+
+  return values;
 }
 
 export const ACTIVITY_PANEL_COLORS = {

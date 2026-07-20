@@ -22,8 +22,8 @@ const getApiUrl = () => {
     return 'https://mathbattlebackend-production.up.railway.app/api';
   }
   
-  // Default to localhost for development
-  return 'http://localhost:8080/api';
+  // Default to localhost:8000 for development
+  return 'http://localhost:8000/api';
 };
 
 const API_URL = getApiUrl();

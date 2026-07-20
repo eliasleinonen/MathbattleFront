@@ -38,6 +38,13 @@ body {
   }
 }
 
+.activity-heatmap-container,
+.activity-heatmap-container div,
+.activity-heatmap-container svg {
+  width: 100% !important;
+  height: auto !important;
+}
+
 @keyframes home-elo-fade {
   from { opacity: 0; }
   to { opacity: 1; }

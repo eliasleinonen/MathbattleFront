@@ -83,7 +83,7 @@ export function buildActivityHeatmapValues(pastChallenges, userCompletions, toda
 }
 
 export const ACTIVITY_PANEL_COLORS = {
-  0: '#f3f4f6',
+  0: '#ebedf0',
   1: '#86efac',
   2: '#facc15',
 };

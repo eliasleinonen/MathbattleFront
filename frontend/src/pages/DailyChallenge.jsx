@@ -175,27 +175,39 @@ export default function DailyChallenge() {
     return mins > 0 ? `${mins}:${secs.padStart(5, '0')}` : `${secs}s`;
   };
 
-  const heatMapValue = buildActivityHeatmapValues(pastChallenges, userCompletions, todayStr);
+  const heatMapValue = buildActivityHeatmapValues(pastChallenges, userCompletions, todayStr, 12);
   const { startDate: heatMapStart, endDate: heatMapEnd } = heatmapRangeFromToday(todayStr, 12);
 
   const renderCalendar = () => {
     return (
       <div className="bg-white border border-gray-200 rounded p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity</h3>
-        <div className="w-full overflow-x-auto [&_svg]:w-full [&_svg]:h-auto">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-gray-900">Activity</h3>
+          <span className="text-xs text-gray-500 font-mono">Past 1 Year</span>
+        </div>
+        <div className="activity-heatmap-container overflow-x-auto w-full">
           <HeatMap
             value={heatMapValue}
             startDate={heatMapStart}
             endDate={heatMapEnd}
-            rectSize={12}
-            space={3}
+            rectSize={15}
+            space={4}
             legendCellSize={0}
             panelColors={ACTIVITY_PANEL_COLORS}
-            weekLabels={['', 'Mon', '', 'Wed', '', 'Fri', '']}
+            weekLabels={false}
             rectProps={{ rx: 2 }}
             rectRender={(props, data) => {
-              const status = data.status || 'empty';
+              const status = data.status || 'not-completed';
               const completion = data.completion;
+              const isCompleted = data.count === 1;
+              const isWinner = data.count === 2;
+
+              const fillColor = isWinner
+                ? '#facc15'
+                : isCompleted
+                ? '#22c55e'
+                : '#ebedf0';
+
               const titleParts = [String(data.date || '').replaceAll('/', '-')];
               if (data.challenge) {
                 titleParts.push('challenge available');
@@ -207,7 +219,7 @@ export default function DailyChallenge() {
                 titleParts.push('you placed #1');
               }
               return (
-                <rect {...props} data-status={status}>
+                <rect {...props} fill={fillColor} data-status={status}>
                   <title>{titleParts.filter(Boolean).join(' · ')}</title>
                 </rect>
               );

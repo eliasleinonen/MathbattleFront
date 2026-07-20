@@ -194,30 +194,6 @@ export default function Home() {
 
       <div className="relative z-10 border-t border-gray-200 bg-gray-50 px-5 py-12 sm:px-8">
         <div className="max-w-3xl mx-auto">
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm mb-8 text-sm text-gray-600 leading-relaxed space-y-2">
-            <p>
-              Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the{' '}
-              <button type="button" onClick={() => navigate('/leaderboard')} className="text-gray-900 font-medium underline hover:text-gray-600">
-                leaderboard
-              </button>
-              .
-            </p>
-            <p>
-              Play{' '}
-              <button type="button" onClick={() => navigate('/play/random')} className="text-gray-900 font-medium underline hover:text-gray-600">
-                random matches
-              </button>{' '}
-              or{' '}
-              <button type="button" onClick={() => navigate('/play/friend')} className="text-gray-900 font-medium underline hover:text-gray-600">
-                challenge friends
-              </button>
-              ; need a refresher? Open the{' '}
-              <button type="button" onClick={() => navigate('/how-to-derivate')} className="text-gray-900 font-medium underline hover:text-gray-600">
-                derivative guide
-              </button>
-              .
-            </p>
-          </div>
 
           {challengeError && (
             <p className="text-sm text-red-600 mb-4" role="alert">
@@ -282,6 +258,32 @@ export default function Home() {
               </div>
               <p className="text-sm text-gray-500">One derivative problem every day — compete on the daily leaderboard for the fastest time</p>
             </button>
+          </div>
+
+          {/* SEO-rich description — placed after game modes for natural reading flow */}
+          <div className="mt-8 text-sm text-gray-500 leading-relaxed space-y-1.5 font-mono">
+            <p>
+              Derivative Duel is a competitive math game: solve derivatives fast, earn ELO, and climb the{' '}
+              <button type="button" onClick={() => navigate('/leaderboard')} className="text-gray-700 underline hover:text-gray-900">
+                leaderboard
+              </button>
+              .
+            </p>
+            <p>
+              Play{' '}
+              <button type="button" onClick={() => navigate('/play/random')} className="text-gray-700 underline hover:text-gray-900">
+                random matches
+              </button>{' '}
+              or{' '}
+              <button type="button" onClick={() => navigate('/play/friend')} className="text-gray-700 underline hover:text-gray-900">
+                challenge friends
+              </button>
+              ; need a refresher? Open the{' '}
+              <button type="button" onClick={() => navigate('/how-to-derivate')} className="text-gray-700 underline hover:text-gray-900">
+                derivative guide
+              </button>
+              .
+            </p>
           </div>
 
           <div className="mt-8 bg-white border border-gray-200 rounded-lg p-6 shadow-sm">

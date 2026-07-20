@@ -3,7 +3,42 @@
 @tailwind utilities;
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
   margin: 0;
   padding: 0;
+}
+
+.home-field {
+  background-color: #f2f3f0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.home-hero-copy {
+  background: linear-gradient(180deg, transparent, rgba(242, 243, 240, 0.92) 18%);
+}
+
+.home-elo-graph .elo-squiggle-path {
+  /* Fade/rise the whole stroke so dasharray never clips the full-bleed path. */
+  opacity: 0;
+  transform: translateY(6px);
+  animation: home-elo-draw 900ms ease both;
+}
+
+.home-elo-graph .elo-squiggle-tip {
+  animation: home-elo-fade 700ms 350ms ease both;
+}
+
+@keyframes home-elo-draw {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes home-elo-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

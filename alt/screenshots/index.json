@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "viewport": "desktop",
+    "file": "variant-01-desktop.png",
+    "title": "Centered classic"
+  },
+  {
+    "id": 1,
+    "viewport": "mobile",
+    "file": "variant-01-mobile.png",
+    "title": "Centered classic"
+  },
+  {
+    "id": 2,
+    "viewport": "desktop",
+    "file": "variant-02-desktop.png",
+    "title": "Split plane"
+  },
+  {
+    "id": 2,
+    "viewport": "mobile",
+    "file": "variant-02-mobile.png",
+    "title": "Split plane"
+  },
+  {
+    "id": 3,
+    "viewport": "desktop",
+    "file": "variant-03-desktop.png",
+    "title": "Watermark editorial"
+  },
+  {
+    "id": 3,
+    "viewport": "mobile",
+    "file": "variant-03-mobile.png",
+    "title": "Watermark editorial"
+  },
+  {
+    "id": 4,
+    "viewport": "desktop",
+    "file": "variant-04-desktop.png",
+    "title": "Light terminal"
+  },
+  {
+    "id": 4,
+    "viewport": "mobile",
+    "file": "variant-04-mobile.png",
+    "title": "Light terminal"
+  },
+  {
+    "id": 5,
+    "viewport": "desktop",
+    "file": "variant-05-desktop.png",
+    "title": "Vertical flow"
+  },
+  {
+    "id": 5,
+    "viewport": "mobile",
+    "file": "variant-05-mobile.png",
+    "title": "Vertical flow"
+  },
+  {
+    "id": 6,
+    "viewport": "desktop",
+    "file": "variant-06-desktop.png",
+    "title": "Ink stripe hero"
+  },
+  {
+    "id": 6,
+    "viewport": "mobile",
+    "file": "variant-06-mobile.png",
+    "title": "Ink stripe hero"
+  },
+  {
+    "id": 7,
+    "viewport": "desktop",
+    "file": "variant-07-desktop.png",
+    "title": "Bottom-anchored CTA"
+  },
+  {
+    "id": 7,
+    "viewport": "mobile",
+    "file": "variant-07-mobile.png",
+    "title": "Bottom-anchored CTA"
+  },
+  {
+    "id": 8,
+    "viewport": "desktop",
+    "file": "variant-08-desktop.png",
+    "title": "Diagonal paper fold"
+  },
+  {
+    "id": 8,
+    "viewport": "mobile",
+    "file": "variant-08-mobile.png",
+    "title": "Diagonal paper fold"
+  },
+  {
+    "id": 9,
+    "viewport": "desktop",
+    "file": "variant-09-desktop.png",
+    "title": "Type scale ladder"
+  },
+  {
+    "id": 9,
+    "viewport": "mobile",
+    "file": "variant-09-mobile.png",
+    "title": "Type scale ladder"
+  },
+  {
+    "id": 10,
+    "viewport": "desktop",
+    "file": "variant-10-desktop.png",
+    "title": "Equation as hero media"
+  },
+  {
+    "id": 10,
+    "viewport": "mobile",
+    "file": "variant-10-mobile.png",
+    "title": "Equation as hero media"
+  },
+  {
+    "id": 11,
+    "viewport": "desktop",
+    "file": "variant-11-desktop.png",
+    "title": "Wide lockup"
+  },
+  {
+    "id": 11,
+    "viewport": "mobile",
+    "file": "variant-11-mobile.png",
+    "title": "Wide lockup"
+  },
+  {
+    "id": 12,
+    "viewport": "desktop",
+    "file": "variant-12-desktop.png",
+    "title": "Narrow arena"
+  },
+  {
+    "id": 12,
+    "viewport": "mobile",
+    "file": "variant-12-mobile.png",
+    "title": "Narrow arena"
+  },
+  {
+    "id": 13,
+    "viewport": "desktop",
+    "file": "variant-13-desktop.png",
+    "title": "Asymmetric mark"
+  },
+  {
+    "id": 13,
+    "viewport": "mobile",
+    "file": "variant-13-mobile.png",
+    "title": "Asymmetric mark"
+  },
+  {
+    "id": 14,
+    "viewport": "desktop",
+    "file": "variant-14-desktop.png",
+    "title": "Serif manifesto"
+  },
+  {
+    "id": 14,
+    "viewport": "mobile",
+    "file": "variant-14-mobile.png",
+    "title": "Serif manifesto"
+  },
+  {
+    "id": 15,
+    "viewport": "desktop",
+    "file": "variant-15-desktop.png",
+    "title": "Match header"
+  },
+  {
+    "id": 15,
+    "viewport": "mobile",
+    "file": "variant-15-mobile.png",
+    "title": "Match header"
+  },
+  {
+    "id": 16,
+    "viewport": "desktop",
+    "file": "variant-16-desktop.png",
+    "title": "Graph plane bottom copy"
+  },
+  {
+    "id": 16,
+    "viewport": "mobile",
+    "file": "variant-16-mobile.png",
+    "title": "Graph plane bottom copy"
+  },
+  {
+    "id": 17,
+    "viewport": "desktop",
+    "file": "variant-17-desktop.png",
+    "title": "Giant mark rail"
+  },
+  {
+    "id": 17,
+    "viewport": "mobile",
+    "file": "variant-17-mobile.png",
+    "title": "Giant mark rail"
+  },
+  {
+    "id": 18,
+    "viewport": "desktop",
+    "file": "variant-18-desktop.png",
+    "title": "Band + equation ticker"
+  },
+  {
+    "id": 18,
+    "viewport": "mobile",
+    "file": "variant-18-mobile.png",
+    "title": "Band + equation ticker"
+  },
+  {
+    "id": 19,
+    "viewport": "desktop",
+    "file": "variant-19-desktop.png",
+    "title": "Editorial folio rule"
+  },
+  {
+    "id": 19,
+    "viewport": "mobile",
+    "file": "variant-19-mobile.png",
+    "title": "Editorial folio rule"
+  },
+  {
+    "id": 20,
+    "viewport": "desktop",
+    "file": "variant-20-desktop.png",
+    "title": "Asymmetric slate column"
+  },
+  {
+    "id": 20,
+    "viewport": "mobile",
+    "file": "variant-20-mobile.png",
+    "title": "Asymmetric slate column"
+  },
+  {
+    "id": 21,
+    "viewport": "desktop",
+    "file": "variant-21-desktop.png",
+    "title": "Underline brand forest"
+  },
+  {
+    "id": 21,
+    "viewport": "mobile",
+    "file": "variant-21-mobile.png",
+    "title": "Underline brand forest"
+  },
+  {
+    "id": 22,
+    "viewport": "desktop",
+    "file": "variant-22-desktop.png",
+    "title": "Duel scoreboard split"
+  },
+  {
+    "id": 22,
+    "viewport": "mobile",
+    "file": "variant-22-mobile.png",
+    "title": "Duel scoreboard split"
+  },
+  {
+    "id": 23,
+    "viewport": "desktop",
+    "file": "variant-23-desktop.png",
+    "title": "Narrow essay drift"
+  },
+  {
+    "id": 23,
+    "viewport": "mobile",
+    "file": "variant-23-mobile.png",
+    "title": "Narrow essay drift"
+  },
+  {
+    "id": 24,
+    "viewport": "desktop",
+    "file": "variant-24-desktop.png",
+    "title": "Axis grid media top"
+  },
+  {
+    "id": 24,
+    "viewport": "mobile",
+    "file": "variant-24-mobile.png",
+    "title": "Axis grid media top"
+  },
+  {
+    "id": 25,
+    "viewport": "desktop",
+    "file": "variant-25-desktop.png",
+    "title": "Olive stacked brand"
+  },
+  {
+    "id": 25,
+    "viewport": "mobile",
+    "file": "variant-25-mobile.png",
+    "title": "Olive stacked brand"
+  },
+  {
+    "id": 26,
+    "viewport": "desktop",
+    "file": "variant-26-desktop.png",
+    "title": "Countdown ring arena"
+  },
+  {
+    "id": 26,
+    "viewport": "mobile",
+    "file": "variant-26-mobile.png",
+    "title": "Countdown ring arena"
+  },
+  {
+    "id": 27,
+    "viewport": "desktop",
+    "file": "variant-27-desktop.png",
+    "title": "Rust hairline frame"
+  },
+  {
+    "id": 27,
+    "viewport": "mobile",
+    "file": "variant-27-mobile.png",
+    "title": "Rust hairline frame"
+  },
+  {
+    "id": 28,
+    "viewport": "desktop",
+    "file": "variant-28-desktop.png",
+    "title": "Partial mosaic wide"
+  },
+  {
+    "id": 28,
+    "viewport": "mobile",
+    "file": "variant-28-mobile.png",
+    "title": "Partial mosaic wide"
+  },
+  {
+    "id": 29,
+    "viewport": "desktop",
+    "file": "variant-29-desktop.png",
+    "title": "Navy manifesto rule"
+  },
+  {
+    "id": 29,
+    "viewport": "mobile",
+    "file": "variant-29-mobile.png",
+    "title": "Navy manifesto rule"
+  },
+  {
+    "id": 30,
+    "viewport": "desktop",
+    "file": "variant-30-desktop.png",
+    "title": "Floating equation + bar"
+  },
+  {
+    "id": 30,
+    "viewport": "mobile",
+    "file": "variant-30-mobile.png",
+    "title": "Floating equation + bar"
+  },
+  {
+    "id": 31,
+    "viewport": "desktop",
+    "file": "variant-31-desktop.png",
+    "title": "Diagonal equation wash"
+  },
+  {
+    "id": 31,
+    "viewport": "mobile",
+    "file": "variant-31-mobile.png",
+    "title": "Diagonal equation wash"
+  },
+  {
+    "id": 32,
+    "viewport": "desktop",
+    "file": "variant-32-desktop.png",
+    "title": "Polar grid stage"
+  },
+  {
+    "id": 32,
+    "viewport": "mobile",
+    "file": "variant-32-mobile.png",
+    "title": "Polar grid stage"
+  },
+  {
+    "id": 33,
+    "viewport": "desktop",
+    "file": "variant-33-desktop.png",
+    "title": "Three-round timeline"
+  },
+  {
+    "id": 33,
+    "viewport": "mobile",
+    "file": "variant-33-mobile.png",
+    "title": "Three-round timeline"
+  },
+  {
+    "id": 34,
+    "viewport": "desktop",
+    "file": "variant-34-desktop.png",
+    "title": "Layered equation stack"
+  },
+  {
+    "id": 34,
+    "viewport": "mobile",
+    "file": "variant-34-mobile.png",
+    "title": "Layered equation stack"
+  },
+  {
+    "id": 35,
+    "viewport": "desktop",
+    "file": "variant-35-desktop.png",
+    "title": "Corner brand graph field"
+  },
+  {
+    "id": 35,
+    "viewport": "mobile",
+    "file": "variant-35-mobile.png",
+    "title": "Corner brand graph field"
+  },
+  {
+    "id": 36,
+    "viewport": "desktop",
+    "file": "variant-36-desktop.png",
+    "title": "Prompt caret terminal"
+  },
+  {
+    "id": 36,
+    "viewport": "mobile",
+    "file": "variant-36-mobile.png",
+    "title": "Prompt caret terminal"
+  },
+  {
+    "id": 37,
+    "viewport": "desktop",
+    "file": "variant-37-desktop.png",
+    "title": "Before after transform"
+  },
+  {
+    "id": 37,
+    "viewport": "mobile",
+    "file": "variant-37-mobile.png",
+    "title": "Before after transform"
+  },
+  {
+    "id": 38,
+    "viewport": "desktop",
+    "file": "variant-38-desktop.png",
+    "title": "Countdown arc ring"
+  },
+  {
+    "id": 38,
+    "viewport": "mobile",
+    "file": "variant-38-mobile.png",
+    "title": "Countdown arc ring"
+  },
+  {
+    "id": 39,
+    "viewport": "desktop",
+    "file": "variant-39-desktop.png",
+    "title": "Contour landscape"
+  },
+  {
+    "id": 39,
+    "viewport": "mobile",
+    "file": "variant-39-mobile.png",
+    "title": "Contour landscape"
+  },
+  {
+    "id": 40,
+    "viewport": "desktop",
+    "file": "variant-40-desktop.png",
+    "title": "Cascading type ladder"
+  },
+  {
+    "id": 40,
+    "viewport": "mobile",
+    "file": "variant-40-mobile.png",
+    "title": "Cascading type ladder"
+  },
+  {
+    "id": 41,
+    "viewport": "desktop",
+    "file": "variant-41-desktop.png",
+    "title": "Olive oval equation"
+  },
+  {
+    "id": 41,
+    "viewport": "mobile",
+    "file": "variant-41-mobile.png",
+    "title": "Olive oval equation"
+  },
+  {
+    "id": 42,
+    "viewport": "desktop",
+    "file": "variant-42-desktop.png",
+    "title": "Wireframe axes object"
+  },
+  {
+    "id": 42,
+    "viewport": "mobile",
+    "file": "variant-42-mobile.png",
+    "title": "Wireframe axes object"
+  },
+  {
+    "id": 43,
+    "viewport": "desktop",
+    "file": "variant-43-desktop.png",
+    "title": "Proof strip scroll"
+  },
+  {
+    "id": 43,
+    "viewport": "mobile",
+    "file": "variant-43-mobile.png",
+    "title": "Proof strip scroll"
+  },
+  {
+    "id": 44,
+    "viewport": "desktop",
+    "file": "variant-44-desktop.png",
+    "title": "Horizon climbing point"
+  },
+  {
+    "id": 44,
+    "viewport": "mobile",
+    "file": "variant-44-mobile.png",
+    "title": "Horizon climbing point"
+  },
+  {
+    "id": 45,
+    "viewport": "desktop",
+    "file": "variant-45-desktop.png",
+    "title": "Focus lens detail"
+  },
+  {
+    "id": 45,
+    "viewport": "mobile",
+    "file": "variant-45-mobile.png",
+    "title": "Focus lens detail"
+  },
+  {
+    "id": 46,
+    "viewport": "desktop",
+    "file": "variant-46-desktop.png",
+    "title": "Slope field center"
+  },
+  {
+    "id": 46,
+    "viewport": "mobile",
+    "file": "variant-46-mobile.png",
+    "title": "Slope field center"
+  },
+  {
+    "id": 47,
+    "viewport": "desktop",
+    "file": "variant-47-desktop.png",
+    "title": "Limit corridor"
+  },
+  {
+    "id": 47,
+    "viewport": "mobile",
+    "file": "variant-47-mobile.png",
+    "title": "Limit corridor"
+  },
+  {
+    "id": 48,
+    "viewport": "desktop",
+    "file": "variant-48-desktop.png",
+    "title": "Twin ledger columns"
+  },
+  {
+    "id": 48,
+    "viewport": "mobile",
+    "file": "variant-48-mobile.png",
+    "title": "Twin ledger columns"
+  },
+  {
+    "id": 49,
+    "viewport": "desktop",
+    "file": "variant-49-desktop.png",
+    "title": "Soft chalkboard wash"
+  },
+  {
+    "id": 49,
+    "viewport": "mobile",
+    "file": "variant-49-mobile.png",
+    "title": "Soft chalkboard wash"
+  },
+  {
+    "id": 50,
+    "viewport": "desktop",
+    "file": "variant-50-desktop.png",
+    "title": "Concentric rate rings"
+  },
+  {
+    "id": 50,
+    "viewport": "mobile",
+    "file": "variant-50-mobile.png",
+    "title": "Concentric rate rings"
+  },
+  {
+    "id": 51,
+    "viewport": "desktop",
+    "file": "variant-51-desktop.png",
+    "title": "Instantaneous tick stage"
+  },
+  {
+    "id": 51,
+    "viewport": "mobile",
+    "file": "variant-51-mobile.png",
+    "title": "Instantaneous tick stage"
+  },
+  {
+    "id": 52,
+    "viewport": "desktop",
+    "file": "variant-52-desktop.png",
+    "title": "Quiet match clock"
+  },
+  {
+    "id": 52,
+    "viewport": "mobile",
+    "file": "variant-52-mobile.png",
+    "title": "Quiet match clock"
+  },
+  {
+    "id": 53,
+    "viewport": "desktop",
+    "file": "variant-53-desktop.png",
+    "title": "Secant into tangent"
+  },
+  {
+    "id": 53,
+    "viewport": "mobile",
+    "file": "variant-53-mobile.png",
+    "title": "Secant into tangent"
+  },
+  {
+    "id": 54,
+    "viewport": "desktop",
+    "file": "variant-54-desktop.png",
+    "title": "Folio margin notation"
+  },
+  {
+    "id": 54,
+    "viewport": "mobile",
+    "file": "variant-54-mobile.png",
+    "title": "Folio margin notation"
+  },
+  {
+    "id": 55,
+    "viewport": "desktop",
+    "file": "variant-55-desktop.png",
+    "title": "Nested radical wash"
+  },
+  {
+    "id": 55,
+    "viewport": "mobile",
+    "file": "variant-55-mobile.png",
+    "title": "Nested radical wash"
+  },
+  {
+    "id": 56,
+    "viewport": "desktop",
+    "file": "variant-56-desktop.png",
+    "title": "Ranked ascent steps"
+  },
+  {
+    "id": 56,
+    "viewport": "mobile",
+    "file": "variant-56-mobile.png",
+    "title": "Ranked ascent steps"
+  },
+  {
+    "id": 57,
+    "viewport": "desktop",
+    "file": "variant-57-desktop.png",
+    "title": "Monospace caret prompt"
+  },
+  {
+    "id": 57,
+    "viewport": "mobile",
+    "file": "variant-57-mobile.png",
+    "title": "Monospace caret prompt"
+  },
+  {
+    "id": 58,
+    "viewport": "desktop",
+    "file": "variant-58-desktop.png",
+    "title": "Soft sine curtain"
+  },
+  {
+    "id": 58,
+    "viewport": "mobile",
+    "file": "variant-58-mobile.png",
+    "title": "Soft sine curtain"
+  },
+  {
+    "id": 59,
+    "viewport": "desktop",
+    "file": "variant-59-desktop.png",
+    "title": "Bracketed problem reveal"
+  },
+  {
+    "id": 59,
+    "viewport": "mobile",
+    "file": "variant-59-mobile.png",
+    "title": "Bracketed problem reveal"
+  },
+  {
+    "id": 60,
+    "viewport": "desktop",
+    "file": "variant-60-desktop.png",
+    "title": "Twin path fork"
+  },
+  {
+    "id": 60,
+    "viewport": "mobile",
+    "file": "variant-60-mobile.png",
+    "title": "Twin path fork"
+  }
+]

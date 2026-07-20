@@ -24,7 +24,9 @@ describe('entry-server prerendering', () => {
 
   it('renders the homepage with the intro content visible', () => {
     const { html, head } = render('/');
-    expect(html).toContain('Competitive derivative battles');
+    expect(html).toContain('Derivative Duel');
+    expect(html).toContain('Rating curve at 1000 elo');
+    expect(html).toContain('competitive math game');
     expect(head).toContain('https://www.mathbattle.xyz/');
   });
 

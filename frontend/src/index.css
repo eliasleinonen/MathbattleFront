@@ -3,7 +3,38 @@
 @tailwind utilities;
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
   margin: 0;
   padding: 0;
+}
+
+.home-field {
+  background-color: #f2f3f0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.home-hero-copy {
+  background: linear-gradient(180deg, transparent, rgba(242, 243, 240, 0.92) 18%);
+}
+
+.home-elo-graph .elo-squiggle-path {
+  stroke-dasharray: 900;
+  animation: home-elo-draw 1.8s ease both;
+}
+
+.home-elo-graph .elo-squiggle-tip {
+  animation: home-elo-fade 900ms 700ms ease both;
+}
+
+@keyframes home-elo-draw {
+  from { stroke-dashoffset: 900; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes home-elo-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

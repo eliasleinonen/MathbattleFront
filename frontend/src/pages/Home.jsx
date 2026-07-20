@@ -163,15 +163,15 @@ export default function Home() {
 
         <EloSquiggleGraph
           elo={displayElo}
-          className="absolute inset-x-0 top-[10%] bottom-[38%] z-10 cursor-crosshair text-[#1a1a1a] opacity-90 home-elo-graph"
+          className="pointer-events-none absolute inset-x-0 top-[10%] bottom-[38%] z-0 text-[#1a1a1a] opacity-90 home-elo-graph"
         />
 
         <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-xl home-hero-copy">
-          <h2 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-3">
+          <h2 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-2">
             &#8706; Derivative Duel
           </h2>
-          <p className="text-sm sm:text-[0.95rem] text-gray-600 leading-relaxed mb-6 max-w-md">
-            Graph paper, full bleed. Your rating draws the next segment.
+          <p className="font-mono text-sm text-gray-700 mb-6 tabular-nums">
+            elo {displayElo}
           </p>
           <div className="flex flex-wrap gap-3">
             <button

@@ -45,22 +45,21 @@ function catmullRomToBezier(points) {
 }
 
 /**
- * Full-bleed squiggle: always starts at the left edge and ends at the right edge.
- * Elo only seeds the wiggle personality — the UI span is the priority.
+ * Full-bleed squiggle ending near the right edge with room for the tip label.
+ * Same look at every elo (including guest 1000): left → right, fun wiggles.
  */
 export function buildEloSquigglePath(
   elo,
-  { width = 800, height = 300, paddingY = 36 } = {}
+  { width = 800, height = 300, paddingY = 36, tipInset = 56 } = {}
 ) {
   const rating = normalizeElo(elo);
   const minY = paddingY;
   const maxY = height - paddingY;
   const midY = (minY + maxY) / 2;
   const startX = 0;
-  const endX = width;
+  const endX = Math.max(width - tipInset, width * 0.9);
 
   const rand = mulberry32(rating * 9973 + 42);
-  // Keep start/end in a clear mid band so the full-bleed stroke stays obvious.
   const startY = midY + (rand() - 0.5) * (maxY - minY) * 0.35;
   const endY = midY + (rand() - 0.5) * (maxY - minY) * 0.3;
 

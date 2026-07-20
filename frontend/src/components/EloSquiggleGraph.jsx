@@ -1,34 +1,16 @@
-import { useState } from 'react';
 import { buildEloSquigglePath } from '../utils/eloSquiggle';
 
 /**
  * Full-bleed decorative curve for the home hero.
- * Line always runs left edge → right edge; current elo appears only on hover.
+ * Always spans toward the right edge with a tip dot + readable elo — no axes/chrome.
  */
 export default function EloSquiggleGraph({ elo, className = '' }) {
-  const { path, elo: rating, width, height } = buildEloSquigglePath(elo);
-  const [hover, setHover] = useState(null);
-
-  const updateHover = (event) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    if (bounds.width <= 0 || bounds.height <= 0) return;
-    setHover({
-      x: ((event.clientX - bounds.left) / bounds.width) * 100,
-      y: ((event.clientY - bounds.top) / bounds.height) * 100,
-    });
-  };
-
-  const clearHover = () => setHover(null);
+  const { path, endX, endY, elo: rating, width, height } = buildEloSquigglePath(elo);
+  const tipLeft = (endX / width) * 100;
+  const tipTop = (endY / height) * 100;
 
   return (
-    <div
-      className={className}
-      role="img"
-      aria-label={`Rating curve at ${rating} elo`}
-      onPointerEnter={updateHover}
-      onPointerMove={updateHover}
-      onPointerLeave={clearHover}
-    >
+    <div className={className} role="img" aria-label={`Rating curve at ${rating} elo`}>
       <div className="relative h-full w-full">
         <svg
           className="pointer-events-none absolute inset-0 h-full w-full text-inherit"
@@ -47,18 +29,19 @@ export default function EloSquiggleGraph({ elo, className = '' }) {
             className="elo-squiggle-path origin-center"
           />
         </svg>
-        {hover && (
-          <span
-            className="elo-squiggle-hover pointer-events-none absolute z-10 font-sans text-sm font-semibold tabular-nums tracking-tight text-inherit sm:text-base"
-            style={{
-              left: `${hover.x}%`,
-              top: `${hover.y}%`,
-              transform: 'translate(-50%, calc(-100% - 0.55rem))',
-            }}
-          >
+        <span
+          className="elo-squiggle-tip pointer-events-none absolute flex items-center gap-1.5 text-inherit"
+          style={{
+            left: `${tipLeft}%`,
+            top: `${tipTop}%`,
+            transform: 'translate(0.15rem, -50%)',
+          }}
+        >
+          <span className="elo-squiggle-dot inline-block h-2 w-2 shrink-0 rounded-full bg-current" aria-hidden="true" />
+          <span className="elo-squiggle-label font-sans text-xl font-semibold tabular-nums tracking-tight sm:text-2xl">
             {rating}
           </span>
-        )}
+        </span>
       </div>
     </div>
   );

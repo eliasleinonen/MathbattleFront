@@ -27,8 +27,8 @@ body {
   animation: home-elo-draw 900ms ease both;
 }
 
-.home-elo-graph .elo-squiggle-hover {
-  animation: home-elo-fade 120ms ease both;
+.home-elo-graph .elo-squiggle-tip {
+  animation: home-elo-fade 700ms 350ms ease both;
 }
 
 @keyframes home-elo-draw {

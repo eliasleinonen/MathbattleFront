@@ -34,22 +34,23 @@ describe('Home elo squiggle', () => {
     vi.clearAllMocks();
   });
 
-  it('keeps guest elo on the curve metadata without a permanent tip label', async () => {
+  it('shows guest elo on the tip and under the brand', async () => {
     renderHome();
 
     await waitFor(() => {
       expect(screen.getByRole('img', { name: `Rating curve at ${DEFAULT_ELO} elo` })).toBeDefined();
     });
-    expect(screen.queryByText(String(DEFAULT_ELO))).toBeNull();
+    expect(screen.getByText(`elo ${DEFAULT_ELO}`)).toBeDefined();
+    expect(screen.getAllByText(String(DEFAULT_ELO)).length).toBeGreaterThanOrEqual(1);
     expect(api.get).not.toHaveBeenCalled();
   });
 
-  it('uses profile elo for the hoverable curve when logged in', async () => {
+  it('shows profile elo on the tip and under the brand when logged in', async () => {
     window.localStorage.setItem('token', 'test-token');
     api.get.mockImplementation((url) => {
       if (url === '/user/profile') {
         return Promise.resolve({
-          data: { username: 'chainruler', elo: 1642, wins: 12, losses: 4 },
+          data: { username: 'chainruler', elo: 2100, wins: 12, losses: 4 },
         });
       }
       if (url === '/challenges/pending') {
@@ -61,9 +62,9 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      expect(screen.getByRole('img', { name: 'Rating curve at 1642 elo' })).toBeDefined();
+      expect(screen.getByRole('img', { name: 'Rating curve at 2100 elo' })).toBeDefined();
     });
-    expect(screen.queryByText('1642')).toBeNull();
+    expect(screen.getByText('elo 2100')).toBeDefined();
     expect(screen.queryByText('Your Stats')).toBeNull();
   });
 
@@ -84,7 +85,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      expect(screen.getByRole('img', { name: `Rating curve at ${DEFAULT_ELO} elo` })).toBeDefined();
+      expect(screen.getByText(`elo ${DEFAULT_ELO}`)).toBeDefined();
     });
   });
 });

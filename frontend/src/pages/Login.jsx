@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api';
+import api, { authAPI } from '../api';
 import Seo from '../components/Seo';
 import LoadingSpinner from '../components/LoadingSpinner';
 
@@ -19,7 +19,7 @@ export default function Login() {
     script.onload = () => {
       if (window.google) {
         window.google.accounts.id.initialize({
-          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          client_id: (import.meta.env.VITE_GOOGLE_CLIENT_ID || '').trim(),
           callback: handleCredentialResponse,
         });
 
@@ -49,7 +49,8 @@ export default function Login() {
     setLoading(true);
     setError('');
     try {
-      const res = await api.post('/auth/google', { token: response.credential });
+      const guestId = localStorage.getItem('guestId');
+      const res = await authAPI.loginGoogle(response.credential, guestId);
       localStorage.setItem('token', res.data.access_token);
 
       // Check if there's a pending match code

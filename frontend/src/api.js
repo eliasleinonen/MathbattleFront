@@ -58,6 +58,9 @@ api.interceptors.request.use((config) => {
 });
 
 export const authAPI = {
+  loginGoogle: (token, guestId = null) =>
+    api.post('/auth/google', { token, guest_id: guestId }),
+
   register: (email, password, name) => 
     api.post('/auth/register', { email, password, name }),
   

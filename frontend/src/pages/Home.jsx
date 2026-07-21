@@ -5,6 +5,7 @@ import TermsAndPrivacy from '../components/TermsAndPrivacy';
 import EloSquiggleGraph from '../components/EloSquiggleGraph';
 import Seo, { SITE_URL, SITE_NAME } from '../components/Seo';
 import { DEFAULT_ELO } from '../utils/eloSquiggle';
+import SaveProgressModal from '../components/SaveProgressModal';
 
 const homeJsonLd = [
   {
@@ -42,34 +43,41 @@ export default function Home() {
     elo: DEFAULT_ELO,
     wins: 0,
     losses: 0,
+    is_guest: true,
   });
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        setIsLoggedIn(true);
-        try {
-          const res = await api.get('/user/profile');
-          setUserData({
-            name: res.data.username || res.data.name,
-            elo: res.data.elo ?? DEFAULT_ELO,
-            wins: res.data.wins,
-            losses: res.data.losses,
-          });
+      try {
+        const res = await api.get('/user/profile');
+        const isGuest = res.data.is_guest ?? true;
+        setUserData({
+          name: res.data.username || res.data.name,
+          elo: res.data.elo ?? DEFAULT_ELO,
+          wins: res.data.wins,
+          losses: res.data.losses,
+          is_guest: isGuest,
+        });
+        setIsLoggedIn(!isGuest);
 
+        if (!isGuest) {
           const challengesRes = await api.get('/challenges/pending');
           setChallenges(challengesRes.data);
-        } catch (error) {
-          console.error('Failed to fetch user data:', error);
-          setIsLoggedIn(false);
-          setUserData({
-            name: 'Guest Player',
-            elo: DEFAULT_ELO,
-            wins: 0,
-            losses: 0,
-          });
         }
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+        }
+        setIsLoggedIn(false);
+        setUserData({
+          name: 'Guest Player',
+          elo: DEFAULT_ELO,
+          wins: 0,
+          losses: 0,
+          is_guest: true,
+        });
       }
     };
 
@@ -105,9 +113,28 @@ export default function Home() {
       elo: DEFAULT_ELO,
       wins: 0,
       losses: 0,
+      is_guest: true,
     });
     setChallenges([]);
     navigate('/login');
+  };
+
+  const handleUpgradeSuccess = async () => {
+    setIsSaveModalOpen(false);
+    try {
+      const res = await api.get('/user/profile');
+      const isGuest = res.data.is_guest ?? false;
+      setUserData({
+        name: res.data.username || res.data.name,
+        elo: res.data.elo ?? DEFAULT_ELO,
+        wins: res.data.wins,
+        losses: res.data.losses,
+        is_guest: isGuest,
+      });
+      setIsLoggedIn(!isGuest);
+    } catch (error) {
+      console.error('Failed to reload profile after upgrade:', error);
+    }
   };
 
   const displayElo = userData.elo ?? DEFAULT_ELO;
@@ -137,16 +164,7 @@ export default function Home() {
             >
               leaderboard
             </button>
-            {!isLoggedIn && (
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                className="hover:text-gray-900"
-              >
-                login
-              </button>
-            )}
-            {isLoggedIn && (
+            {isLoggedIn ? (
               <div className="flex items-center gap-3">
                 <span className="text-xs text-gray-500 hidden sm:inline">{userData.name}</span>
                 <button
@@ -155,6 +173,28 @@ export default function Home() {
                   className="text-sm text-gray-600 hover:text-red-600 border border-gray-300 rounded px-3 py-1 transition-colors"
                 >
                   logout
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                {userData.is_guest && userData.name !== 'Guest Player' && (
+                  <>
+                    <span className="text-xs text-gray-500 hidden sm:inline">{userData.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => setIsSaveModalOpen(true)}
+                      className="text-sm text-blue-600 hover:text-blue-800 border border-blue-300 rounded px-3 py-1 transition-colors font-semibold"
+                    >
+                      save progress
+                    </button>
+                  </>
+                )}
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  className="hover:text-gray-900"
+                >
+                  login
                 </button>
               </div>
             )}
@@ -327,6 +367,11 @@ export default function Home() {
         </div>
       </div>
       <TermsAndPrivacy />
+      <SaveProgressModal
+        isOpen={isSaveModalOpen}
+        onClose={() => setIsSaveModalOpen(false)}
+        onUpgradeSuccess={handleUpgradeSuccess}
+      />
     </div>
   );
 }

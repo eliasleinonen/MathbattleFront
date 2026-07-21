@@ -35,6 +35,15 @@ describe('Home elo squiggle', () => {
   });
 
   it('shows guest elo on the tip and under the brand', async () => {
+    api.get.mockImplementation((url) => {
+      if (url === '/user/profile') {
+        return Promise.resolve({
+          data: { username: 'Guest Player', elo: DEFAULT_ELO, wins: 0, losses: 0, is_guest: true },
+        });
+      }
+      return Promise.reject(new Error(`unexpected ${url}`));
+    });
+
     renderHome();
 
     await waitFor(() => {
@@ -42,7 +51,7 @@ describe('Home elo squiggle', () => {
     });
     expect(screen.getByText(`elo ${DEFAULT_ELO}`)).toBeDefined();
     expect(screen.getAllByText(String(DEFAULT_ELO)).length).toBeGreaterThanOrEqual(1);
-    expect(api.get).not.toHaveBeenCalled();
+    expect(api.get).toHaveBeenCalledWith('/user/profile');
   });
 
   it('shows profile elo on the tip and under the brand when logged in', async () => {

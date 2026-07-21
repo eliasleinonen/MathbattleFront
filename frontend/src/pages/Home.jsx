@@ -142,20 +142,20 @@ export default function Home() {
   return (
     <div className="home-field min-h-screen text-[#111] font-mono">
       <Seo
-        title="Derivative Duel - Competitive Calculus Math Game | Learn Derivatives Through 1v1 Battles"
-        description="Battle opponents by solving calculus derivative problems in real-time. Challenge friends, improve your ELO rating, and master differentiation through fast-paced 1v1 matches."
+        title="Derivative Duel | Competitive Calculus Math Game"
+        description="Battle opponents by solving calculus derivative problems in real-time. Challenge friends, improve your ELO rating, and master calculus derivatives."
         path="/"
         jsonLd={homeJsonLd}
       />
 
       <div className="relative min-h-[100svh] flex flex-col">
         <nav className="relative z-20 flex justify-between items-center gap-4 px-5 py-5 sm:px-8">
-          <h1
+          <span
             aria-label="derivative duel"
             className="text-3xl font-medium text-gray-900 select-none leading-none"
           >
             &#8706;
-          </h1>
+          </span>
           <div className="flex items-center gap-6 text-sm text-gray-600">
             <button
               type="button"
@@ -207,9 +207,9 @@ export default function Home() {
         />
 
         <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-xl home-hero-copy">
-          <h2 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-2">
+          <h1 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-2">
             &#8706; Derivative Duel
-          </h2>
+          </h1>
           <p className="font-mono text-sm text-gray-700 mb-6 tabular-nums">
             elo {displayElo}
           </p>

@@ -129,8 +129,7 @@ export default function CookieConsent() {
                   We use cookies
                 </h2>
                 <p className="text-xs text-gray-500 leading-relaxed font-mono">
-                  We use cookies to keep you logged in, analyse site usage, and serve relevant ads via Google AdSense.
-                  Read our{' '}
+                  We use cookies to improve your browsing experience and analyze site traffic. Read our{' '}
                   <button
                     type="button"
                     onClick={() => navigate('/privacy-policy')}
@@ -185,21 +184,21 @@ export default function CookieConsent() {
                 {/* Necessary */}
                 <CookieCategory
                   label="Necessary"
-                  description="Session tokens, authentication. Required for the site to function."
+                  description="Essential cookies required for the site to function properly."
                   checked={settings.necessary}
                   disabled
                 />
                 {/* Analytics */}
                 <CookieCategory
                   label="Analytics"
-                  description="Help us understand how visitors interact with the site."
+                  description="Help us measure and understand how visitors interact with the site."
                   checked={settings.analytics}
                   onChange={() => toggleSetting('analytics')}
                 />
                 {/* Advertising */}
                 <CookieCategory
                   label="Advertising"
-                  description="Used by Google AdSense to show relevant ads."
+                  description="Used to deliver relevant content and personalized ads."
                   checked={settings.advertising}
                   onChange={() => toggleSetting('advertising')}
                 />

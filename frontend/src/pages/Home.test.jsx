@@ -97,4 +97,21 @@ describe('Home elo squiggle', () => {
       expect(screen.getByText(`elo ${DEFAULT_ELO}`)).toBeDefined();
     });
   });
+
+  it('renders the hero buttons including Daily challenge button', async () => {
+    api.get.mockImplementation((url) => {
+      if (url === '/user/profile') {
+        return Promise.resolve({
+          data: { username: 'Guest Player', elo: DEFAULT_ELO, wins: 0, losses: 0, is_guest: true },
+        });
+      }
+      return Promise.reject(new Error(`unexpected ${url}`));
+    });
+
+    renderHome();
+
+    await waitFor(() => {
+      expect(screen.getAllByRole('button', { name: /Daily challenge/i }).length).toBeGreaterThanOrEqual(2);
+    });
+  });
 });

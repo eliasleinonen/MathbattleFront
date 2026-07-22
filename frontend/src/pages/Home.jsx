@@ -228,6 +228,17 @@ export default function Home() {
             >
               Challenge friend
             </button>
+            <button
+              type="button"
+              onClick={() => navigate('/daily-challenge')}
+              className="relative inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
+            >
+              Daily challenge
+              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 ring-2 ring-white" />
+              </span>
+            </button>
           </div>
         </div>
       </div>

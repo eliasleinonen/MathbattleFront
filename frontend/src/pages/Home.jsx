@@ -235,7 +235,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => navigate('/play/friend')}
-              className="inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-transparent"
+              className="inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
             >
               Challenge friend
             </button>

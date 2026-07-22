@@ -27,6 +27,18 @@ function getStoredSettings() {
   }
 }
 
+// Update Google Analytics / AdSense consent mode
+function applyGoogleConsent(settings) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('consent', 'update', {
+      analytics_storage: settings.analytics ? 'granted' : 'denied',
+      ad_storage: settings.advertising ? 'granted' : 'denied',
+      ad_user_data: settings.advertising ? 'granted' : 'denied',
+      ad_personalization: settings.advertising ? 'granted' : 'denied',
+    });
+  }
+}
+
 export default function CookieConsent() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
@@ -36,6 +48,13 @@ export default function CookieConsent() {
 
   useEffect(() => {
     const consent = getStoredConsent();
+    const storedSettings = getStoredSettings();
+
+    if (storedSettings) {
+      setSettings(storedSettings);
+      applyGoogleConsent(storedSettings);
+    }
+
     if (!consent) {
       // Small delay so the banner slides in after page paint
       const timer = setTimeout(() => setVisible(true), 600);
@@ -53,12 +72,14 @@ export default function CookieConsent() {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
     localStorage.setItem(COOKIE_SETTINGS_KEY, JSON.stringify(all));
     setSettings(all);
+    applyGoogleConsent(all);
     dismiss();
   };
 
   const handleSaveSettings = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'custom');
     localStorage.setItem(COOKIE_SETTINGS_KEY, JSON.stringify(settings));
+    applyGoogleConsent(settings);
     setShowSettings(false);
     dismiss();
   };
@@ -68,6 +89,7 @@ export default function CookieConsent() {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'rejected');
     localStorage.setItem(COOKIE_SETTINGS_KEY, JSON.stringify(minimal));
     setSettings(minimal);
+    applyGoogleConsent(minimal);
     dismiss();
   };
 

@@ -14,6 +14,7 @@ import About from './pages/About';
 import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import NotFound from './pages/NotFound';
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CookieConsent />
     </div>
   );
 }

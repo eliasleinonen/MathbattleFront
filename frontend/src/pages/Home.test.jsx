@@ -98,12 +98,18 @@ describe('Home elo squiggle', () => {
     });
   });
 
-  it('renders the hero buttons including Daily challenge button', async () => {
+  it('shows green dot on Daily challenge button when challenge is not completed today', async () => {
     api.get.mockImplementation((url) => {
       if (url === '/user/profile') {
         return Promise.resolve({
-          data: { username: 'Guest Player', elo: DEFAULT_ELO, wins: 0, losses: 0, is_guest: true },
+          data: { username: 'testuser', elo: 1200, wins: 5, losses: 2, is_guest: false },
         });
+      }
+      if (url === '/challenges/pending') {
+        return Promise.resolve({ data: [] });
+      }
+      if (url === '/daily-challenge/today') {
+        return Promise.resolve({ data: { user_completed: false } });
       }
       return Promise.reject(new Error(`unexpected ${url}`));
     });
@@ -111,7 +117,32 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      expect(screen.getAllByRole('button', { name: /Daily challenge/i }).length).toBeGreaterThanOrEqual(2);
+      const dailyBtn = screen.getAllByRole('button', { name: /Daily challenge/i })[0];
+      expect(dailyBtn.querySelector('.bg-green-500')).not.toBeNull();
+    });
+  });
+
+  it('hides green dot on Daily challenge button when challenge is completed today', async () => {
+    api.get.mockImplementation((url) => {
+      if (url === '/user/profile') {
+        return Promise.resolve({
+          data: { username: 'testuser', elo: 1200, wins: 5, losses: 2, is_guest: false },
+        });
+      }
+      if (url === '/challenges/pending') {
+        return Promise.resolve({ data: [] });
+      }
+      if (url === '/daily-challenge/today') {
+        return Promise.resolve({ data: { user_completed: true } });
+      }
+      return Promise.reject(new Error(`unexpected ${url}`));
+    });
+
+    renderHome();
+
+    await waitFor(() => {
+      const dailyBtn = screen.getAllByRole('button', { name: /Daily challenge/i })[0];
+      expect(dailyBtn.querySelector('.bg-green-500')).toBeNull();
     });
   });
 });

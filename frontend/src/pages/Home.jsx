@@ -46,6 +46,7 @@ export default function Home() {
     is_guest: true,
   });
   const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
+  const [isDailyCompleted, setIsDailyCompleted] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -81,7 +82,17 @@ export default function Home() {
       }
     };
 
+    const checkDailyStatus = async () => {
+      try {
+        const res = await api.get('/daily-challenge/today');
+        setIsDailyCompleted(!!(res.data && res.data.user_completed));
+      } catch {
+        setIsDailyCompleted(false);
+      }
+    };
+
     fetchUserData();
+    checkDailyStatus();
 
     const interval = setInterval(() => {
       if (localStorage.getItem('token')) {
@@ -234,10 +245,12 @@ export default function Home() {
               className="relative inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
             >
               Daily challenge
-              <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 ring-2 ring-white" />
-              </span>
+              {!isDailyCompleted && (
+                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 ring-2 ring-white" />
+                </span>
+              )}
             </button>
           </div>
         </div>

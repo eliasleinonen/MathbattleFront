@@ -230,7 +230,7 @@ export default function Home() {
               onClick={() => navigate('/play/random')}
               className="inline-flex items-center justify-center px-5 py-3 bg-gray-900 hover:bg-black text-white text-sm rounded transition-colors"
             >
-              Play random
+              {isLoggedIn ? 'Play random' : 'Play as a guest'}
             </button>
             <button
               type="button"
@@ -298,7 +298,9 @@ export default function Home() {
               onClick={() => navigate('/play/random')}
               className="bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group"
             >
-              <h3 className="text-lg font-medium text-gray-900 group-hover:text-black mb-1">Play Random</h3>
+              <h3 className="text-lg font-medium text-gray-900 group-hover:text-black mb-1">
+                {isLoggedIn ? 'Play Random' : 'Play as a Guest'}
+              </h3>
               <p className="text-sm text-gray-500">Match instantly with an online opponent</p>
             </button>
 

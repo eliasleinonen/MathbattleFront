@@ -145,4 +145,44 @@ describe('Home elo squiggle', () => {
       expect(dailyBtn.querySelector('.bg-green-500')).toBeNull();
     });
   });
+
+  it('shows Play as a guest copy when user is not logged in', async () => {
+    api.get.mockImplementation((url) => {
+      if (url === '/user/profile') {
+        return Promise.resolve({
+          data: { username: 'Guest Player', elo: DEFAULT_ELO, wins: 0, losses: 0, is_guest: true },
+        });
+      }
+      return Promise.reject(new Error(`unexpected ${url}`));
+    });
+
+    renderHome();
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Play as a guest' })).toBeDefined();
+      expect(screen.getByText('Play as a Guest')).toBeDefined();
+    });
+  });
+
+  it('shows Play random copy when user is logged in', async () => {
+    window.localStorage.setItem('token', 'test-token');
+    api.get.mockImplementation((url) => {
+      if (url === '/user/profile') {
+        return Promise.resolve({
+          data: { username: 'registereduser', elo: 1400, wins: 10, losses: 2, is_guest: false },
+        });
+      }
+      if (url === '/challenges/pending') {
+        return Promise.resolve({ data: [] });
+      }
+      return Promise.reject(new Error(`unexpected ${url}`));
+    });
+
+    renderHome();
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Play random' })).toBeDefined();
+      expect(screen.getByText('Play Random')).toBeDefined();
+    });
+  });
 });

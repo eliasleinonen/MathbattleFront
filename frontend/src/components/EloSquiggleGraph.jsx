@@ -30,17 +30,17 @@ export default function EloSquiggleGraph({ elo, className = '' }) {
           />
         </svg>
         <span
-          className="elo-squiggle-tip pointer-events-none absolute flex items-center gap-1.5 text-inherit"
+          className="elo-squiggle-tip pointer-events-none absolute flex flex-col items-center text-inherit"
           style={{
             left: `${tipLeft}%`,
             top: `${tipTop}%`,
-            transform: 'translate(0.15rem, -50%)',
+            transform: 'translate(-50%, calc(-100% + 4px))',
           }}
         >
-          <span className="elo-squiggle-dot inline-block h-2 w-2 shrink-0 rounded-full bg-current" aria-hidden="true" />
-          <span className="elo-squiggle-label font-sans text-xl font-semibold tabular-nums tracking-tight sm:text-2xl">
+          <span className="elo-squiggle-label font-sans text-lg sm:text-xl font-semibold tabular-nums tracking-tight md:text-2xl mb-1">
             {rating}
           </span>
+          <span className="elo-squiggle-dot inline-block h-2 w-2 shrink-0 rounded-full bg-current" aria-hidden="true" />
         </span>
       </div>
     </div>

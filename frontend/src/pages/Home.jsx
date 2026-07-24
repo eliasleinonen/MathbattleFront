@@ -151,7 +151,7 @@ export default function Home() {
   const displayElo = userData.elo ?? DEFAULT_ELO;
 
   return (
-    <div className="home-field min-h-screen text-[#111] font-mono">
+    <div className="home-field min-h-screen text-[#111] font-mono overflow-x-hidden">
       <Seo
         title="Derivative Duel | Competitive Calculus Math Game"
         description="Battle opponents by solving calculus derivative problems in real-time. Challenge friends, improve your ELO rating, and master calculus derivatives."
@@ -160,14 +160,14 @@ export default function Home() {
       />
 
       <div className="relative min-h-[100svh] flex flex-col">
-        <nav className="relative z-20 flex justify-between items-center gap-4 px-5 py-5 sm:px-8">
+        <nav className="relative z-20 flex justify-between items-center gap-2 sm:gap-4 px-4 py-4 sm:px-8 sm:py-5">
           <span
             aria-label="derivative duel"
             className="text-3xl font-medium text-gray-900 select-none leading-none"
           >
             &#8706;
           </span>
-          <div className="flex items-center gap-6 text-sm text-gray-600">
+          <div className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-600">
             <button
               type="button"
               onClick={() => navigate('/leaderboard')}
@@ -214,35 +214,35 @@ export default function Home() {
 
         <EloSquiggleGraph
           elo={displayElo}
-          className="pointer-events-none absolute inset-x-0 top-[10%] bottom-[38%] z-0 text-[#1a1a1a] opacity-90 home-elo-graph"
+          className="pointer-events-none absolute inset-x-0 top-[18%] bottom-[50%] sm:top-[10%] sm:bottom-[38%] z-0 text-[#1a1a1a] opacity-90 home-elo-graph"
         />
 
-        <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-3xl home-hero-copy">
+        <div className="relative z-10 mt-auto px-4 pb-8 pt-12 sm:px-8 sm:pb-14 sm:pt-16 max-w-3xl home-hero-copy">
           <h1 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-2">
             &#8706; Derivative Duel
           </h1>
           <p className="font-mono text-sm text-gray-700 mb-6 tabular-nums">
             elo {displayElo}
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             <button
               type="button"
               onClick={() => navigate('/play/random')}
-              className="inline-flex items-center justify-center px-4 sm:px-5 py-3 bg-gray-900 hover:bg-black text-white text-sm rounded transition-colors"
+              className="inline-flex items-center justify-center px-3.5 sm:px-5 py-2.5 sm:py-3 bg-gray-900 hover:bg-black text-white text-xs sm:text-sm rounded transition-colors"
             >
               {isLoggedIn ? 'Play random' : 'Play as a guest'}
             </button>
             <button
               type="button"
               onClick={() => navigate('/play/friend')}
-              className="inline-flex items-center justify-center px-4 sm:px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
+              className="inline-flex items-center justify-center px-3.5 sm:px-5 py-2.5 sm:py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-xs sm:text-sm rounded transition-colors bg-white"
             >
               Challenge friend
             </button>
             <button
               type="button"
               onClick={() => navigate('/daily-challenge')}
-              className="relative inline-flex items-center justify-center px-4 sm:px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
+              className="relative inline-flex items-center justify-center px-3.5 sm:px-5 py-2.5 sm:py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-xs sm:text-sm rounded transition-colors bg-white"
             >
               Daily challenge
               {!isDailyCompleted && (
@@ -256,7 +256,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative z-10 border-t border-gray-200 bg-gray-50 px-5 py-12 sm:px-8">
+      <div className="relative z-10 border-t border-gray-200 bg-gray-50 px-4 py-10 sm:px-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
 
           {challengeError && (

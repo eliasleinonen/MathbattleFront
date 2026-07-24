@@ -112,7 +112,7 @@ export default function CookieConsent() {
 
       {/* Banner */}
       <div
-        className={`fixed bottom-4 right-4 z-[9999] max-w-sm sm:max-w-md w-[calc(100%-2rem)] transition-all duration-300 ease-out ${
+        className={`fixed bottom-4 right-4 z-[9999] max-w-xs sm:max-w-md w-[calc(100%-2rem)] transition-all duration-300 ease-out ${
           closing
             ? 'translate-y-4 opacity-0 pointer-events-none'
             : 'translate-y-0 opacity-100'
@@ -120,27 +120,26 @@ export default function CookieConsent() {
         role="dialog"
         aria-label="Cookie consent"
       >
-        <div className="bg-white border border-gray-300 rounded shadow-xl p-5">
+        <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-3.5 sm:p-4">
           {/* Main banner content */}
           {!showSettings && (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
               <div className="min-w-0">
-                <h2 className="text-sm font-semibold text-gray-900 font-mono mb-1.5">
+                <h2 className="text-xs font-semibold text-gray-900 font-mono mb-0.5">
                   We use cookies
                 </h2>
-                <p className="text-xs text-gray-500 leading-relaxed font-mono">
-                  We use cookies to improve your browsing experience and analyze site traffic. Read our{' '}
+                <p className="text-[11px] text-gray-500 leading-normal font-mono">
+                  We use cookies to analyze traffic. Read our{' '}
                   <button
                     type="button"
                     onClick={() => navigate('/privacy-policy')}
                     className="text-gray-700 underline hover:text-gray-900 transition-colors"
                   >
                     Privacy Policy
-                  </button>{' '}
-                  for details.
+                  </button>.
                 </p>
               </div>
-              <div className="flex items-center justify-end gap-2 shrink-0">
+              <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
                 <button
                   type="button"
                   onClick={() => {
@@ -148,14 +147,14 @@ export default function CookieConsent() {
                     if (stored) setSettings(stored);
                     setShowSettings(true);
                   }}
-                  className="px-3.5 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:border-gray-900 hover:text-gray-900 transition-colors font-mono"
+                  className="px-2.5 py-1 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:border-gray-900 hover:text-gray-900 transition-colors font-mono"
                 >
-                  Edit settings
+                  Edit
                 </button>
                 <button
                   type="button"
                   onClick={handleAcceptAll}
-                  className="px-4 py-1.5 text-xs font-medium text-white bg-gray-900 rounded hover:bg-black transition-colors font-mono"
+                  className="px-3.5 py-1 text-xs font-medium text-white bg-gray-900 rounded hover:bg-black transition-colors font-mono"
                 >
                   Accept
                 </button>

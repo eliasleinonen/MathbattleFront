@@ -217,7 +217,7 @@ export default function Home() {
           className="pointer-events-none absolute inset-x-0 top-[10%] bottom-[38%] z-0 text-[#1a1a1a] opacity-90 home-elo-graph"
         />
 
-        <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-xl home-hero-copy">
+        <div className="relative z-10 mt-auto px-5 pb-10 pt-16 sm:px-8 sm:pb-14 max-w-3xl home-hero-copy">
           <h1 className="font-sans font-bold text-[clamp(2.4rem,7vw,3.75rem)] tracking-tight leading-[0.95] text-gray-900 mb-2">
             &#8706; Derivative Duel
           </h1>
@@ -228,21 +228,21 @@ export default function Home() {
             <button
               type="button"
               onClick={() => navigate('/play/random')}
-              className="inline-flex items-center justify-center px-5 py-3 bg-gray-900 hover:bg-black text-white text-sm rounded transition-colors"
+              className="inline-flex items-center justify-center px-4 sm:px-5 py-3 bg-gray-900 hover:bg-black text-white text-sm rounded transition-colors"
             >
               {isLoggedIn ? 'Play random' : 'Play as a guest'}
             </button>
             <button
               type="button"
               onClick={() => navigate('/play/friend')}
-              className="inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
+              className="inline-flex items-center justify-center px-4 sm:px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
             >
               Challenge friend
             </button>
             <button
               type="button"
               onClick={() => navigate('/daily-challenge')}
-              className="relative inline-flex items-center justify-center px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
+              className="relative inline-flex items-center justify-center px-4 sm:px-5 py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-sm rounded transition-colors bg-white"
             >
               Daily challenge
               {!isDailyCompleted && (

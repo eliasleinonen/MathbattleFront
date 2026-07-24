@@ -112,7 +112,7 @@ export default function CookieConsent() {
 
       {/* Banner */}
       <div
-        className={`fixed bottom-4 right-4 z-[9999] max-w-sm sm:max-w-md w-[calc(100%-2rem)] transition-all duration-300 ease-out ${
+        className={`fixed bottom-3 left-3 right-3 sm:left-auto sm:right-4 sm:bottom-4 z-[9999] sm:max-w-md transition-all duration-300 ease-out ${
           closing
             ? 'translate-y-4 opacity-0 pointer-events-none'
             : 'translate-y-0 opacity-100'

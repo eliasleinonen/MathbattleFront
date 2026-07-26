@@ -117,7 +117,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      const dailyBtn = screen.getAllByRole('button', { name: /Daily challenge/i })[0];
+      const dailyBtn = screen.getAllByRole('link', { name: /Daily challenge/i })[0];
       expect(dailyBtn.querySelector('.bg-green-500')).not.toBeNull();
     });
   });
@@ -141,7 +141,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      const dailyBtn = screen.getAllByRole('button', { name: /Daily challenge/i })[0];
+      const dailyBtn = screen.getAllByRole('link', { name: /Daily challenge/i })[0];
       expect(dailyBtn.querySelector('.bg-green-500')).toBeNull();
     });
   });
@@ -159,7 +159,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Play as a guest' })).toBeDefined();
+      expect(screen.getByRole('link', { name: 'Play as a guest' })).toBeDefined();
       expect(screen.getByText('Play as a Guest')).toBeDefined();
     });
   });
@@ -181,7 +181,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Play random' })).toBeDefined();
+      expect(screen.getByRole('link', { name: 'Play random' })).toBeDefined();
       expect(screen.getByText('Play Random')).toBeDefined();
     });
   });

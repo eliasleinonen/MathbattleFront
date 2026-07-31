@@ -44,7 +44,7 @@ export default function PrivacyPolicy() {
             <ul className="list-disc list-inside text-gray-700 space-y-2">
               <li><strong>Usage Data:</strong> Pages visited, time spent, features used</li>
               <li><strong>Device Information:</strong> Browser type, IP address, operating system</li>
-              <li><strong>Cookies:</strong> We use cookies to maintain your session and improve user experience</li>
+              <li><strong>Cookies & Local Storage:</strong> We use essential local storage (such as JWT authentication tokens and guest IDs) and cookies for analytics and advertising preferences.</li>
             </ul>
           </section>
 
@@ -128,10 +128,19 @@ export default function PrivacyPolicy() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Cookies</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Cookies & Local Storage</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              We use essential local storage to maintain your login session (via authentication tokens) and to store guest identifiers. Optional third-party cookies and local storage are used for analytics and advertising when consented to.
+            </p>
             <p className="text-gray-700 leading-relaxed">
-              We use cookies to maintain your login session and improve user experience. You can configure your browser to reject cookies, 
-              but this may limit your ability to use certain features of our service.
+              You can review or change your cookie and privacy preferences at any time by clicking{' '}
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))}
+                className="text-blue-600 underline hover:text-blue-700 font-medium cursor-pointer"
+              >
+                Cookie Settings
+              </button>.
             </p>
           </section>
 

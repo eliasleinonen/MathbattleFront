@@ -31,7 +31,16 @@ export default function TermsAndServices() {
 
             <div>
               <h2 className="text-lg font-semibold text-gray-900 mb-2">Cookies & Analytics</h2>
-              <p>We use essential cookies and local storage to keep you logged in and remember your preferences. Third-party services such as Google AdSense and Google Analytics may also use cookies to serve ads and analyze traffic.</p>
+              <p>
+                We use essential local storage (such as authentication tokens and guest IDs) and cookies to keep you logged in and remember your preferences. Third-party services such as Google AdSense and Google Analytics may also use cookies to serve ads and analyze traffic when consented to. You can adjust your preferences anytime via{' '}
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new Event('open-cookie-settings'))}
+                  className="underline text-blue-600 hover:text-blue-700 font-medium cursor-pointer"
+                >
+                  Cookie Settings
+                </button>.
+              </p>
             </div>
 
             <div>

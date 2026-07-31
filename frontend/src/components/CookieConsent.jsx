@@ -47,6 +47,16 @@ export default function CookieConsent() {
   const [closing, setClosing] = useState(false);
 
   useEffect(() => {
+    const handleOpenSettings = () => {
+      const storedSettings = getStoredSettings();
+      if (storedSettings) setSettings(storedSettings);
+      setShowSettings(true);
+      setClosing(false);
+      setVisible(true);
+    };
+
+    window.addEventListener('open-cookie-settings', handleOpenSettings);
+
     const consent = getStoredConsent();
     const storedSettings = getStoredSettings();
 
@@ -58,8 +68,15 @@ export default function CookieConsent() {
     if (!consent) {
       // Small delay so the banner slides in after page paint
       const timer = setTimeout(() => setVisible(true), 600);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('open-cookie-settings', handleOpenSettings);
+      };
     }
+
+    return () => {
+      window.removeEventListener('open-cookie-settings', handleOpenSettings);
+    };
   }, []);
 
   const dismiss = () => {
@@ -126,10 +143,10 @@ export default function CookieConsent() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
               <div className="min-w-0">
                 <h2 className="text-xs font-semibold text-gray-900 font-mono mb-0.5">
-                  We use cookies
+                  Cookies & Preferences
                 </h2>
                 <p className="text-[11px] text-gray-500 leading-normal font-mono">
-                  We use cookies to analyze traffic. Read our{' '}
+                  We use cookies and local storage for analytics and advertising. Read our{' '}
                   <button
                     type="button"
                     onClick={() => navigate('/privacy-policy')}
@@ -183,7 +200,7 @@ export default function CookieConsent() {
                 {/* Necessary */}
                 <CookieCategory
                   label="Necessary"
-                  description="Essential cookies required for the site to function properly."
+                  description="Essential cookies and local storage required for login session and core site functionality."
                   checked={settings.necessary}
                   disabled
                 />

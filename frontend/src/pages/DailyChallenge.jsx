@@ -661,23 +661,29 @@ export default function DailyChallenge() {
     <div className="min-h-screen p-4 sm:p-8 bg-gray-50 text-gray-900">
       {dailyChallengeSeo}
       <div className="max-w-6xl mx-auto">
-        <button
-          onClick={() => navigate('/')}
-          className="text-sm text-gray-600 hover:text-gray-900 mb-6 font-mono inline-flex items-center gap-1"
-        >
-          ← back to home
-        </button>
-
-        <div className="mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-gray-500 block mb-1">
-            ∂ Daily Calculus
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">
-            Daily Derivative Challenge
-          </h1>
-          <p className="text-sm sm:text-base text-gray-600 max-w-2xl leading-relaxed">
-            A new calculus derivative problem every day at 00:00 UTC. Differentiate the function as fast as you can, build your streak, and climb the daily leaderboard.
-          </p>
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate('/')}
+              className="text-xs font-mono text-gray-500 hover:text-gray-900 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 hover:border-gray-300 bg-white shadow-xs transition-all"
+            >
+              ← <span className="hidden sm:inline">Home</span>
+            </button>
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight">
+                Daily Derivative Challenge
+              </h1>
+              <p className="text-xs text-gray-500 font-mono mt-0.5">
+                New puzzle every day at 00:00 UTC • Compete globally
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/how-to-derivate"
+            className="text-xs font-mono text-gray-500 hover:text-gray-900 underline hidden sm:inline"
+          >
+            Differentiation Guide →
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
@@ -769,27 +775,22 @@ export default function DailyChallenge() {
                       </span>
                     </div>
                   </div>
-                  <div className="bg-gray-50 p-6 rounded mb-6 border border-gray-100">
-                    <p className="text-sm text-gray-900 font-medium mb-1">Ready to find today's derivative?</p>
-                    <p className="text-xs text-gray-600 mb-2 leading-relaxed">
-                      Everyone receives the exact same function. Differentiate f(x) as fast as you can to rank on the leaderboard.
-                    </p>
-                    <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-                      <span className="text-gray-600">
-                        Topic: <strong className="text-gray-900">{getDifficultyMeta(todayChallenge.difficulty, todayChallenge.category).category}</strong>
+                  <div className="bg-gray-50/80 p-4 rounded-xl mb-5 border border-gray-100 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+                    <span className="text-gray-600">
+                      Topic: <strong className="text-gray-900 font-semibold">{getDifficultyMeta(todayChallenge.difficulty, todayChallenge.category).category}</strong>
+                    </span>
+                    {!isLoggedIn && (
+                      <span className="text-blue-600">
+                        Playing as guest • Instant play without sign-in
                       </span>
-                      {!isLoggedIn && (
-                        <span className="text-blue-600">
-                          • Playing as guest • Instant play without sign-in
-                        </span>
-                      )}
-                    </div>
+                    )}
                   </div>
                   <button
                     onClick={startChallenge}
-                    className="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded font-medium transition-colors w-full text-base shadow-sm"
+                    className="bg-gray-900 hover:bg-black text-white px-8 py-3.5 rounded-xl font-medium transition-all w-full text-base shadow-sm active:scale-[0.99] flex items-center justify-center gap-2"
                   >
-                    Start Challenge
+                    <span>Start Challenge</span>
+                    <span className="text-gray-400 font-mono text-sm">→</span>
                   </button>
                 </>
               )
@@ -842,7 +843,12 @@ export default function DailyChallenge() {
 
         {/* How It Works Section */}
         <div className="bg-white border border-gray-200 rounded p-6 mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">How the Daily Derivative Works</h2>
+          <div className="max-w-3xl mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-2">How the Daily Derivative Works</h2>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              A new calculus derivative problem is released every day at 00:00 UTC. Differentiate the function as fast as you can, build your streak, and climb the daily global speed leaderboard.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-gray-50 border border-gray-100 rounded p-4">
               <span className="text-xs font-mono text-gray-500 font-semibold block mb-1">01 / DAILY FUNCTION</span>

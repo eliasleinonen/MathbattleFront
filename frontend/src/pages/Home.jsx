@@ -240,7 +240,7 @@ export default function Home() {
               to="/daily-challenge"
               className="relative inline-flex items-center justify-center px-3.5 sm:px-5 py-2.5 sm:py-3 border border-gray-300 hover:border-gray-900 text-gray-900 text-xs sm:text-sm rounded transition-colors bg-white"
             >
-              Daily challenge
+              Daily derivative
               {!isDailyCompleted && (
                 <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -312,7 +312,7 @@ export default function Home() {
               className="block bg-white border border-gray-200 hover:border-gray-900 p-6 rounded-lg text-left transition-all shadow-sm hover:shadow-md group md:col-span-2"
             >
               <div className="flex justify-between items-center mb-1">
-                <h3 className="text-lg font-medium text-gray-900 group-hover:text-black">Daily Challenge</h3>
+                <h3 className="text-lg font-medium text-gray-900 group-hover:text-black">Daily Derivative</h3>
                 <span className="text-[10px] bg-green-100 text-green-800 font-mono px-2 py-0.5 rounded">NEW PUZZLE EVERY DAY</span>
               </div>
               <p className="text-sm text-gray-500">One derivative problem every day — compete on the daily leaderboard for the fastest time</p>
@@ -330,6 +330,10 @@ export default function Home() {
             </p>
             <p>
               Play{' '}
+              <Link to="/daily-challenge" className="text-gray-700 underline hover:text-gray-900">
+                today's daily derivative
+              </Link>
+              , compete in{' '}
               <Link to="/play/random" className="text-gray-700 underline hover:text-gray-900">
                 random matches
               </Link>{' '}

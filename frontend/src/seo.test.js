@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { faqs, faqJsonLd } from './pages/FAQ';
+import { dailyChallengeFaqs, dailyChallengeJsonLd } from './pages/DailyChallenge';
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(rootDir, '..', 'public');
@@ -54,6 +55,22 @@ describe('FAQ structured data', () => {
       expect(entry['@type']).toBe('Question');
       expect(entry.name).toBe(faqs[index].question);
       expect(entry.acceptedAnswer.text).toBe(faqs[index].answer);
+    }
+  });
+});
+
+describe('Daily Challenge structured data', () => {
+  it('builds a WebApplication and FAQPage schema covering every question', () => {
+    expect(dailyChallengeJsonLd).toHaveLength(2);
+    const [webApp, faq] = dailyChallengeJsonLd;
+    expect(webApp['@type']).toBe('WebApplication');
+    expect(webApp.name).toBe('Daily Derivative Challenge');
+    expect(faq['@type']).toBe('FAQPage');
+    expect(faq.mainEntity).toHaveLength(dailyChallengeFaqs.length);
+    for (const [index, entry] of faq.mainEntity.entries()) {
+      expect(entry['@type']).toBe('Question');
+      expect(entry.name).toBe(dailyChallengeFaqs[index].question);
+      expect(entry.acceptedAnswer.text).toBe(dailyChallengeFaqs[index].answer);
     }
   });
 });

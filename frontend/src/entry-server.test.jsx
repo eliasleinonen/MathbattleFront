@@ -30,6 +30,19 @@ describe('entry-server prerendering', () => {
     expect(head).toContain('https://www.mathbattle.xyz/');
   });
 
+  it('renders the Daily Challenge route with rich semantic content and FAQ structured data', () => {
+    const { html, head } = render('/daily-challenge');
+    expect(html).toContain('Daily Derivative Challenge');
+    expect(html).toContain('How the Daily Derivative Works');
+    expect(html).toContain('Frequently Asked Questions');
+    expect(html).toContain('Start Challenge');
+    expect(head).toContain('https://www.mathbattle.xyz/daily-challenge');
+    expect(head).toContain('Daily Derivative');
+    expect(head).toContain('application/ld+json');
+    expect(head).toContain('FAQPage');
+    expect(head).toContain('WebApplication');
+  });
+
   it('renders the derivative guide content', () => {
     const { html } = render('/how-to-derivate');
     expect(html).toContain('Power Rule');

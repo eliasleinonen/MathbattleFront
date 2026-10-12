@@ -117,7 +117,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      const dailyBtn = screen.getAllByRole('link', { name: /Daily challenge/i })[0];
+      const dailyBtn = screen.getAllByRole('link', { name: /Daily (challenge|derivative)/i })[0];
       expect(dailyBtn.querySelector('.bg-green-500')).not.toBeNull();
     });
   });
@@ -141,7 +141,7 @@ describe('Home elo squiggle', () => {
     renderHome();
 
     await waitFor(() => {
-      const dailyBtn = screen.getAllByRole('link', { name: /Daily challenge/i })[0];
+      const dailyBtn = screen.getAllByRole('link', { name: /Daily (challenge|derivative)/i })[0];
       expect(dailyBtn.querySelector('.bg-green-500')).toBeNull();
     });
   });

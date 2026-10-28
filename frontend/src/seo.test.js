@@ -60,9 +60,9 @@ describe('FAQ structured data', () => {
 });
 
 describe('Daily Challenge structured data', () => {
-  it('builds a WebApplication and FAQPage schema covering every question', () => {
-    expect(dailyChallengeJsonLd).toHaveLength(2);
-    const [webApp, faq] = dailyChallengeJsonLd;
+  it('builds WebApplication, FAQPage, and BreadcrumbList schemas covering every question', () => {
+    expect(dailyChallengeJsonLd).toHaveLength(3);
+    const [webApp, faq, breadcrumbs] = dailyChallengeJsonLd;
     expect(webApp['@type']).toBe('WebApplication');
     expect(webApp.name).toBe('Daily Derivative Challenge');
     expect(faq['@type']).toBe('FAQPage');
@@ -72,5 +72,8 @@ describe('Daily Challenge structured data', () => {
       expect(entry.name).toBe(dailyChallengeFaqs[index].question);
       expect(entry.acceptedAnswer.text).toBe(dailyChallengeFaqs[index].answer);
     }
+    expect(breadcrumbs['@type']).toBe('BreadcrumbList');
+    expect(breadcrumbs.itemListElement).toHaveLength(2);
+    expect(breadcrumbs.itemListElement[1].name).toBe('Daily Derivative');
   });
 });

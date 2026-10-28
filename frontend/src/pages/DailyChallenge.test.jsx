@@ -354,11 +354,13 @@ describe('DailyChallenge page and guest access', () => {
 
   it('exports valid FAQ and Schema.org structured data', () => {
     expect(dailyChallengeFaqs.length).toBeGreaterThan(2);
-    expect(dailyChallengeJsonLd).toHaveLength(2);
+    expect(dailyChallengeJsonLd).toHaveLength(3);
     const webAppSchema = dailyChallengeJsonLd[0];
     const faqSchema = dailyChallengeJsonLd[1];
+    const breadcrumbSchema = dailyChallengeJsonLd[2];
     expect(webAppSchema['@type']).toBe('WebApplication');
     expect(faqSchema['@type']).toBe('FAQPage');
+    expect(breadcrumbSchema['@type']).toBe('BreadcrumbList');
     expect(faqSchema.mainEntity).toHaveLength(dailyChallengeFaqs.length);
   });
 

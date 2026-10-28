@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import Seo from '../components/Seo';
 
@@ -12,8 +12,8 @@ export const faqs = [
       answer: "ELO is a rating system that measures your skill level. You start at 1000 ELO. When you win matches, your ELO goes up; when you lose, it goes down. The amount of change depends on the skill difference between you and your opponent."
     },
     {
-      question: "How does the Daily Challenge work?",
-      answer: "Every day, a new derivative problem is posted. All players solve the same problem, and the leaderboard ranks players by completion time."
+      question: "How does the Daily Derivative work?",
+      answer: "Every day, a new Daily Derivative calculus puzzle is released at 00:00 UTC. All players solve the exact same derivative of the day, and a global leaderboard ranks solvers by completion speed."
     },
     {
       question: "What derivative rules do I need to know?",
@@ -110,7 +110,20 @@ export default function FAQ() {
           ))}
         </div>
 
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+        <div className="mt-8 bg-gray-100 border border-gray-200 rounded-lg p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h2 className="text-base font-semibold text-gray-900">Ready to test your calculus skills?</h2>
+            <p className="text-sm text-gray-600 mt-1">Solve today's Daily Derivative puzzle and compete on the global speed leaderboard.</p>
+          </div>
+          <Link
+            to="/daily-challenge"
+            className="inline-flex items-center px-4 py-2 bg-gray-900 hover:bg-black text-white text-sm font-medium rounded transition-colors whitespace-nowrap"
+          >
+            Play Daily Derivative →
+          </Link>
+        </div>
+
+        <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">Still have questions?</h2>
           <p className="text-gray-700 mb-4">
             Can't find what you're looking for? Contact us and we'll be happy to help!

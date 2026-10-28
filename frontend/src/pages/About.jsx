@@ -39,7 +39,7 @@ export default function About() {
             <ul className="list-disc list-inside text-gray-700 space-y-2">
               <li><strong>Ranked Matches:</strong> Compete against random opponents and climb the ELO leaderboard</li>
               <li><strong>Challenge Friends:</strong> Create private matches and challenge your classmates</li>
-              <li><strong>Daily Challenge:</strong> Solve the daily derivative problem and compete for the fastest time</li>
+              <li><strong><Link to="/daily-challenge" className="underline hover:text-blue-600">Daily Derivative:</Link></strong> Solve the daily derivative problem of the day and compete for the fastest time on the leaderboard</li>
             </ul>
           </section>
 

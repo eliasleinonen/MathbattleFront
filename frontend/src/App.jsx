@@ -29,6 +29,7 @@ function App() {
         <Route path="/play/friend/:matchCode" element={<PlayFriend />} />
         <Route path="/game/:matchCode" element={<Game />} />
         <Route path="/daily-challenge" element={<DailyChallenge />} />
+        <Route path="/daily-derivative" element={<DailyChallenge />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
         <Route path="/how-to-derivate" element={<HowToDerivate />} />
         <Route path="/terms-and-services" element={<TermsAndServices />} />

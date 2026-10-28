@@ -11,7 +11,7 @@ export const dailyChallengeFaqs = [
   {
     question: 'What is the Daily Derivative challenge?',
     answer:
-      'The Daily Derivative is a free daily calculus puzzle where players solve a new derivative problem every day and compete on a global speed leaderboard.',
+      'The Daily Derivative is a free daily calculus puzzle where players solve a new derivative of the day every day and compete on a global speed leaderboard.',
   },
   {
     question: 'When does the daily derivative reset?',
@@ -21,6 +21,11 @@ export const dailyChallengeFaqs = [
     question: 'Can I play the Daily Derivative without an account?',
     answer:
       'Yes! Anyone can play and solve today\'s challenge instantly as a guest without creating an account or logging in. You can optionally sign in with Google to save your streak and post your score to the leaderboard.',
+  },
+  {
+    question: 'What types of daily derivative problems are featured?',
+    answer:
+      'Our daily derivative problems range from Speed Run polynomials on Mondays to Chain Rule and Product Rule challenges later in the week. Practicing daily derivatives helps reinforce calculus differentiation rules through consistent, bite-sized daily calculus practice.',
   },
   {
     question: 'How do I enter mathematical answers?',
@@ -43,7 +48,7 @@ export const dailyChallengeJsonLd = [
       priceCurrency: 'USD',
     },
     description:
-      'Solve today\'s Daily Derivative calculus challenge! Practice derivatives every day with a new problem, beat the clock, and compete on the global leaderboard.',
+      'Play today\'s Daily Derivative! Free daily calculus puzzle with instant feedback, streak tracking, and global speed leaderboard. No sign-in or download required.',
   },
   {
     '@context': 'https://schema.org',
@@ -57,12 +62,30 @@ export const dailyChallengeJsonLd = [
       },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Daily Derivative',
+        item: `${SITE_URL}/daily-challenge`,
+      },
+    ],
+  },
 ];
 
 const dailyChallengeSeo = (
   <Seo
-    title="Daily Derivative — Free Daily Calculus Challenge | Derivative Duel"
-    description="Solve today's Daily Derivative calculus challenge! Practice derivatives every day with a new problem, beat the clock, and compete on the global leaderboard."
+    title="Daily Derivative — Play Today's Calculus Puzzle Free Online"
+    description="Play today's Daily Derivative! Free daily calculus puzzle with instant feedback, streak tracking, and global speed leaderboard. No sign-in or download required."
     path="/daily-challenge"
     jsonLd={dailyChallengeJsonLd}
   />
@@ -846,15 +869,15 @@ export default function DailyChallenge() {
           <div className="max-w-3xl mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">How the Daily Derivative Works</h2>
             <p className="text-sm text-gray-600 leading-relaxed">
-              A new calculus derivative problem is released every day at 00:00 UTC. Differentiate the function as fast as you can, build your streak, and climb the daily global speed leaderboard.
+              The Daily Derivative is a daily calculus puzzle designed to build rapid differentiation mastery. Solve the derivative of the day every day at 00:00 UTC across various difficulty tiers, build your streak, and climb the daily global speed leaderboard.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="bg-gray-50 border border-gray-100 rounded p-4">
               <span className="text-xs font-mono text-gray-500 font-semibold block mb-1">01 / DAILY FUNCTION</span>
-              <p className="font-medium text-gray-900 mb-1">One Problem Every Day</p>
+              <p className="font-medium text-gray-900 mb-1">Derivative of the Day</p>
               <p className="text-gray-600 text-xs leading-relaxed">
-                A new function f(x) is released every day at 00:00 UTC. Everyone across the world gets the exact same calculus problem.
+                A new function f(x) is released every day at 00:00 UTC. Everyone across the world receives the exact same daily derivative problem.
               </p>
             </div>
             <div className="bg-gray-50 border border-gray-100 rounded p-4">

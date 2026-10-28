@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { leaderboardAPI } from '../api';
 import Seo from '../components/Seo';
 
@@ -65,9 +65,17 @@ export default function Leaderboard() {
           ← back
         </button>
 
-        <h1 className="text-2xl font-medium text-gray-800 mb-8">
-          leaderboard
-        </h1>
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-2xl font-medium text-gray-800">
+            leaderboard
+          </h1>
+          <Link
+            to="/daily-challenge"
+            className="text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded transition-colors"
+          >
+            Daily Derivative ⏱️
+          </Link>
+        </div>
 
         {/* Tab Selector */}
         <div className="flex gap-2 mb-6">
@@ -176,12 +184,12 @@ export default function Leaderboard() {
             {timeTrialPlayers.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-sm text-gray-500">no time trial records yet</p>
-                <button
-                  onClick={() => navigate('/daily-challenge')}
-                  className="mt-4 text-sm text-gray-600 hover:text-gray-900"
+                <Link
+                  to="/daily-challenge"
+                  className="inline-block mt-4 text-sm text-gray-600 hover:text-gray-900 underline"
                 >
-                  play daily challenge →
-                </button>
+                  play daily derivative →
+                </Link>
               </div>
             )}
           </div>

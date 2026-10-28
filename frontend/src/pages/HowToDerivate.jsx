@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Seo, { SITE_URL } from '../components/Seo';
 
 const guideJsonLd = {
@@ -114,6 +114,21 @@ export default function HowToDerivate() {
                   <li>• Practice with a variety of functions to get comfortable with the rules</li>
                 </ul>
               </div>
+            </div>
+
+            <div className="mt-8 p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <h3 className="font-semibold text-base mb-1">Ready to test these differentiation rules?</h3>
+                <p className="text-xs text-gray-300">
+                  Solve today's Daily Derivative puzzle and compete for the fastest time on the global leaderboard.
+                </p>
+              </div>
+              <Link
+                to="/daily-challenge"
+                className="px-5 py-2.5 bg-white text-gray-900 hover:bg-gray-100 rounded-lg text-xs font-mono font-medium transition-colors shrink-0 shadow-sm"
+              >
+                Play Daily Derivative →
+              </Link>
             </div>
           </div>
 

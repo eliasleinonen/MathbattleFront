@@ -4,6 +4,8 @@ import { gameAPI } from '../api';
 import api from '../api';
 import Seo from '../components/Seo';
 import { useRoundAdvance } from '../hooks/useRoundAdvance';
+import NotificationPromptModal from '../components/NotificationPromptModal';
+import { incrementMatchesPlayedCount, shouldPromptForNotifications } from '../utils/notifications';
 
 export default function Game() {
   const joinAttemptedRef = useRef(false);
@@ -22,6 +24,8 @@ export default function Game() {
   const [isWaiting, setIsWaiting] = useState(true);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [opponentConnected, setOpponentConnected] = useState(true);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const hasTrackedMatchRef = useRef(false);
   const elapsedTimerRef = useRef(null);
   const [gameState, setGameState] = useState({
     matchId: '',
@@ -431,6 +435,17 @@ export default function Game() {
     );
   }
 
+  // Track finished matches and trigger notification prompt after 1st and every 5th match
+  useEffect(() => {
+    if (gameState.phase === 'finished' && !hasTrackedMatchRef.current) {
+      hasTrackedMatchRef.current = true;
+      incrementMatchesPlayedCount();
+      if (shouldPromptForNotifications()) {
+        setShowNotificationModal(true);
+      }
+    }
+  }, [gameState.phase]);
+
   if (gameState.phase === 'finished') {
     const userScore = isPlayer1 ? gameState.player1Score : gameState.player2Score;
     const opponentScore = isPlayer1 ? gameState.player2Score : gameState.player1Score;
@@ -475,6 +490,10 @@ export default function Game() {
             </button>
           </div>
         </div>
+        <NotificationPromptModal
+          isOpen={showNotificationModal}
+          onClose={() => setShowNotificationModal(false)}
+        />
       </div>
     );
   }

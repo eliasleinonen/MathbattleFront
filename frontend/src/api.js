@@ -72,8 +72,8 @@ export const authAPI = {
 };
 
 export const gameAPI = {
-  startMatch: (mode, continueExisting = false) => 
-    api.post('/game/start', { mode, continue_existing: continueExisting }),
+  startMatch: (mode, continueExisting = false, forceBot = false) => 
+    api.post('/game/start', { mode, continue_existing: continueExisting, force_bot: forceBot }),
   
   cancelMatchmaking: () =>
     api.post('/game/cancel'),
@@ -101,6 +101,17 @@ export const gameAPI = {
   
   getProfile: () =>
     api.get('/user/profile'),
+};
+
+export const notificationAPI = {
+  getVapidPublicKey: () =>
+    api.get('/notifications/vapid-public-key'),
+
+  subscribe: (subscription) =>
+    api.post('/notifications/subscribe', subscription),
+
+  unsubscribe: (endpoint) =>
+    api.post('/notifications/unsubscribe', { endpoint }),
 };
 
 export const leaderboardAPI = {

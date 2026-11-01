@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
 import { useRoundAdvance } from '../hooks/useRoundAdvance';
+import NotificationPromptModal from '../components/NotificationPromptModal';
+import { incrementMatchesPlayedCount, shouldPromptForNotifications } from '../utils/notifications';
 
 const playRandomSeo = (
   <Seo
@@ -59,7 +61,9 @@ export default function PlayRandom() {
   const searchTimeoutRef = useRef(null);
   const isSearchingRef = useRef(true);
   const [isSearching, setIsSearching] = useState(true);
-  const [searchTime, setSearchTime] = useState(10);
+  const [searchTime, setSearchTime] = useState(60);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const hasTrackedMatchRef = useRef(false);
   const [opponent, setOpponent] = useState('');
   const [username, setUsername] = useState('You');
   const [opponentName, setOpponentName] = useState('Opponent');
@@ -248,6 +252,34 @@ export default function PlayRandom() {
     }
   };
 
+  const playBotNow = async () => {
+    isSearchingRef.current = false;
+    setIsSearching(false);
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+      searchTimeoutRef.current = null;
+    }
+    try {
+      const res = await gameAPI.startMatch('random', false, true);
+      if (res.data.status === 'matched') {
+        setOpponent(res.data.opponent);
+        const matchId = res.data.match_id;
+        const code = res.data.match_code;
+        setGameState(prev => ({ ...prev, matchId, currentRound: 0, player1Score: 0, player2Score: 0 }));
+        const currentUserId = userId || (await gameAPI.getProfile()).data.id;
+        setUserId(currentUserId);
+        await fetchGameStatus(matchId, currentUserId);
+        if (res.data.opponent) setOpponent(res.data.opponent);
+        if (code) {
+          navigate(`/play/random/${code}`, { replace: true });
+        }
+        startCountdown(matchId);
+      }
+    } catch (err) {
+      console.error('Failed to start bot match:', err);
+    }
+  };
+
   const resetTimers = () => {
     resetRound();
     if (elapsedTimerRef.current) {
@@ -262,9 +294,11 @@ export default function PlayRandom() {
 
   const handlePlayAgain = () => {
     resetTimers();
+    hasTrackedMatchRef.current = false;
+    setShowNotificationModal(false);
     isSearchingRef.current = true;
     setIsSearching(true);
-    setSearchTime(10);
+    setSearchTime(60);
     setElapsedTime(0);
     setIsBot(false);
     setOpponent('');
@@ -273,6 +307,17 @@ export default function PlayRandom() {
     navigate('/play/random', { replace: true });
     searchForMatch();
   };
+
+  // Track finished matches and trigger notification prompt after 1st and every 5th match
+  useEffect(() => {
+    if (gameState.phase === 'finished' && !hasTrackedMatchRef.current) {
+      hasTrackedMatchRef.current = true;
+      incrementMatchesPlayedCount();
+      if (shouldPromptForNotifications()) {
+        setShowNotificationModal(true);
+      }
+    }
+  }, [gameState.phase]);
 
   // Stopwatch timer for question phase (excluding bot matches which have their own timer)
   useEffect(() => {
@@ -644,7 +689,7 @@ export default function PlayRandom() {
             setGameState(prev => {
               // Don't start new round if match is finished
               if (prev.player1Score >= 3 || prev.player2Score >= 3) {
-                return { ...prev, phase: 'finished', matchWinner: res.winner_id, eloChange: res.elo_change || 0 };
+                return { ...prev, phase: 'finished', matchWinner: res.data.winner_id, eloChange: res.data.elo_change || 0 };
               }
               return {
                 ...prev,
@@ -731,6 +776,10 @@ export default function PlayRandom() {
             </button>
           </div>
         </div>
+        <NotificationPromptModal
+          isOpen={showNotificationModal}
+          onClose={() => setShowNotificationModal(false)}
+        />
       </div>
     );
   }
@@ -742,20 +791,36 @@ export default function PlayRandom() {
 
   if (isSearching) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
         {playRandomSeo}
-        <div className="bg-white border border-gray-200 rounded-lg p-10 text-center shadow-sm max-w-md w-full">
-          <div className="text-sm text-gray-500 mb-2">searching for an opponent</div>
-          <div className="text-6xl font-light text-gray-900 mb-4">{searchTime}s</div>
-          <div className="text-sm text-gray-600 mb-6">
-            if no one joins in time, we will match you with a bot
+        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center shadow-sm max-w-md w-full">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200 mb-6">
+            <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            notified active duelists 🔔
           </div>
-          <button
-            onClick={cancelSearch}
-            className="bg-gray-900 hover:bg-gray-800 text-white text-sm px-6 py-3 rounded transition-colors w-full"
-          >
-            cancel
-          </button>
+
+          <div className="text-xs uppercase tracking-wider text-gray-500 font-medium mb-1">
+            searching for an opponent
+          </div>
+          <div className="text-6xl font-light text-gray-900 mb-3">{searchTime}s</div>
+          <div className="text-xs text-gray-500 mb-6">
+            if no one joins before the timer ends, you'll be matched with a bot
+          </div>
+
+          <div className="flex flex-col gap-2.5">
+            <button
+              onClick={playBotNow}
+              className="bg-gray-900 hover:bg-black text-white text-sm px-6 py-3 rounded-lg font-medium transition-colors w-full"
+            >
+              play against bot now
+            </button>
+            <button
+              onClick={cancelSearch}
+              className="bg-white hover:bg-gray-50 text-gray-700 text-sm px-6 py-2.5 rounded-lg border border-gray-300 hover:border-gray-900 transition-colors w-full"
+            >
+              cancel search
+            </button>
+          </div>
         </div>
       </div>
     );

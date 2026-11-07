@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Seo from '../components/Seo';
 
 export default function NotFound() {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
       <Seo
@@ -17,12 +15,12 @@ export default function NotFound() {
       <p className="text-sm text-gray-500 mb-8">
         The derivative of this page is zero - there is nothing here.
       </p>
-      <button
-        onClick={() => navigate('/')}
+      <Link
+        to="/"
         className="text-sm text-gray-600 hover:text-gray-900 underline"
       >
         ← back to home
-      </button>
+      </Link>
     </div>
   );
 }

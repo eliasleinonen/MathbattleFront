@@ -21,17 +21,17 @@ export default function HowToDerivate() {
     <div className="min-h-screen p-8 bg-gray-50">
       <Seo
         title="Derivative Rules Reference - Power, Product, Quotient & Chain Rule | Derivative Duel"
-        description="Learn how to find derivatives with this quick reference: power rule, product rule, quotient rule, chain rule, and common derivatives of sin, cos, tan, ln x, and e^x."
+        description="Quick reference for calculus derivatives: power rule, product rule, quotient rule, chain rule, and common derivatives of sin, cos, tan, ln x, and e^x."
         path="/how-to-derivate"
         jsonLd={guideJsonLd}
       />
       <div className="max-w-2xl mx-auto">
-        <button
-          onClick={() => navigate('/')}
-          className="text-sm text-gray-600 hover:text-gray-900 mb-8"
+        <Link
+          to="/"
+          className="inline-block text-sm text-gray-600 hover:text-gray-900 mb-8"
         >
           ← back to home
-        </button>
+        </Link>
         
         <div className="bg-white rounded-lg shadow p-8 text-gray-800">
           <h1 className="text-3xl font-bold mb-4">How to Derivate</h1>

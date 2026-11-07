@@ -7,6 +7,7 @@ export const PRERENDER_ROUTES = [
   '/leaderboard',
   '/daily-challenge',
   '/daily-derivative',
+  '/play/random',
   '/play/friend',
   '/how-to-derivate',
   '/faq',

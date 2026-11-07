@@ -36,7 +36,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/spa-shell.html"
+      "destination": "/spa-shell"
     }
   ]
 }

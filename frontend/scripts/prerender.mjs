@@ -34,9 +34,14 @@ for (const route of PRERENDER_ROUTES) {
     throw new Error(`prerender: ${route} rendered without a title - is its Seo component missing?`);
   }
 
+  if (!head.includes('name="description"')) {
+    throw new Error(`prerender: ${route} rendered without a meta description - is its Seo component missing?`);
+  }
+
   const page = template
-    // The Seo component provides the per-page title; drop the static fallback
+    // The Seo component provides the per-page title and description; drop the static fallbacks
     .replace(/<title>[\s\S]*?<\/title>\n?/, '')
+    .replace(/<meta\s+name="description"[\s\S]*?\/>\n?/, '')
     .replace('<!--app-head-->', head)
     .replace('<!--app-html-->', html);
 

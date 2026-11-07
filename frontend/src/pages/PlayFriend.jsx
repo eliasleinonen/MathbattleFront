@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import api from '../api';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
@@ -165,13 +165,12 @@ export default function PlayFriend() {
         path="/play/friend"
       />
       <div className="max-w-xl mx-auto">
-        <button
-          type="button"
-          onClick={() => navigate('/')}
-          className="text-sm text-gray-600 hover:text-gray-900 mb-6 flex items-center gap-1 transition-colors"
+        <Link
+          to="/"
+          className="text-sm text-gray-600 hover:text-gray-900 mb-6 inline-flex items-center gap-1 transition-colors"
         >
           ← back
-        </button>
+        </Link>
 
         <div className="mb-8">
           <h1 className="text-3xl font-medium text-gray-900 tracking-tight mb-2">

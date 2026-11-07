@@ -85,7 +85,7 @@ export const dailyChallengeJsonLd = [
 const dailyChallengeSeo = (
   <Seo
     title="Daily Derivative — Play Today's Calculus Puzzle Free Online"
-    description="Play today's Daily Derivative! Free daily calculus puzzle with instant feedback, streak tracking, and global speed leaderboard. No sign-in or download required."
+    description="Play today's Daily Derivative! Free daily calculus puzzle with instant feedback, streak tracking, and global speed leaderboard. No sign-in required."
     path="/daily-challenge"
     jsonLd={dailyChallengeJsonLd}
   />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api, { authAPI } from '../api';
 import Seo from '../components/Seo';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -116,38 +116,39 @@ export default function Login() {
           <div className="flex-1 h-px bg-gray-200"></div>
         </div>
 
-        <button
+        <Link
+          to="/"
           onClick={continueAsGuest}
-          className="w-full border border-gray-300 hover:border-gray-400 text-gray-700 text-sm py-2.5 rounded transition-colors"
+          className="block text-center w-full border border-gray-300 hover:border-gray-400 text-gray-700 text-sm py-2.5 rounded transition-colors"
         >
           continue as guest
-        </button>
+        </Link>
 
         <p className="text-xs text-gray-400 text-center mt-6">
           By continuing, you agree to our{' '}
-          <button
-            onClick={() => navigate('/terms-and-services')}
+          <Link
+            to="/terms-and-services"
             className="underline text-gray-500 hover:text-gray-900"
           >
             Terms and Services
-          </button>{' '}
+          </Link>{' '}
           and{' '}
-          <button
-            onClick={() => navigate('/privacy-policy')}
+          <Link
+            to="/privacy-policy"
             className="underline text-gray-500 hover:text-gray-900"
           >
             Privacy Policy
-          </button>
+          </Link>
           .
         </p>
       </div>
 
-      <button
-        onClick={() => navigate('/')}
+      <Link
+        to="/"
         className="mt-6 text-sm text-gray-500 hover:text-gray-900 underline"
       >
         ← back to home
-      </button>
+      </Link>
     </div>
   );
 }

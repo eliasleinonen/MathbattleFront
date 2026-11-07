@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { gameAPI } from '../api';
 import Seo from '../components/Seo';
 import { useRoundAdvance } from '../hooks/useRoundAdvance';
@@ -768,12 +768,12 @@ export default function PlayRandom() {
             >
               play again
             </button>
-            <button
-              onClick={() => navigate('/')}
-              className="flex-1 bg-white hover:bg-gray-50 text-gray-900 text-sm px-6 py-2 rounded border border-gray-300 hover:border-gray-900 transition-colors"
+            <Link
+              to="/"
+              className="flex-1 bg-white hover:bg-gray-50 text-gray-900 text-sm px-6 py-2 rounded border border-gray-300 hover:border-gray-900 transition-colors inline-flex items-center justify-center"
             >
               home
-            </button>
+            </Link>
           </div>
         </div>
         <NotificationPromptModal
@@ -799,9 +799,9 @@ export default function PlayRandom() {
             notified active duelists 🔔
           </div>
 
-          <div className="text-xs uppercase tracking-wider text-gray-500 font-medium mb-1">
+          <h1 className="text-xs uppercase tracking-wider text-gray-500 font-medium mb-1">
             searching for an opponent
-          </div>
+          </h1>
           <div className="text-6xl font-light text-gray-900 mb-3">{searchTime}s</div>
           <div className="text-xs text-gray-500 mb-6">
             if no one joins before the timer ends, you'll be matched with a bot
@@ -814,12 +814,16 @@ export default function PlayRandom() {
             >
               play against bot now
             </button>
-            <button
-              onClick={cancelSearch}
-              className="bg-white hover:bg-gray-50 text-gray-700 text-sm px-6 py-2.5 rounded-lg border border-gray-300 hover:border-gray-900 transition-colors w-full"
+            <Link
+              to="/"
+              onClick={(e) => {
+                e.preventDefault();
+                cancelSearch();
+              }}
+              className="bg-white hover:bg-gray-50 text-gray-700 text-sm px-6 py-2.5 rounded-lg border border-gray-300 hover:border-gray-900 transition-colors w-full inline-block text-center"
             >
               cancel search
-            </button>
+            </Link>
           </div>
         </div>
       </div>
